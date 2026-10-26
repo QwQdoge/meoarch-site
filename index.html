@@ -62,7 +62,7 @@
             <h3>Meo AI</h3>
             <p data-i18n="p.ai">MeoArch 的助手：日常对话、本地或远程的代理工作，以及受控的系统操作；桌面和网页保持同一种体验。</p>
             <div class="links"><a href="https://ai.meoarch.org/" target="_blank" rel="noreferrer" data-i18n="l.site">网站 ↗</a><a href="https://github.com/QwQdoge/meo-ai" target="_blank" rel="noreferrer">GitHub ↗</a></div>
-            <code class="install">sudo pacman -S meo-ai <small>(Stable)</small></code>
+            <code class="install">sudo pacman -Syu meo-ai <small data-i18n="repo.need">（需要 Meo 软件源）</small></code>
           </div>
         </article>
 
@@ -73,7 +73,7 @@
             <h3>OmniStore</h3>
             <p data-i18n="p.store">应用商店：发现软件来源，管理软件的安装与更新；原生 Qt/QML + MeoUI 客户端，Python 后端。</p>
             <div class="links"><a href="https://github.com/QwQdoge/OmniStore" target="_blank" rel="noreferrer">GitHub ↗</a></div>
-            <code class="install">sudo pacman -S omnistore-bin <small>(Stable)</small></code>
+            <code class="install">yay -Syu omnistore-bin</code>
           </div>
         </article>
 
@@ -84,7 +84,7 @@
             <h3>Meo Settings</h3>
             <p data-i18n="p.settings">日常系统设置：基于 MeoUI，使用 KDE 和 Linux 已验证的系统组件，不取代 NetworkManager、BlueZ、PipeWire 等。</p>
             <div class="links"><a href="https://github.com/QwQdoge/MeoSettings" target="_blank" rel="noreferrer">GitHub ↗</a></div>
-            <code class="install">sudo pacman -S meo-settings <small>(Stable)</small></code>
+            <code class="install">yay -Syu meo-settings</code>
           </div>
         </article>
 
@@ -95,7 +95,7 @@
             <h3>MeoUI</h3>
             <p data-i18n="p.ui">MeoArch 共用的 Qt Quick / QML Material Design 3 设计系统：主题、组件和模式，让各个应用保持一致。MIT 许可。</p>
             <div class="links"><a href="https://github.com/QwQdoge/MeoUI" target="_blank" rel="noreferrer">GitHub ↗</a></div>
-            <code class="install">sudo pacman -S meoui-qml <small>(Stable)</small></code>
+            <code class="install">yay -Syu meoui-qml</code>
           </div>
         </article>
 
@@ -106,7 +106,7 @@
             <h3>Meo Login</h3>
             <p data-i18n="p.login">MeoArch 的登录与显示管理器：在 KDE Plasma Login Manager 6.8 之上只改外观，认证和会话逻辑保持上游。</p>
             <div class="links"><a href="https://github.com/QwQdoge/meo-login-manager" target="_blank" rel="noreferrer">GitHub ↗</a></div>
-            <code class="install">sudo pacman -S meo-plasma-login-manager <small>(Stable)</small></code>
+            <code class="install">yay -Syu meo-plasma-login-manager</code>
           </div>
         </article>
         <article class="card wide">
@@ -116,7 +116,7 @@
             <h3>MeoKDE</h3>
             <p data-i18n="p.kde">MeoArch 的 KDE Plasma 6 原生集成：Shell、Plasmoid、主题、默认配置和 KDE/Qt 桥接，打包为 meo-desktop。</p>
             <div class="links"><a href="https://github.com/QwQdoge/meo-kde" target="_blank" rel="noreferrer">GitHub ↗</a></div>
-            <code class="install">sudo pacman -S meo-desktop <small>(Stable)</small></code>
+            <code class="install">yay -Syu meo-desktop</code>
           </div>
         </article>
 
@@ -136,8 +136,10 @@
       <div class="heading"><p class="eyebrow" data-i18n="install.eyebrow">安装</p><h2 data-i18n="install.title">三种方式。</h2><p data-i18n="install.lead">MeoArch 仍在开发中，请先在虚拟机或备用设备上试用，并备份重要数据。</p></div>
       <div class="install-grid">
         <article class="install-card"><h3 data-i18n="i.iso.t">下载 ISO</h3><p data-i18n="i.iso.p">新装一台机器或虚拟机。目前只有测试版（2026-10-25 构建）。</p><a class="button primary" href="https://sourceforge.net/projects/meoarch/files/meoarch-os-2026.10.25-070252-x86_64.iso/download" target="_blank" rel="noreferrer" data-i18n="i.iso.b">从 SourceForge 下载</a><p class="note">SHA-256<code>ca2a6c4e457407aed4f7338fe904d8dc186c290300523466fc070a079ec8face</code></p></article>
-        <article class="install-card"><h3 data-i18n="i.pac.t">pacman（Meo 软件源）</h3><p data-i18n="i.pac.p">已有 Arch？一条命令配置已签名的 Meo 软件源并安装 Meo 桌面。</p><pre><code>curl -fsSL https://raw.githubusercontent.com/QwQdoge/MeoArch-os-workspace/main/scripts/install.sh | bash -s -- --full</code></pre><p class="note" data-i18n="i.pac.n">加 --beta 使用 Beta 通道。运行前请先阅读脚本。之后单个应用用 pacman -S 安装。</p></article>
-        <article class="install-card"><h3>yay (AUR)</h3><p data-i18n="i.yay.p">AUR 上目前有两个独立可构建的包；其余软件依赖 Meo 软件源，请用 pacman 安装。</p><pre><code>yay -Syu meoui-qml meo-plasma-login-manager</code></pre><p class="note" data-i18n="i.yay.n">meo-plasma-login-manager 会替换 plasma-login-manager，安装前请确认。</p><p class="note"><a href="https://aur.archlinux.org/packages/meoui-qml" target="_blank" rel="noreferrer">AUR: meoui-qml ↗</a> · <a href="https://aur.archlinux.org/packages/meo-plasma-login-manager" target="_blank" rel="noreferrer">AUR: meo-plasma-login-manager ↗</a></p></article>
+        <article class="install-card"><h3 data-i18n="i.pac.t">Meo 软件源（安装全部）</h3><p data-i18n="i.pac.p">已有 Arch？一条命令配置已签名的 Meo 软件源并安装 Meo 桌面。</p><pre><code>curl -fsSL https://raw.githubusercontent.com/QwQdoge/MeoArch-os-workspace/main/scripts/install.sh | bash -s -- --full</code></pre><p class="note" data-i18n="i.pac.n">加 --beta 使用 Beta 通道。运行前请先阅读脚本。之后单个应用用 pacman -S 安装。</p></article>
+        <article class="install-card"><h3 data-i18n="i.yay.t">yay（单独安装）</h3><p data-i18n="i.yay.p">只想装其中某一个软件？用 yay 从 AUR 单独安装，不需要配置软件源。</p><pre><code>yay -Syu meo-desktop
+yay -Syu meo-settings
+yay -Syu omnistore-bin</code></pre><p class="note" data-i18n="i.yay.n">另有 meoui-qml、meo-plasma-login-manager 等。meo-plasma-login-manager 会替换 plasma-login-manager，安装前请确认。Meo AI 目前只在 Meo 软件源中。</p></article>
       </div>
     </div></section>
 

@@ -17,15 +17,17 @@ const zh={
   'p.login':'MeoArch 的登录与显示管理器：在 KDE Plasma Login Manager 6.8 之上只改外观，认证和会话逻辑保持上游。',
   'install.eyebrow':'安装','install.title':'三种方式。','install.lead':'MeoArch 仍在开发中，请先在虚拟机或备用设备上试用，并备份重要数据。',
   'i.iso.t':'下载 ISO','i.iso.p':'新装一台机器或虚拟机。目前只有测试版（2026-10-25 构建）。','i.iso.b':'从 SourceForge 下载',
-  'i.pac.t':'pacman（Meo 软件源）','i.pac.p':'已有 Arch？一条命令配置已签名的 Meo 软件源并安装 Meo 桌面。','i.pac.n':'加 --beta 使用 Beta 通道。运行前请先阅读脚本。之后单个应用用 pacman -S 安装。',
-  'i.yay.p':'AUR 上目前有两个独立可构建的包；其余软件依赖 Meo 软件源，请用 pacman 安装。','i.yay.n':'meo-plasma-login-manager 会替换 plasma-login-manager，安装前请确认。',
+  'i.pac.t':'Meo 软件源（安装全部）','i.pac.p':'想要完整的 MeoArch 桌面和全部软件？配置已签名的 Meo 软件源，之后用 pacman 统一安装和更新。','i.pac.n':'加 --beta 使用 Beta 通道。运行前请先阅读脚本。',
+  'i.yay.p':'只想装其中某一个软件？用 yay 从 AUR 单独安装，不需要配置软件源。','i.yay.n':'另有 meoui-qml、meo-plasma-login-manager 等。meo-plasma-login-manager 会替换 plasma-login-manager，安装前请确认。Meo AI 目前只在 Meo 软件源中。',
   'ws.eyebrow':'更多项目','ws.title':'工作坊里的其他东西。','ws.lead':'除了 MeoArch 本身，还有一些公开的小项目；学校作业和个人小实验会陆续整理放进来。',
   'ws.widgets':'一组自制的 KDE Plasma 6 小部件：时钟、系统监视器、媒体工具等。GPL-3.0。',
   'about.eyebrow':'关于','about.title':'为什么叫 MeoArch。',
   'about.p1':'<b>MEO = Modern · Expressive · Open。</b>交互和呈现要现代，动效和视觉语言要有表现力，Linux 的基础和用户的控制权要保持开放。',
   'about.p2':'<b>为什么是 Arch？</b>因为自由和新：滚动更新让软件保持较新，也不替你做决定。MeoArch 在这份自由之上，加一层更容易理解、更容易恢复的操作界面。',
   'about.p3':'<b>适合日常使用吗？</b>目前还不建议作为唯一的日常系统，它仍在开发中。欢迎试用、反馈，也欢迎一起做。',
-  'foot.tag':'Calm by design. Built in the open.'
+  'foot.tag':'Calm by design. Built in the open.',
+  'i.yay.t':'yay（单独安装）',
+  'repo.need':'（需要 Meo 软件源）'
 };
 const en={
   'badge.stable':'Stable channel','p.kde':'MeoArch’s native KDE Plasma 6 integration: shell, plasmoids, themes, default configuration and KDE/Qt bridges, packaged as meo-desktop.','p.repo':'The signed pacman repository and release flow: recipes, release manifests and validation tooling, in a Stable and a Beta channel.',
@@ -45,15 +47,17 @@ const en={
   'p.login':'The MeoArch login and display manager: only the look changes on top of KDE Plasma Login Manager 6.8, authentication and session logic stay upstream.',
   'install.eyebrow':'Install','install.title':'Three ways.','install.lead':'MeoArch is still in development; please try it in a virtual machine or on a spare device and back up important data.',
   'i.iso.t':'Download the ISO','i.iso.p':'For a new machine or virtual machine. Only a test build (built 2026-10-25) is available for now.','i.iso.b':'Download from SourceForge',
-  'i.pac.t':'pacman (Meo repository)','i.pac.p':'Already on Arch? One command sets up the signed Meo repository and installs the Meo desktop.','i.pac.n':'Add --beta for the Beta channel. Read the script before you run it. Install single apps afterwards with pacman -S.',
-  'i.yay.p':'Two self-contained packages are on the AUR for now; everything else depends on the Meo repository, so install it with pacman.','i.yay.n':'meo-plasma-login-manager replaces plasma-login-manager; check before installing.',
+  'i.pac.t':'Meo repository (install everything)','i.pac.p':'Want the complete MeoArch desktop and all of its software? Set up the signed Meo repository, then install and update everything with pacman.','i.pac.n':'Add --beta for the Beta channel. Read the script before you run it.',
+  'i.yay.p':'Only want one piece of software? Install it on its own from the AUR with yay, no repository setup needed.','i.yay.n':'Also available: meoui-qml, meo-plasma-login-manager and more. meo-plasma-login-manager replaces plasma-login-manager; check before installing. Meo AI is only in the Meo repository for now.',
   'ws.eyebrow':'More projects','ws.title':'Other things from the workshop.','ws.lead':'Besides MeoArch itself there are a few small public projects; school work and personal experiments will be collected here over time.',
   'ws.widgets':'A collection of custom KDE Plasma 6 widgets: clocks, system monitors, media tools and more. GPL-3.0.',
   'about.eyebrow':'About','about.title':'Why MeoArch.',
   'about.p1':'<b>MEO = Modern · Expressive · Open.</b> Modern in interaction and presentation, expressive in motion and visual language, and open in its Linux foundation and the control it leaves with the user.',
   'about.p2':'<b>Why Arch?</b> Freedom and freshness: rolling releases keep software current and Arch does not make choices for you. MeoArch adds an easier-to-understand, easier-to-recover layer on top of that freedom.',
   'about.p3':'<b>Ready for daily use?</b> Not yet as your only system; it is still in development. Try it, send feedback, and build it with us.',
-  'foot.tag':'Calm by design. Built in the open.'
+  'foot.tag':'Calm by design. Built in the open.',
+  'i.yay.t':'yay (install one thing)',
+  'repo.need':'(needs the Meo repository)'
 };
 const translations={'zh-CN':zh,en};
 function getLang(){try{const s=localStorage.getItem('site-lang');if(translations[s])return s}catch(e){}return (navigator.language||'').startsWith('en')?'en':'zh-CN'}
