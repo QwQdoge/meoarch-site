@@ -1,5 +1,6 @@
 const toggle=document.querySelector('[data-menu-toggle]'),nav=document.querySelector('[data-nav]'),langSelect=document.getElementById('lang-select');
 const zh={
+  'badge.stable':'Stable 通道','p.kde':'MeoArch 的 KDE Plasma 6 原生集成：Shell、Plasmoid、主题、默认配置和 KDE/Qt 桥接，打包为 meo-desktop。','p.repo':'已签名的 pacman 软件源和发布流程：配方、发布清单、校验工具，分 Stable 和 Beta 两个通道。',
   'ui.skip':'跳到主要内容','ui.menu':'打开菜单','ui.lang':'语言 / Language',
   'nav.products':'产品','nav.install':'安装','nav.workshop':'更多项目','nav.about':'关于',
   'hero.title':'一个 Arch 桌面，<br><em>和围绕它的一切。</em>',
@@ -27,6 +28,7 @@ const zh={
   'foot.tag':'Calm by design. Built in the open.'
 };
 const en={
+  'badge.stable':'Stable channel','p.kde':'MeoArch’s native KDE Plasma 6 integration: shell, plasmoids, themes, default configuration and KDE/Qt bridges, packaged as meo-desktop.','p.repo':'The signed pacman repository and release flow: recipes, release manifests and validation tooling, in a Stable and a Beta channel.',
   'ui.skip':'Skip to main content','ui.menu':'Open menu','ui.lang':'Language',
   'nav.products':'Products','nav.install':'Install','nav.workshop':'More projects','nav.about':'About',
   'hero.title':'An Arch desktop,<br><em>and everything around it.</em>',

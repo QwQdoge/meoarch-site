@@ -48,3 +48,6 @@ code.install{display:block;padding:9px 12px;border-radius:12px;background:#2a234
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
 .card>.art{display:grid;place-items:center;aspect-ratio:16/10;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#b8a5f0,#7451c7 60%,#4a2f94)}.card>.art img{width:96px;height:96px;aspect-ratio:auto;border:0;filter:brightness(0) invert(1);opacity:.92}
+
+.card.wide{grid-column:span 2;flex-direction:row}.card.wide>img{width:48%;aspect-ratio:auto;border-bottom:0;border-right:1px solid var(--line);object-fit:cover}.card.wide .card-body{justify-content:center}
+@media(max-width:1000px){.card.wide{grid-column:1/-1;flex-direction:column}.card.wide>img{width:100%;border-right:0;border-bottom:1px solid var(--line);aspect-ratio:16/10}}
