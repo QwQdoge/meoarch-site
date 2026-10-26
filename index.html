@@ -51,7 +51,7 @@
             <span class="badge test" data-i18n="badge.testiso">测试版 ISO 可下载</span>
             <h3>MeoArch OS</h3>
             <p data-i18n="p.os">基于 Arch Linux 的桌面系统：设置会解释自己，高风险修改可以预览和恢复，底层仍然是真正的 Linux。</p>
-            <div class="links"><a href="https://os.meoarch.org/" target="_blank" rel="noreferrer" data-i18n="l.site">网站 ↗</a><a href="https://sourceforge.net/projects/meoarch/files/meoarch-os-2026.10.25-070252-x86_64.iso/download" target="_blank" rel="noreferrer" data-i18n="l.iso">下载测试版 ISO ↗</a><a href="https://github.com/QwQdoge/MeoArch-os-workspace" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+            <div class="links"><a href="https://os.meoarch.org/" target="_blank" rel="noreferrer" data-i18n="l.site">网站 ↗</a><a href="https://sourceforge.net/projects/meoarch/files/meoarch-os-2026.10.25-070252-x86_64.iso/download" target="_blank" rel="noreferrer" data-i18n="l.iso">下载测试版 ISO ↗</a><a href="https://iso.meoarch.org/meoarch-os-2026.10.25-070252-x86_64.iso" target="_blank" rel="noreferrer" data-i18n="l.isom">备用下载 ↗</a><a href="https://github.com/QwQdoge/MeoArch-os-workspace" target="_blank" rel="noreferrer">GitHub ↗</a></div>
           </div>
         </article>
 
@@ -135,7 +135,7 @@
     <section id="install" class="section install-section"><div class="wrap">
       <div class="heading"><p class="eyebrow" data-i18n="install.eyebrow">安装</p><h2 data-i18n="install.title">三种方式。</h2><p data-i18n="install.lead">MeoArch 仍在开发中，请先在虚拟机或备用设备上试用，并备份重要数据。</p></div>
       <div class="install-grid">
-        <article class="install-card"><h3 data-i18n="i.iso.t">下载 ISO</h3><p data-i18n="i.iso.p">新装一台机器或虚拟机。目前只有测试版（2026-10-25 构建）。</p><a class="button primary" href="https://sourceforge.net/projects/meoarch/files/meoarch-os-2026.10.25-070252-x86_64.iso/download" target="_blank" rel="noreferrer" data-i18n="i.iso.b">从 SourceForge 下载</a><p class="note">SHA-256<code>ca2a6c4e457407aed4f7338fe904d8dc186c290300523466fc070a079ec8face</code></p></article>
+        <article class="install-card"><h3 data-i18n="i.iso.t">下载 ISO</h3><p data-i18n="i.iso.p">新装一台机器或虚拟机。目前只有测试版（2026-10-25 构建）。</p><a class="button primary" href="https://sourceforge.net/projects/meoarch/files/meoarch-os-2026.10.25-070252-x86_64.iso/download" target="_blank" rel="noreferrer" data-i18n="i.iso.b">从 SourceForge 下载</a> <a class="button" href="https://iso.meoarch.org/meoarch-os-2026.10.25-070252-x86_64.iso" target="_blank" rel="noreferrer" data-i18n="i.iso.m">Cloudflare 备用下载</a><p class="note">SHA-256<code>ca2a6c4e457407aed4f7338fe904d8dc186c290300523466fc070a079ec8face</code></p></article>
         <article class="install-card"><h3 data-i18n="i.pac.t">Meo 软件源（安装全部）</h3><p data-i18n="i.pac.p">已有 Arch？一条命令配置已签名的 Meo 软件源并安装 Meo 桌面。</p><pre><code>curl -fsSL https://raw.githubusercontent.com/QwQdoge/MeoArch-os-workspace/main/scripts/install.sh | bash -s -- --full</code></pre><p class="note" data-i18n="i.pac.n">加 --beta 使用 Beta 通道。运行前请先阅读脚本。之后单个应用用 pacman -S 安装。</p></article>
         <article class="install-card"><h3 data-i18n="i.yay.t">yay（单独安装）</h3><p data-i18n="i.yay.p">只想装其中某一个软件？用 yay 从 AUR 单独安装，不需要配置软件源。</p><pre><code>yay -Syu meo-desktop
 yay -Syu meo-settings
