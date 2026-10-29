@@ -51,7 +51,7 @@
             <span class="badge test" data-i18n="badge.testiso">测试版 ISO 可下载</span>
             <h3>MeoArch OS</h3>
             <p data-i18n="p.os">基于 Arch Linux 的桌面系统：设置会解释自己，高风险修改可以预览和恢复，底层仍然是真正的 Linux。</p>
-            <div class="links"><a href="https://os.meoarch.org/" target="_blank" rel="noreferrer" data-i18n="l.site">网站 ↗</a><a href="https://sourceforge.net/projects/meoarch/files/meoarch-os-2026.10.25-070252-x86_64.iso/download" target="_blank" rel="noreferrer" data-i18n="l.iso">下载测试版 ISO ↗</a><a href="https://iso.meoarch.org/meoarch-os-2026.10.25-070252-x86_64.iso" target="_blank" rel="noreferrer" data-i18n="l.isom">备用下载 ↗</a><a href="https://github.com/QwQdoge/MeoArch-os-workspace" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+            <div class="actions"><a class="button primary" href="/os/" data-i18n="l.detail">查看详情</a><a class="button secondary" href="https://sourceforge.net/projects/meoarch/files/meoarch-os-2026.10.25-070252-x86_64.iso/download" target="_blank" rel="noreferrer" data-i18n="l.iso">直接进入 ↗</a></div><div class="links"><a href="https://iso.meoarch.org/meoarch-os-2026.10.25-070252-x86_64.iso" target="_blank" rel="noreferrer" data-i18n="l.isom">备用下载 ↗</a></div>
           </div>
         </article>
 
@@ -61,8 +61,18 @@
             <span class="badge" data-i18n="badge.preview">开发预览</span>
             <h3>Meo AI</h3>
             <p data-i18n="p.ai">MeoArch 的助手：日常对话、本地或远程的代理工作，以及受控的系统操作；桌面和网页保持同一种体验。</p>
-            <div class="links"><a href="https://ai.meoarch.org/" target="_blank" rel="noreferrer" data-i18n="l.site">网站 ↗</a><a href="https://github.com/QwQdoge/meo-ai" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+            <div class="actions"><a class="button primary" href="/ai/" data-i18n="l.detail">查看详情</a><a class="button secondary" href="https://chat.meoarch.org/" target="_blank" rel="noreferrer" data-i18n="l.open">直接进入 ↗</a></div>
             <code class="install">sudo pacman -Syu meo-ai <small data-i18n="repo.need">（需要 Meo 软件源）</small></code>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="art" aria-hidden="true"><img class="full" src="assets/img/vrc-memories.svg" alt="" width="110" height="110"></div>
+          <div class="card-body">
+            <span class="badge test" data-i18n="badge.testing">测试中</span>
+            <h3>VRC Memories</h3>
+            <p data-i18n="p.vrc">仿照 VRCX 做的 VRChat 云端回忆录：24 小时自动记录好友动态和世界足迹，有回忆录和“那年今日”。</p>
+            <div class="actions"><a class="button primary" href="/vrc-m/" data-i18n="l.detail">查看详情</a><a class="button secondary" href="https://vrc.meoarch.org/" target="_blank" rel="noreferrer" data-i18n="l.open">直接进入 ↗</a></div>
           </div>
         </article>
 
@@ -72,7 +82,7 @@
             <span class="badge" data-i18n="badge.preview">开发预览</span>
             <h3>OmniStore</h3>
             <p data-i18n="p.store">应用商店：发现软件来源，管理软件的安装与更新；原生 Qt/QML + MeoUI 客户端，Python 后端。</p>
-            <div class="links"><a href="https://github.com/QwQdoge/OmniStore" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+            <div class="actions"><a class="button primary" href="/omnistore/" data-i18n="l.detail">查看详情</a><a class="button secondary" href="https://github.com/QwQdoge/OmniStore" target="_blank" rel="noreferrer" data-i18n="l.open">直接进入 ↗</a></div>
             <code class="install">yay -Syu omnistore-bin</code>
           </div>
         </article>
@@ -83,7 +93,7 @@
             <span class="badge" data-i18n="badge.beta">Beta</span>
             <h3>Meo Settings</h3>
             <p data-i18n="p.settings">日常系统设置：基于 MeoUI，使用 KDE 和 Linux 已验证的系统组件，不取代 NetworkManager、BlueZ、PipeWire 等。</p>
-            <div class="links"><a href="https://github.com/QwQdoge/MeoSettings" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+            <div class="actions"><a class="button primary" href="/meo-settings/" data-i18n="l.detail">查看详情</a><a class="button secondary" href="https://github.com/QwQdoge/MeoSettings" target="_blank" rel="noreferrer" data-i18n="l.open">直接进入 ↗</a></div>
             <code class="install">yay -Syu meo-settings</code>
           </div>
         </article>
@@ -94,7 +104,7 @@
             <span class="badge" data-i18n="badge.beta">Beta</span>
             <h3>MeoUI</h3>
             <p data-i18n="p.ui">MeoArch 共用的 Qt Quick / QML Material Design 3 设计系统：主题、组件和模式，让各个应用保持一致。MIT 许可。</p>
-            <div class="links"><a href="https://github.com/QwQdoge/MeoUI" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+            <div class="actions"><a class="button primary" href="/meoui/" data-i18n="l.detail">查看详情</a><a class="button secondary" href="https://github.com/QwQdoge/MeoUI" target="_blank" rel="noreferrer" data-i18n="l.open">直接进入 ↗</a></div>
             <code class="install">yay -Syu meoui-qml</code>
           </div>
         </article>
@@ -105,7 +115,7 @@
             <span class="badge" data-i18n="badge.beta">Beta</span>
             <h3>Meo Login</h3>
             <p data-i18n="p.login">MeoArch 的登录与显示管理器：在 KDE Plasma Login Manager 6.8 之上只改外观，认证和会话逻辑保持上游。</p>
-            <div class="links"><a href="https://github.com/QwQdoge/meo-login-manager" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+            <div class="actions"><a class="button primary" href="/meo-login/" data-i18n="l.detail">查看详情</a><a class="button secondary" href="https://github.com/QwQdoge/meo-login-manager" target="_blank" rel="noreferrer" data-i18n="l.open">直接进入 ↗</a></div>
             <code class="install">yay -Syu meo-plasma-login-manager</code>
           </div>
         </article>
@@ -115,7 +125,7 @@
             <span class="badge" data-i18n="badge.stable">Stable 通道</span>
             <h3>MeoKDE</h3>
             <p data-i18n="p.kde">MeoArch 的 KDE Plasma 6 原生集成：Shell、Plasmoid、主题、默认配置和 KDE/Qt 桥接，打包为 meo-desktop。</p>
-            <div class="links"><a href="https://github.com/QwQdoge/meo-kde" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+            <div class="actions"><a class="button primary" href="/meokde/" data-i18n="l.detail">查看详情</a><a class="button secondary" href="https://github.com/QwQdoge/meo-kde" target="_blank" rel="noreferrer" data-i18n="l.open">直接进入 ↗</a></div>
             <code class="install">yay -Syu meo-desktop</code>
           </div>
         </article>
@@ -126,7 +136,7 @@
             <span class="badge" data-i18n="badge.stable">Stable 通道</span>
             <h3>Meo Repo</h3>
             <p data-i18n="p.repo">已签名的 pacman 软件源和发布流程：配方、发布清单、校验工具，分 Stable 和 Beta 两个通道。</p>
-            <div class="links"><a href="https://github.com/QwQdoge/meo-repo" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+            <div class="actions"><a class="button primary" href="/meo-repo/" data-i18n="l.detail">查看详情</a><a class="button secondary" href="https://github.com/QwQdoge/meo-repo" target="_blank" rel="noreferrer" data-i18n="l.open">直接进入 ↗</a></div>
           </div>
         </article>
       </div>
@@ -146,7 +156,7 @@ yay -Syu omnistore-bin</code></pre><p class="note" data-i18n="i.yay.n">另有 me
     <section id="workshop" class="section"><div class="wrap">
       <div class="heading"><p class="eyebrow" data-i18n="ws.eyebrow">更多项目</p><h2 data-i18n="ws.title">工作坊里的其他东西。</h2><p data-i18n="ws.lead">除了 MeoArch 本身，还有一些公开的小项目。</p></div>
       <div class="mini-grid">
-        <a class="mini" href="https://github.com/QwQdoge/kde-plasma6-widgets" target="_blank" rel="noreferrer"><h3>KDE Plasma 6 Widgets</h3><p data-i18n="ws.widgets">一组自制的 KDE Plasma 6 小部件：时钟、系统监视器、媒体工具等。GPL-3.0。</p><span>GitHub ↗</span></a>
+        <div class="mini"><h3>KDE Plasma 6 Widgets</h3><p data-i18n="ws.widgets">一组自制的 KDE Plasma 6 小部件：时钟、系统监视器、媒体工具等。GPL-3.0。</p><div class="actions"><a class="button primary" href="/kde-widgets/" data-i18n="l.detail">查看详情</a><a class="button secondary" href="https://github.com/QwQdoge/kde-plasma6-widgets" target="_blank" rel="noreferrer" data-i18n="l.open">直接进入 ↗</a></div></div>
       </div>
     </div></section>
 
@@ -162,7 +172,7 @@ yay -Syu omnistore-bin</code></pre><p class="note" data-i18n="i.yay.n">另有 me
 
   <footer class="footer"><div class="wrap footer-content">
     <div><a class="brand" href="#top"><img src="assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
-    <nav aria-label="Footer"><a href="https://os.meoarch.org/" target="_blank" rel="noreferrer">MeoArch OS</a><a href="https://ai.meoarch.org/" target="_blank" rel="noreferrer">Meo AI</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/vrc-m/">VRC Memories</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
   </div></footer>
   <script src="app.js"></script>
 </body>

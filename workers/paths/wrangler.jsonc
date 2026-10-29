@@ -1,0 +1,12 @@
+{
+  "name": "meoarch-paths",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-13",
+  "routes": [
+    { "pattern": "meoarch.org/os", "zone_name": "meoarch.org" },
+    { "pattern": "meoarch.org/os/*", "zone_name": "meoarch.org" },
+    { "pattern": "meoarch.org/ai", "zone_name": "meoarch.org" },
+    { "pattern": "meoarch.org/ai/*", "zone_name": "meoarch.org" }
+  ],
+  "services": [{ "binding": "AI_LANDING", "service": "meo-ai-landing" }]
+}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="VRC Memories">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9A7FE8"/>
+      <stop offset="1" stop-color="#5B3FB0"/>
+    </linearGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E9E0FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <!-- open book: the two page tops form an "M" for Meo -->
+  <path d="M250 404C206 366 154 358 104 366V176C154 168 206 176 250 214Z" fill="url(#page)"/>
+  <path d="M262 404C306 366 358 358 408 366V176C358 168 306 176 262 214Z" fill="url(#page)"/>
+  <!-- ribbon bookmark -->
+  <path d="M292 190V282L310 266L328 282V186C316 182 304 184 292 190Z" fill="#F4A6C8"/>
+  <!-- memory sparkle -->
+  <path d="M376 96L388 124L416 136L388 148L376 176L364 148L336 136L364 124Z" fill="#FFE3EE"/>
+  <circle cx="430" cy="84" r="9" fill="#FFE3EE" opacity=".85"/>
+</svg>

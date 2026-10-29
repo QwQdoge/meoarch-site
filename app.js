@@ -1,5 +1,6 @@
 const toggle=document.querySelector('[data-menu-toggle]'),nav=document.querySelector('[data-nav]'),langSelect=document.getElementById('lang-select');
 const zh={
+  'l.detail':'查看详情','l.open':'直接进入 ↗','badge.testing':'测试中','p.vrc':'仿照 VRCX 做的 VRChat 云端回忆录：24 小时自动记录好友动态和世界足迹，有回忆录和“那年今日”。','d.back':'← 返回项目列表',
   'badge.stable':'Stable 通道','p.kde':'MeoArch 的 KDE Plasma 6 原生集成：Shell、Plasmoid、主题、默认配置和 KDE/Qt 桥接，打包为 meo-desktop。','p.repo':'已签名的 pacman 软件源和发布流程：配方、发布清单、校验工具，分 Stable 和 Beta 两个通道。',
   'ui.skip':'跳到主要内容','ui.menu':'打开菜单','ui.lang':'语言 / Language',
   'nav.products':'产品','nav.install':'安装','nav.workshop':'更多项目','nav.about':'关于',
@@ -30,6 +31,7 @@ const zh={
   'repo.need':'（需要 Meo 软件源）'
 };
 const en={
+  'l.detail':'Details','l.open':'Open ↗','badge.testing':'Testing','p.vrc':'A cloud memory book for VRChat, modelled on VRCX: it logs friends and your travels 24/7, with a memory book and “on this day” flashbacks.','d.back':'← Back to projects',
   'badge.stable':'Stable channel','p.kde':'MeoArch’s native KDE Plasma 6 integration: shell, plasmoids, themes, default configuration and KDE/Qt bridges, packaged as meo-desktop.','p.repo':'The signed pacman repository and release flow: recipes, release manifests and validation tooling, in a Stable and a Beta channel.',
   'ui.skip':'Skip to main content','ui.menu':'Open menu','ui.lang':'Language',
   'nav.products':'Products','nav.install':'Install','nav.workshop':'More projects','nav.about':'About',
