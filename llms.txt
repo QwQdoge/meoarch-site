@@ -1,0 +1,26 @@
+# MeoArch
+
+> MeoArch is an Arch Linux based desktop and a set of Qt/QML apps built on the MeoUI design system.
+> These files are the published copy of the MeoUI specification for coding agents. The canonical source is
+> the MeoUI repository (`docs/`); if they disagree, the repository wins.
+
+Start with "Rules for Coding Agents". Then read only the document that matches the task.
+Always read the target repository's AGENTS.md first: its owner workflow rules take precedence.
+
+## MeoUI specification
+
+- [MeoUI Specification](https://meoarch.org/docs/meoui/index.md): Index and core rules: ownership, tokens, components, localization, evidence, files.
+- [App Shell](https://meoarch.org/docs/meoui/app-shell.md): Window chrome and toolbar, where app settings live and how they are grouped, About, open-source credits.
+- [Settings Pattern](https://meoarch.org/docs/meoui/settings.md): Settings rows, groups, sidebar, task sheet, state layer and motion.
+- [Page Types](https://meoarch.org/docs/meoui/page-types.md): Page kinds, the two-level rule and registry metadata.
+- [Dynamic Color](https://meoarch.org/docs/meoui/dynamic-color.md): The mandatory dynamic color role table and who generates it.
+- [API Lifecycle](https://meoarch.org/docs/meoui/api-lifecycle.md): Current, deprecated, experimental and internal components.
+- [Localization](https://meoarch.org/docs/meoui/localization.md): Language precedence, translation catalogs and accessible names.
+- [Rules for Coding Agents](https://meoarch.org/docs/meoui/for-agents.md): The same rules as decision tables and checklists for AI coding agents.
+
+## Repositories
+
+- [MeoUI](https://github.com/QwQdoge/MeoUI): shared QML design system (tokens, controls, patterns, Showcase)
+- [MeoSettings](https://github.com/QwQdoge/MeoSettings): system settings app; product contracts in docs/
+- [meo-kde](https://github.com/QwQdoge/meo-kde): Plasma/KWin integration, shell surfaces, title bar colors
+- [MeoArch-os-workspace](https://github.com/QwQdoge/MeoArch-os-workspace): ISO, installer, repair, AI router

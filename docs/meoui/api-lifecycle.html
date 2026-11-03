@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API Lifecycle · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/api-lifecycle">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/api-lifecycle.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="MeoUI"><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html" aria-current="page">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/api-lifecycle.md" target="_blank" rel="noreferrer">MeoUI/docs/api-lifecycle.md ↗</a> · <a href="/docs/meoui/api-lifecycle.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<h1 id="meoui-api-lifecycle">MeoUI API lifecycle</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#status-classes">Status classes</a></li><li><a href="#initial-classification">Initial classification</a></li><li><a href="#deprecation-rules">Deprecation rules</a></li><li><a href="#experimental-rules">Experimental rules</a></li><li><a href="#removal-rules">Removal rules</a></li><li><a href="#ownership">Ownership</a></li></ul></nav>
+<p>MeoUI is a shared UI library. Public QML may outlive the product surface that first introduced it, so new and old patterns must be classified explicitly instead of being left side-by-side with equal status.</p>
+<h2 id="status-classes">Status classes</h2>
+<h3 id="current">Current</h3>
+<p>Recommended for new product work. Current components are documented in Showcase/catalog coverage and follow current Material 3 Expressive guidance.</p>
+<h3 id="compatibility-deprecated">Compatibility / deprecated</h3>
+<p>Kept to avoid breaking existing consumers. Deprecated APIs remain source-compatible for a transition window but must not be selected for new feature work when a Current replacement exists.</p>
+<h3 id="experimental">Experimental</h3>
+<p>Public or semi-public work that is still being validated. Experimental components may change without the same migration guarantees as Current APIs and must be clearly labelled in docs/Showcase.</p>
+<h3 id="internal">Internal</h3>
+<p>Implementation details not intended as product-facing API.</p>
+<h2 id="initial-classification">Initial classification</h2>
+<h3 id="current">Current</h3>
+<ul><li><code>MeoDockedToolbar.qml</code>: current docked action-surface pattern for new work.</li><li><code>MeoWidget.qml</code>: current platform-neutral widget contract.</li><li><code>MeoWidgetSheet.qml</code>: current widget catalogue/browser pattern.</li><li>established Material 3 Expressive controls, semantic tokens, motion and responsive layout primitives that are covered by the current Showcase.</li></ul>
+<h3 id="deprecated-compatibility">Deprecated compatibility</h3>
+<ul><li><code>MeoBottomAppBar.qml</code>: legacy baseline retained for compatibility. New work should use <code>MeoDockedToolbar</code> when the surface is a docked action toolbar. Do not mechanically replace it when a consumer actually needs navigation rather than actions.</li></ul>
+<p>The migration notation is:</p>
+<p><code>MeoBottomAppBar -&gt; MeoDockedToolbar</code> for docked action surfaces.</p>
+<p>This is a product/API recommendation, not permission to delete the old type.</p>
+<h2 id="deprecation-rules">Deprecation rules</h2>
+<p>A deprecation must include:</p>
+<ol><li>the replacement or explicit statement that no direct replacement exists;</li><li>a reason based on product/API semantics, not only visual preference;</li><li>a migration note when properties/signals/behavior differ;</li><li>Showcase/catalog labelling;</li><li>no silent removal while known maintained consumers still depend on it.</li></ol>
+<p>Deprecated components may receive correctness, accessibility and compatibility fixes. They should not receive new product-specific features that belong in the replacement.</p>
+<h2 id="experimental-rules">Experimental rules</h2>
+<p>Experimental APIs must be clearly marked in their source documentation and Showcase metadata. A feature becomes Current only after its public contract, adaptive behavior, accessibility and validation path are stable enough for maintained consumers.</p>
+<h2 id="removal-rules">Removal rules</h2>
+<p>Removal requires a dedicated cleanup change that verifies repository consumers and known first-party consumers have migrated. Do not remove a type as incidental work during unrelated UI changes.</p>
+<h2 id="ownership">Ownership</h2>
+<p>Reusable lifecycle/migration rules live here. Plasma/KWin or application-specific migration belongs in the owning repository; MeoUI must not keep a legacy component solely because an owning application refused to migrate without documenting that dependency.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+</body>
+</html>

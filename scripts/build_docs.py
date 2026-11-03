@@ -1,0 +1,259 @@
+#!/usr/bin/env python3
+"""Generate /docs/ from the canonical MeoUI specification.
+
+Source: $MEO_UI_ROOT/docs (default: ../MeoUI next to this repository). Never edit the generated files.
+Output for people: /docs/index.html and /docs/meoui/<slug>.html.
+Output for agents: /docs/meoui/<slug>.md (verbatim, links rewritten) and /llms.txt."""
+import html, os, pathlib, re, sys
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+UI = pathlib.Path(os.environ.get("MEO_UI_ROOT") or ROOT.parent / "MeoUI") / "docs"
+SITE = "https://meoarch.org"
+REPO = "https://github.com/QwQdoge/MeoUI/blob/main/docs/"
+DOCS = [
+    # slug, source path under MeoUI/docs, title, one-line summary
+    ("index", "design/README.md", "MeoUI Specification", "Index and core rules: ownership, tokens, components, localization, evidence, files."),
+    ("app-shell", "design/APP_SHELL.md", "App Shell", "Window chrome and toolbar, where app settings live and how they are grouped, About, open-source credits."),
+    ("settings", "design/SETTINGS.md", "Settings Pattern", "Settings rows, groups, sidebar, task sheet, state layer and motion."),
+    ("page-types", "design/PAGE_TYPES.md", "Page Types", "Page kinds, the two-level rule and registry metadata."),
+    ("dynamic-color", "design/DYNAMIC_COLOR.md", "Dynamic Color", "The mandatory dynamic color role table and who generates it."),
+    ("api-lifecycle", "api-lifecycle.md", "API Lifecycle", "Current, deprecated, experimental and internal components."),
+    ("localization", "localization.md", "Localization", "Language precedence, translation catalogs and accessible names."),
+    ("for-agents", "design/FOR_AGENTS.md", "Rules for Coding Agents", "The same rules as decision tables and checklists for AI coding agents."),
+]
+BY_SOURCE = {src: slug for slug, src, _, _ in DOCS}
+
+
+def resolve(link, current):
+    """Map a relative link between MeoUI docs to a site slug, or None."""
+    target = os.path.normpath(os.path.join(os.path.dirname(current), link)).replace("\\", "/")
+    return BY_SOURCE.get(target)
+
+
+def rewrite_links(md, current, ext):
+    def sub(m):
+        text, link = m.group(1), m.group(2)
+        if re.match(r"[a-z]+:|#", link):
+            return m.group(0)
+        path, _, frag = link.partition("#")
+        slug = resolve(path, current)
+        if slug:
+            return f"[{text}]({slug}{ext}{'#' + frag if frag else ''})"
+        return f"[{text}]({REPO}{os.path.normpath(os.path.join(os.path.dirname(current), path))})"
+    return re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", sub, md)
+
+
+def inline(text):
+    parts = re.split(r"(`[^`]+`)", text)
+    out = []
+    for part in parts:
+        if part.startswith("`") and part.endswith("`") and len(part) > 1:
+            out.append(f"<code>{html.escape(part[1:-1])}</code>")
+            continue
+        s = html.escape(part, quote=False)
+        s = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", lambda m: f'<a href="{html.escape(m.group(2))}">{m.group(1)}</a>', s)
+        s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
+        s = re.sub(r"(?<![\w*])_(.+?)_(?![\w*])", r"<em>\1</em>", s)
+        s = re.sub(r"(?<![\w*])\*(?!\s)(.+?)\*(?![\w*])", r"<em>\1</em>", s)
+        out.append(s)
+    return "".join(out)
+
+
+def slugify(text):
+    return re.sub(r"[^a-z0-9]+", "-", re.sub(r"`|\*", "", text).lower()).strip("-")
+
+
+def render(md):
+    """Small Markdown renderer for the subset the MeoUI docs use."""
+    lines, out, i, toc = md.splitlines(), [], 0, []
+    while i < len(lines):
+        line = lines[i]
+        if line.startswith("```"):
+            code = []
+            i += 1
+            while i < len(lines) and not lines[i].startswith("```"):
+                code.append(lines[i]); i += 1
+            out.append(f"<pre><code>{html.escape(chr(10).join(code))}</code></pre>")
+            i += 1
+            continue
+        m = re.match(r"(#{1,4})\s+(.*)", line)
+        if m:
+            level, text = len(m.group(1)), m.group(2)
+            anchor = slugify(text)
+            if level == 2:
+                toc.append((anchor, text))
+            out.append(f'<h{level} id="{anchor}">{inline(text)}</h{level}>')
+            i += 1
+            continue
+        if line.startswith("|") and i + 1 < len(lines) and re.match(r"\|\s*:?-", lines[i + 1]):
+            row = lambda l: [c.strip() for c in l.strip().strip("|").split("|")]
+            head = row(line)
+            i += 2
+            body = []
+            while i < len(lines) and lines[i].startswith("|"):
+                body.append(row(lines[i])); i += 1
+            out.append('<div class="table-scroll"><table><thead><tr>' + "".join(f"<th>{inline(c)}</th>" for c in head)
+                       + "</tr></thead><tbody>" + "".join("<tr>" + "".join(f"<td>{inline(c)}</td>" for c in r) + "</tr>" for r in body)
+                       + "</tbody></table></div>")
+            continue
+        m = re.match(r"(\s*)([-*]|\d+\.)\s+(.*)", line)
+        if m:
+            tag = "ol" if m.group(2)[0].isdigit() else "ul"
+            items = []
+            while i < len(lines):
+                m = re.match(r"(\s*)([-*]|\d+\.)\s+(.*)", lines[i])
+                if m:
+                    items.append(m.group(3)); i += 1
+                elif lines[i].startswith("  ") and lines[i].strip() and items:
+                    items[-1] += " " + lines[i].strip(); i += 1
+                else:
+                    break
+            lis = []
+            for item in items:
+                box = re.match(r"\[( |x)\]\s+(.*)", item)
+                if box:
+                    lis.append(f'<li class="check"><span aria-hidden="true">{"☑" if box.group(1) == "x" else "☐"}</span> {inline(box.group(2))}</li>')
+                else:
+                    lis.append(f"<li>{inline(item)}</li>")
+            out.append(f"<{tag}>{''.join(lis)}</{tag}>")
+            continue
+        if not line.strip():
+            i += 1
+            continue
+        para = [line.strip()]
+        i += 1
+        while i < len(lines) and lines[i].strip() and not re.match(r"(#|```|\||\s*([-*]|\d+\.)\s)", lines[i]):
+            para.append(lines[i].strip()); i += 1
+        out.append(f"<p>{inline(' '.join(para))}</p>")
+    return "\n".join(out), toc
+
+
+HEADER = '''  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>'''
+FOOTER = '''  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>'''
+
+
+def shell(title, canonical, body, md_href=None):
+    alt = f'\n  <link rel="alternate" type="text/markdown" href="{md_href}">' if md_href else ""
+    return f'''<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{html.escape(title)} · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="{SITE}{canonical}">{alt}
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read {SITE}/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+{HEADER}
+
+  <main id="main">
+{body}
+  </main>
+
+{FOOTER}
+</body>
+</html>
+'''
+
+
+def doc_nav(active):
+    current = ' aria-current="page"'
+    items = "".join(
+        f'<li><a href="/docs/meoui/{slug}.html"{current if slug == active else ""}>{html.escape(title)}</a></li>'
+        for slug, _, title, _ in DOCS)
+    return f'<nav class="doc-nav" aria-label="MeoUI"><p class="eyebrow">MeoUI</p><ul>{items}</ul></nav>'
+
+
+def main():
+    if not UI.is_dir():
+        sys.exit(f"MeoUI docs not found at {UI}; set MEO_UI_ROOT")
+    out_dir = ROOT / "docs" / "meoui"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for slug, src, title, summary in DOCS:
+        md = (UI / src).read_text(encoding="utf-8")
+        note = f"<!-- Generated from MeoUI/docs/{src}. Edit the source, not this copy. -->\n\n"
+        (out_dir / f"{slug}.md").write_text(note + rewrite_links(md, src, ".md"), encoding="utf-8")
+        body_html, toc = render(rewrite_links(md, src, ".html"))
+        toc_html = ("<nav class=\"doc-toc\" aria-labelledby=\"toc-title\"><p id=\"toc-title\" class=\"eyebrow\" data-i18n=\"docs.toc\">本页</p><ul>"
+                    + "".join(f'<li><a href="#{a}">{inline(t)}</a></li>' for a, t in toc) + "</ul></nav>") if len(toc) > 2 else ""
+        if toc_html and "</h1>" in body_html:
+            body_html = body_html.replace("</h1>", "</h1>\n" + toc_html, 1)
+            toc_html = ""
+        agent = slug == "for-agents"
+        banner = (f'<p class="doc-banner"><span data-i18n="docs.{"agentpage" if agent else "source"}"></span> '
+                  f'<a href="{REPO}{src}" target="_blank" rel="noreferrer">MeoUI/docs/{src} ↗</a> · '
+                  f'<a href="/docs/meoui/{slug}.md" data-i18n="docs.markdown">Markdown</a></p>')
+        body = f'''    <div class="wrap doc-layout">
+      {doc_nav(slug)}
+      <article class="doc">
+        {banner}
+        {toc_html}
+{body_html}
+      </article>
+    </div>'''
+        (out_dir / f"{slug}.html").write_text(shell(title, f"/docs/meoui/{slug}", body, f"/docs/meoui/{slug}.md"), encoding="utf-8")
+
+    cards = "".join(
+        f'<a class="mini" href="/docs/meoui/{slug}.html"><h3>{html.escape(title)}</h3><p>{html.escape(summary)}</p><span>{"Markdown · " if slug == "for-agents" else ""}→</span></a>'
+        for slug, _, title, summary in DOCS)
+    hub = f'''    <section class="section docs-hub"><div class="wrap">
+      <div class="heading">
+        <p class="eyebrow" data-i18n="docs.eyebrow">文档</p>
+        <h1 data-i18n="docs.title">规范与文档。</h1>
+        <p data-i18n="docs.lead"></p>
+      </div>
+      <div class="doc-audience">
+        <div><h2 class="h3" data-i18n="docs.human.t">给人看</h2><p data-i18n="docs.human.p"></p></div>
+        <div><h2 class="h3" data-i18n="docs.agent.t">给 AI Agent</h2><p data-i18n="docs.agent.p"></p><code class="install">{SITE}/llms.txt</code></div>
+      </div>
+      <h2 class="docs-group">MeoUI</h2>
+      <div class="mini-grid">{cards}</div>
+    </div></section>'''
+    (ROOT / "docs" / "index.html").write_text(shell("Docs", "/docs/", hub), encoding="utf-8")
+
+    llms = [
+        "# MeoArch",
+        "",
+        "> MeoArch is an Arch Linux based desktop and a set of Qt/QML apps built on the MeoUI design system.",
+        "> These files are the published copy of the MeoUI specification for coding agents. The canonical source is",
+        "> the MeoUI repository (`docs/`); if they disagree, the repository wins.",
+        "",
+        "Start with \"Rules for Coding Agents\". Then read only the document that matches the task.",
+        "Always read the target repository's AGENTS.md first: its owner workflow rules take precedence.",
+        "",
+        "## MeoUI specification",
+        "",
+    ]
+    llms += [f"- [{title}]({SITE}/docs/meoui/{slug}.md): {summary}" for slug, _, title, summary in DOCS]
+    llms += [
+        "",
+        "## Repositories",
+        "",
+        "- [MeoUI](https://github.com/QwQdoge/MeoUI): shared QML design system (tokens, controls, patterns, Showcase)",
+        "- [MeoSettings](https://github.com/QwQdoge/MeoSettings): system settings app; product contracts in docs/",
+        "- [meo-kde](https://github.com/QwQdoge/meo-kde): Plasma/KWin integration, shell surfaces, title bar colors",
+        "- [MeoArch-os-workspace](https://github.com/QwQdoge/MeoArch-os-workspace): ISO, installer, repair, AI router",
+        "",
+    ]
+    (ROOT / "llms.txt").write_text("\n".join(llms), encoding="utf-8")
+    print(f"generated {len(DOCS)} documents from {UI}")
+
+
+if __name__ == "__main__":
+    main()

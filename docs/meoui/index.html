@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MeoUI Specification · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/index">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/index.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="MeoUI"><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html" aria-current="page">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/README.md" target="_blank" rel="noreferrer">MeoUI/docs/design/README.md ↗</a> · <a href="/docs/meoui/index.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<h1 id="meoui-specification">MeoUI Specification</h1>
+<p>MeoUI is the shared Qt Quick / QML Material Design 3 design system of MeoArch. <strong>MEO = Modern · Expressive · Open</strong>: modern interaction and presentation, expressive motion and visual language, and an open Linux foundation that leaves control with the user.</p>
+<p>This directory is the canonical source of the MeoUI specification. It is published at <code>https://meoarch.org/docs/meoui/</code> for people and as Markdown for agents (<code>https://meoarch.org/llms.txt</code>). Edit the rules here, never on the site.</p>
+<h2 id="documents">Documents</h2>
+<div class="table-scroll"><table><thead><tr><th>Document</th><th>Covers</th></tr></thead><tbody><tr><td><a href="app-shell.html">APP_SHELL.md</a></td><td>Window chrome and toolbar, where app settings live and how they are grouped, About, open-source credits, where specs live</td></tr><tr><td><a href="settings.html">SETTINGS.md</a></td><td>Settings building blocks: rows, groups, sidebar, task sheet, state layer and motion</td></tr><tr><td><a href="page-types.html">PAGE_TYPES.md</a></td><td>Page kinds, the two-level rule, registry metadata</td></tr><tr><td><a href="dynamic-color.html">DYNAMIC_COLOR.md</a></td><td>The mandatory dynamic color role table and who generates it</td></tr><tr><td><a href="api-lifecycle.html">../api-lifecycle.md</a></td><td>Current, deprecated, experimental and internal components</td></tr><tr><td><a href="localization.html">../localization.md</a></td><td>Language precedence, translation catalogs, accessible names</td></tr><tr><td><a href="for-agents.html">FOR_AGENTS.md</a></td><td>The same rules as an operational checklist for coding agents</td></tr></tbody></table></div>
+<h2 id="core-rules">Core rules</h2>
+<h3 id="ownership">Ownership</h3>
+<ul><li>MeoUI owns reusable tokens, QML controls, patterns and layouts, motion, accessibility and adaptive behavior, runtime tokens and the Showcase.</li><li>Plasma, KWin, D-Bus, hardware, package manager and OS policy belong in meo-kde or the owning app. MeoUI exposes only the minimal generic UI or API.</li><li>A generic, reusable change is implemented in MeoUI first, then consumed.</li><li>Consumers <code>import MeoUI 1.0</code>. They never copy a shared control into their own repository.</li></ul>
+<h3 id="tokens">Tokens</h3>
+<ul><li>Use <code>MeoTheme</code> semantic tokens, <code>MeoTheme.globalScale</code>, <code>MeoWindowMetrics</code>, <code>MeoMotion</code> primitives and the shared icon system. Do not hard-code a color, size, radius, duration or easing when a semantic token exists.</li><li>Colors come only from the dynamic role table (<code>DYNAMIC_COLOR.md</code>). No product-local palette.</li><li>Typography: Comfortaa Bold is the brand face (brand name, logo, English page titles); Roboto is the UI face; Chinese falls back to Noto Sans SC / Source Han Sans SC.</li><li>Shape: controls 12dp (8dp pressed), large surfaces 28dp, pills full.</li><li>Motion: standard easing <code>[0.2, 0, 0, 1]</code>; 350ms emphasized entrance and 250ms accelerate exit for page navigation; Reduce Motion resolves spatial motion to zero without changing state.</li><li>State layer opacities: hover 8%, focus 10%, pressed 10%, dragged 16%.</li></ul>
+<h3 id="components">Components</h3>
+<ul><li>Every public component has a lifecycle class (<code>../api-lifecycle.md</code>). New work uses Current components. <code>MeoBottomAppBar</code> is deprecated; use <code>MeoDockedToolbar</code> for docked actions.</li><li>Every public QML export has a Showcase sample; visible changes update it.</li></ul>
+<h3 id="localization-and-accessibility">Localization and accessibility</h3>
+<ul><li>All visible strings and <code>Accessible.name</code> / <code>Accessible.description</code> use <code>qsTr()</code>. Translated text is never a key or persisted value.</li><li>English is the source language; <code>zh_CN</code> is the first reviewed catalog.</li><li>The host app resolves the language before creating its first QML object.</li></ul>
+<h3 id="runtime-facts">Runtime facts</h3>
+<p>Machine, session, hardware, account and configuration facts are runtime state read from their authoritative owner. Never ship a placeholder value that looks like a detected fact; show unavailable/unknown instead.</p>
+<h3 id="evidence">Evidence</h3>
+<p>Static checks, offscreen tests, Showcase runs and manual visual review prove different things. Report only the level that was actually run.</p>
+<h3 id="files">Files</h3>
+<ul><li>Code-bound contracts live in <code>docs/</code> of the owning repository.</li><li>Plans, audits and work logs live in <code>$MEO_DOCS_ROOT/Projects/&lt;project&gt;/</code>.</li><li>Build, install, validation and package output lives in <code>$MEO_OUTPUT_ROOT/&lt;project&gt;/{build,install,validation,packages,tmp}/</code>.</li><li>Third-party credits live in <code>THIRD_PARTY_NOTICES.md</code> plus license texts (<code>APP_SHELL.md</code> section 4).</li></ul>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+</body>
+</html>

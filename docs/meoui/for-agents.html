@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rules for Coding Agents · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/for-agents">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/for-agents.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="MeoUI"><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html" aria-current="page">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.agentpage"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/FOR_AGENTS.md" target="_blank" rel="noreferrer">MeoUI/docs/design/FOR_AGENTS.md ↗</a> · <a href="/docs/meoui/for-agents.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<h1 id="meoui-rules-for-coding-agents">MeoUI Rules for Coding Agents</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#before-you-edit">Before you edit</a></li><li><a href="#hard-rules-must-must-not">Hard rules (MUST / MUST NOT)</a></li><li><a href="#decision-table-app-window">Decision table: app window</a></li><li><a href="#decision-table-app-settings">Decision table: app settings</a></li><li><a href="#decision-table-about-and-credits">Decision table: About and credits</a></li><li><a href="#validation-meoui-repository">Validation (MeoUI repository)</a></li><li><a href="#reporting">Reporting</a></li></ul></nav>
+<p>This is the agent-oriented version of the MeoUI specification. It says the same things as the human pages, in decision tables and checklists. When this file and another MeoUI document disagree, the other document wins and this file is a bug.</p>
+<p>Source: <code>MeoUI/docs/design/</code>. Published: <code>https://meoarch.org/docs/meoui/</code>. Index for agents: <code>https://meoarch.org/llms.txt</code>.</p>
+<h2 id="before-you-edit">Before you edit</h2>
+<ol><li>Read the target repository's <code>AGENTS.md</code>; its owner workflow rules come first.</li><li>Identify which repository owns the change:</li></ol>
+<div class="table-scroll"><table><thead><tr><th>The change is about</th><th>Implement it in</th></tr></thead><tbody><tr><td>A reusable control, token, motion, layout or pattern</td><td>MeoUI</td></tr><tr><td>Plasma, KWin, D-Bus, panels, lock screen, title bar colors</td><td>meo-kde</td></tr><tr><td>A system setting and its backend</td><td>MeoSettings</td></tr><tr><td>One application's own flow or preference</td><td>That application's repository</td></tr><tr><td>ISO composition, installer, repair, AI router</td><td>MeoArch-os-workspace</td></tr></tbody></table></div>
+<ol><li>Read only the documents you need:</li></ol>
+<div class="table-scroll"><table><thead><tr><th>Task</th><th>Read</th></tr></thead><tbody><tr><td>Window, toolbar, overflow menu, app settings, About, credits</td><td><code>APP_SHELL.md</code></td></tr><tr><td>Any Settings-style page or row</td><td><code>SETTINGS.md</code>, <code>PAGE_TYPES.md</code></td></tr><tr><td>Colors, theming</td><td><code>DYNAMIC_COLOR.md</code></td></tr><tr><td>Adding, replacing, deprecating or deleting public QML</td><td><code>../api-lifecycle.md</code></td></tr><tr><td>Strings, translations, accessible names</td><td><code>../localization.md</code></td></tr></tbody></table></div>
+<h2 id="hard-rules-must-must-not">Hard rules (MUST / MUST NOT)</h2>
+<ul><li>MUST <code>import MeoUI 1.0</code>; MUST NOT copy a MeoUI control into an app.</li><li>MUST use <code>MeoTheme</code> tokens and <code>MeoTheme.globalScale</code>; MUST NOT hard-code a color, dp size, radius, duration or easing that has a token.</li><li>MUST NOT create a product-local color palette.</li><li>MUST NOT use <code>Qt.FramelessWindowHint</code> on an application window.</li><li>MUST wrap every visible string and accessible name in <code>qsTr()</code>; MUST NOT use translated text as a key or stored value.</li><li>MUST NOT ship placeholder system facts; read the authoritative backend or show unknown.</li><li>MUST NOT put a system-wide control inside an app; link to Meo Settings.</li><li>MUST NOT hard-code an open-source credit list in QML; read the installed <code>THIRD_PARTY_NOTICES.md</code>.</li><li>MUST NOT select a deprecated component (for example <code>MeoBottomAppBar</code>) for new work.</li><li>MUST NOT claim a validation level you did not run.</li></ul>
+<h2 id="decision-table-app-window">Decision table: app window</h2>
+<div class="table-scroll"><table><thead><tr><th>Question</th><th>Answer</th></tr></thead><tbody><tr><td>Toolbar component</td><td><code>MeoTopAppBar { type: &quot;small&quot; }</code>; <code>MeoToolbar</code> for dense tool windows</td></tr><tr><td>Leading control</td><td>One of: sidebar toggle, <code>menu</code>, <code>arrow_back</code> (only with a real parent route)</td></tr><tr><td>Trailing actions</td><td>≤3 <code>MeoIconButton</code>, each with tooltip and <code>Accessible.name</code>; extra go to overflow</td></tr><tr><td>Overflow icon</td><td><code>more_vert</code>, last item in the toolbar</td></tr><tr><td>Overflow tail order</td><td>app actions, divider, Settings (<code>Ctrl+,</code>), Keyboard shortcuts (<code>Ctrl+?</code>), Help (<code>F1</code>), About <em>App</em></td></tr><tr><td>Menu bar</td><td>None</td></tr><tr><td>Content under title bar</td><td>Only via <code>Qt.ExpandedClientAreaHint</code> where honoured, padded by <code>SafeArea.margins</code>, with fallback</td></tr><tr><td>Sidebar apps</td><td>Sidebar full height with its own header; toolbar spans the content pane only</td></tr></tbody></table></div>
+<h2 id="decision-table-app-settings">Decision table: app settings</h2>
+<div class="table-scroll"><table><thead><tr><th>Question</th><th>Answer</th></tr></thead><tbody><tr><td>Separate window?</td><td>No. Route <code>settings</code> in the existing <code>MeoPageHost</code> (compact apps without a host: <code>MeoFullScreenDialog</code>)</td></tr><tr><td>Entry points</td><td>Overflow "Settings", <code>Ctrl+,</code>, and in sidebar apps a footer row <code>settings</code></td></tr><tr><td>≤2 groups</td><td>One <code>settings-category</code> page with <code>MeoSettingsGroup</code></td></tr><tr><td>≥3 categories</td><td><code>MeoSettingsLayout</code> with category sidebar; level 3 = <code>MeoSettingsTaskSheet</code></td></tr><tr><td>Category order</td><td>General, Appearance, feature domains, Notifications, Privacy &amp; data, Accounts &amp; sync, Advanced, About</td></tr><tr><td>Apply/Save buttons</td><td>None for ordinary preferences; confirm only privileged/destructive/restart changes</td></tr><tr><td>Theme, accent, language</td><td>Default "Follow system"; override only, never edit the system value</td></tr><tr><td>Storage</td><td><code>QSettings</code>, organization <code>MeoArch</code>, keys <code>group/key</code> lowercase; secrets in the keyring</td></tr><tr><td>Reset</td><td>"Reset to defaults" as the last row of Advanced, with confirmation</td></tr></tbody></table></div>
+<h2 id="decision-table-about-and-credits">Decision table: About and credits</h2>
+<div class="table-scroll"><table><thead><tr><th>Question</th><th>Answer</th></tr></thead><tbody><tr><td>Device / OS facts</td><td>Meo Settings → About only (<code>SystemInfoBackend</code>)</td></tr><tr><td>App About route</td><td><code>about</code>, from overflow "About <em>App</em>" and the last settings category</td></tr><tr><td>Version source</td><td>Compile-time version of the binary (e.g. CMake <code>PROJECT_VERSION</code>)</td></tr><tr><td>About content order</td><td>Header (icon, name, version, channel) → description → Links → Legal → copyright</td></tr><tr><td>Third-party record</td><td><code>THIRD_PARTY_NOTICES.md</code> at repo root + <code>assets/licenses/</code> (or <code>LICENSES/</code>), installed to <code>/usr/share/licenses/&lt;pkg&gt;/</code></td></tr><tr><td>In-app list includes</td><td>Vendored/adapted code, bundled assets, runtime platform libraries (Qt, KDE Frameworks, MeoUI)</td></tr><tr><td>Build/dev tools</td><td>README "Built with" only, not in the app</td></tr></tbody></table></div>
+<h2 id="validation-meoui-repository">Validation (MeoUI repository)</h2>
+<p>Run the narrowest check that covers the change:</p>
+<pre><code># static design-system usage
+python3 tools/verify-design-system-usage.py --mode library MeoTheme.qml MeoMotion.qml components widgets patterns
+# normal QML/C++ change
+cmake --fresh -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING=ON -DMEOUI_BUILD_SHOWCASE=OFF
+cmake --build build --parallel 2
+QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure --timeout 60
+# public QML export or catalog change
+python3 tools/verify-showcase-coverage.py</code></pre>
+<p>Docs-only changes need no build. After changing anything in <code>docs/design/</code>, regenerate the site with <code>python3 scripts/build_docs.py</code> in <code>meoarch-site</code>.</p>
+<h2 id="reporting">Reporting</h2>
+<p>State which evidence level you reached: static, offscreen, Showcase runtime, or manual visual. Name what was not verified.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+</body>
+</html>

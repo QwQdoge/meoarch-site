@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Localization · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/localization">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/localization.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="MeoUI"><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html" aria-current="page">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/localization.md" target="_blank" rel="noreferrer">MeoUI/docs/localization.md ↗</a> · <a href="/docs/meoui/localization.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<h1 id="meoui-localization-and-accessibility-contract">MeoUI localization and accessibility contract</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#language-precedence">Language precedence</a></li><li><a href="#catalog-workflow">Catalog workflow</a></li><li><a href="#accessible-language">Accessible language</a></li></ul></nav>
+<p>MeoUI owns reusable presentation strings and accessible labels. It does not store a user, account, or desktop language preference: the application that hosts MeoUI resolves that preference and loads the matching catalog before it creates its first QML object.</p>
+<h2 id="language-precedence">Language precedence</h2>
+<p>Use the system UI language by default. A signed-in account may carry a language preference for synchronization, but it must be an explicit user choice rather than a silent override of the current device. Hosts should offer both choices and pass the resolved language consistently to their QML engine, AI features, and account surfaces. A user can always return to system language.</p>
+<p>The Showcase follows <code>QLocale::system()</code> by default and accepts <code>--ui-language=&lt;locale&gt;</code> for validation. Its <code>zh_CN</code> catalog is loaded before the QML root is created, so the first frame is already localized.</p>
+<h2 id="catalog-workflow">Catalog workflow</h2>
+<ul><li>Source strings use <code>qsTr()</code> in their owning QML file. Do not use translated text as an identifier, configuration key, model ID, or persisted value.</li><li>Put reviewed Chinese translations in <code>translations/meoui_zh_CN.ts</code>. The CMake <code>meoui_update_translations</code> target discovers newly added source strings; review its diff and translate every new user-facing entry before a catalog release.</li><li>The build creates <code>meoui_zh_CN.qm</code> and installs it to <code>share/meoui-qml/translations</code>. A host loads that catalog with <code>QTranslator</code>, calls <code>QLocale::setDefault(...)</code> and <code>engine.setUiLanguage(...)</code>, and then <code>engine.retranslate()</code> when the user changes language. This first catalog is specifically <code>zh_CN</code>; an unavailable locale falls back to English instead of substituting a different Chinese script.</li><li>English is the source-language fallback. Do not claim a locale is complete merely because a catalog file exists.</li></ul>
+<h2 id="accessible-language">Accessible language</h2>
+<p>Visible labels, placeholders, validation messages, and <code>Accessible.name</code> / <code>Accessible.description</code> are all user-facing strings and must localize together. Provide a concise action or state, not an implementation note. For icon-only actions, name the outcome (for example, “Previous month”), and keep keyboard activation and focus behavior available alongside pointer input.</p>
+<p>Dates and times keep locale-neutral data values. Components expose a <code>uiLocale</code> presentation property so month names, weekday order, date summaries, spoken labels, and the default hour cycle can follow the resolved language without changing stored data.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+</body>
+</html>
