@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meo Account API · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/guide/account-api">
+  <link rel="alternate" type="text/markdown" href="/docs/guide/account-api.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/account-api.html" aria-current="page">Meo Account API</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/meoarch-site/blob/main/content/account-api.md" target="_blank" rel="noreferrer">content/account-api.md ↗</a> · <a href="/docs/guide/account-api.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<h1 id="meo-account-api">Meo Account API</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#">基本信息</a></li><li><a href="#">登录与授权</a></li><li><a href="#">错误</a></li><li><a href="#">账号</a></li><li><a href="#meo-ai">Meo AI</a></li><li><a href="#">状态检查</a></li><li><a href="#">还没有的</a></li></ul></nav>
+<p>怎么用 Meo Account 的接口：登录、读取账号信息、管理会话和云端备份、调用 Meo AI。仍在开发中，接口可能变化；以线上实际行为为准。</p>
+<h2 id="">基本信息</h2>
+<ul><li>基础地址：<code>https://api.meoarch.org/v1</code></li><li>账号页面：<code>account.meoarch.org</code>，Meo AI 网页版：<code>chat.meoarch.org</code></li><li>请求和响应都是 JSON（<code>Content-Type: application/json</code>）。请求体有大小上限，超过会返回 <code>413 request_too_large</code>。</li><li>浏览器跨域调用只允许来自 <code>account.meoarch.org</code> 和 <code>chat.meoarch.org</code>。</li></ul>
+<h2 id="">登录与授权</h2>
+<p>两种身份可以调用 <code>/v1/*</code>：</p>
+<div class="table-scroll"><table><thead><tr><th>身份</th><th>方式</th><th>权限</th></tr></thead><tbody><tr><td>网页登录</td><td>Meo Account 的登录 Cookie</td><td>不受 scope 限制</td></tr><tr><td>原生应用 / 第三方客户端</td><td><code>Authorization: Bearer &lt;access_token&gt;</code>，令牌由 Meo Account 的 OAuth 2.1 颁发（授权码 + S256 PKCE）</td><td><code>meo:read</code> 允许 <code>GET</code>/<code>HEAD</code>，<code>meo:write</code> 允许其他方法</td></tr></tbody></table></div>
+<p>登录、注册和 OAuth 2.1 端点在 <code>/v1/auth/*</code> 下，例如换取令牌是 <code>POST /v1/auth/oauth2/token</code>。第三方客户端如何注册还没有公开说明。</p>
+<p>敏感操作（改密码、改邮箱、删除账号、管理两步验证等）需要先重新验证身份：用 <code>POST /v1/reauth/password</code> 或 <code>POST /v1/reauth/totp</code>，请求体 <code>{ &quot;purpose&quot;: &quot;account_security&quot; }</code>，成功后 10 分钟内有效。<code>purpose</code> 可以是 <code>account_security</code>、<code>billing</code>、<code>delete_account</code>。</p>
+<h2 id="">错误</h2>
+<p>读错误码（<code>error</code> 字符串），不要依赖文字信息。</p>
+<div class="table-scroll"><table><thead><tr><th>状态</th><th>含义</th></tr></thead><tbody><tr><td><code>400 invalid_request</code></td><td>请求格式或内容不对</td></tr><tr><td><code>401 unauthenticated</code></td><td>没有有效的登录或令牌</td></tr><tr><td><code>403 insufficient_scope</code></td><td>令牌缺少 <code>meo:read</code> / <code>meo:write</code></td></tr><tr><td><code>403 reauth_required</code></td><td>需要先重新验证身份</td></tr><tr><td><code>404</code></td><td>资源不存在，或不属于你（别人的资源一律返回 404）</td></tr><tr><td><code>409</code></td><td>冲突，例如 <code>backup_limit_reached</code></td></tr><tr><td><code>503</code></td><td>依赖服务还没准备好</td></tr></tbody></table></div>
+<h2 id="">账号</h2>
+<div class="table-scroll"><table><thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/me</code></td><td>当前身份（简要）</td></tr><tr><td><code>GET</code></td><td><code>/account</code></td><td>账号概览：资料、角色、会员</td></tr><tr><td><code>GET</code> <code>PATCH</code></td><td><code>/profile</code></td><td>读取、修改资料</td></tr><tr><td><code>GET</code> <code>PATCH</code></td><td><code>/settings</code></td><td>读取、修改可编辑的偏好</td></tr><tr><td><code>GET</code></td><td><code>/plans</code></td><td>方案目录：<code>free</code>、<code>plus</code>、<code>pro</code></td></tr><tr><td><code>GET</code></td><td><code>/subscription</code></td><td>当前订阅，只读（付费方案由服务端决定，付款功能尚未开放）</td></tr><tr><td><code>GET</code></td><td><code>/linked-providers</code></td><td>已绑定的登录方式</td></tr><tr><td><code>GET</code></td><td><code>/security-events</code></td><td>自己的安全记录</td></tr><tr><td><code>GET</code></td><td><code>/account/export</code></td><td>导出自己的账号数据</td></tr><tr><td><code>DELETE</code></td><td><code>/account</code></td><td>删除账号（需要 <code>delete_account</code> 的重新验证并明确确认）</td></tr></tbody></table></div>
+<h3 id="">会话</h3>
+<div class="table-scroll"><table><thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/sessions</code></td><td>自己的登录会话</td></tr><tr><td><code>DELETE</code></td><td><code>/sessions/:id</code></td><td>注销一个会话</td></tr><tr><td><code>DELETE</code></td><td><code>/sessions/others</code></td><td>注销除当前外的所有会话</td></tr><tr><td><code>DELETE</code></td><td><code>/sessions</code></td><td>注销所有会话</td></tr></tbody></table></div>
+<h3 id="">云端备份（设置清单）</h3>
+<div class="table-scroll"><table><thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/backups</code></td><td>列表（每个账号最多 20 个）</td></tr><tr><td><code>POST</code></td><td><code>/backups</code></td><td>上传，满了返回 <code>409 backup_limit_reached</code></td></tr><tr><td><code>GET</code></td><td><code>/backups/:id</code></td><td>下载</td></tr><tr><td><code>DELETE</code></td><td><code>/backups/:id</code></td><td>删除</td></tr></tbody></table></div>
+<h2 id="meo-ai">Meo AI</h2>
+<p>下面的接口需要 <code>meo:write</code>（或网页登录），并使用你自己账号里的模型连接（<code>credentialId</code>）。模型提供商的密钥保存在账号里，不会发给客户端。</p>
+<div class="table-scroll"><table><thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead><tbody><tr><td><code>GET</code> <code>POST</code></td><td><code>/conversations</code></td><td>对话列表、新建</td></tr><tr><td><code>GET</code> <code>POST</code></td><td><code>/conversations/:id/messages</code></td><td>读取、追加消息</td></tr><tr><td><code>POST</code></td><td><code>/chat/stream</code></td><td>发送一次对话并流式接收回复</td></tr><tr><td><code>POST</code></td><td><code>/images/generate</code></td><td>生成图片（结果不会被保存）</td></tr><tr><td><code>POST</code></td><td><code>/search/web</code></td><td>为一次对话做联网搜索</td></tr><tr><td><code>GET</code> <code>POST</code></td><td><code>/ai/credentials</code></td><td>查看、创建模型连接（只返回元信息，不返回密钥）</td></tr><tr><td><code>GET</code> <code>POST</code></td><td><code>/projects</code></td><td>项目列表、新建</td></tr><tr><td><code>GET</code> <code>POST</code></td><td><code>/ai/memories</code></td><td>个人记忆</td></tr><tr><td><code>GET</code></td><td><code>/usage-dashboard?days=</code></td><td>用量，<code>days</code> 为 7 到 730</td></tr></tbody></table></div>
+<p><code>POST /chat/stream</code> 的请求体必填：<code>credentialId</code>、<code>model</code>、<code>prompt</code>（最长 35000 字）。可选：<code>conversationId</code>、<code>consent</code>、<code>webResults</code>、<code>images</code>。多余的字段会被拒绝（<code>invalid_request</code>）。</p>
+<h2 id="">状态检查</h2>
+<ul><li><code>GET /health</code>：服务是否在线，不需要登录。</li><li><code>GET /ready</code>：数据库表是否就绪，没有就绪返回 <code>503</code>。</li></ul>
+<h2 id="">还没有的</h2>
+<p>付款、结算页和账单回调（Plus、Pro 目前只是目录里的占位）。</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+</body>
+</html>

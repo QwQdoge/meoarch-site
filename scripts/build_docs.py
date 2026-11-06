@@ -29,6 +29,7 @@ DOCS = [
 GUIDE_DOCS = [
     ("about", "about.md", "About MeoArch", "What MeoArch is and why it is called that."),
     ("requirements", "requirements.md", "Requirements", "What you need to try MeoArch, Meo AI and the Meo apps."),
+    ("account-api", "account-api.md", "Meo Account API", "How to sign in, read account data, manage sessions and backups, and call Meo AI."),
 ]
 BY_SOURCE = {src: slug for slug, src, _, _ in DOCS}
 GUIDE_BY_SOURCE = {src: slug for slug, src, _, _ in GUIDE_DOCS}

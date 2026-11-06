@@ -7,6 +7,7 @@
 
 - [About MeoArch](https://meoarch.org/docs/guide/about.md): What MeoArch is and why it is called that.
 - [Requirements](https://meoarch.org/docs/guide/requirements.md): What you need to try MeoArch, Meo AI and the Meo apps.
+- [Meo Account API](https://meoarch.org/docs/guide/account-api.md): How to sign in, read account data, manage sessions and backups, and call Meo AI.
 
 ## MeoUI specification
 
