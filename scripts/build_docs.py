@@ -3,16 +3,16 @@
 
 Sources (never edit the generated files; change the source and regenerate):
   - MeoUI specification: $MEO_UI_ROOT/docs (default: ../MeoUI next to this repository)
-  - MeoArch master doc:  $MEO_WORKSPACE_ROOT/docs (default: ../MeoArch-os-workspace)
-Output for people: /docs/index.html, /docs/meoui/<slug>.html and /docs/meoarch/<slug>.html.
+  - Public overview pages for people: content/ in this repository (hand-written)
+Output for people: /docs/index.html, /docs/meoui/<slug>.html and /docs/guide/<slug>.html.
 Output for agents: the same pages as .md (verbatim, links rewritten) and /llms.txt.
 The sync-docs workflow runs this on a schedule so the site follows the repositories."""
 import html, os, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 UI = pathlib.Path(os.environ.get("MEO_UI_ROOT") or ROOT.parent / "MeoUI") / "docs"
-WS = pathlib.Path(os.environ.get("MEO_WORKSPACE_ROOT") or ROOT.parent / "MeoArch-os-workspace") / "docs"
-WS_REPO = "https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/"
+CONTENT = ROOT / "content"
+CONTENT_REPO = "https://github.com/QwQdoge/meoarch-site/blob/main/content/"
 SITE = "https://meoarch.org"
 REPO = "https://github.com/QwQdoge/MeoUI/blob/main/docs/"
 DOCS = [
@@ -26,12 +26,12 @@ DOCS = [
     ("localization", "localization.md", "Localization", "Language precedence, translation catalogs and accessible names."),
     ("for-agents", "design/FOR_AGENTS.md", "Rules for Coding Agents", "The same rules as decision tables and checklists for AI coding agents."),
 ]
-MEOARCH_DOCS = [
-    ("master", "MEOARCH_MASTER.md", "MeoArch Master Doc", "Map of every repository: what it owns, where it lives, how to build, verify, release and deploy it, and where each online resource runs."),
-    ("doc-index", "MEOARCH_DOC_INDEX.md", "All Documents", "Generated list of every Markdown document across the MeoArch repositories."),
+GUIDE_DOCS = [
+    ("about", "about.md", "About MeoArch", "What MeoArch is and why it is called that."),
+    ("requirements", "requirements.md", "Requirements", "What you need to try MeoArch, Meo AI and the Meo apps."),
 ]
 BY_SOURCE = {src: slug for slug, src, _, _ in DOCS}
-MEOARCH_BY_SOURCE = {src: slug for slug, src, _, _ in MEOARCH_DOCS}
+GUIDE_BY_SOURCE = {src: slug for slug, src, _, _ in GUIDE_DOCS}
 
 
 PRIVATE = re.compile(
@@ -206,7 +206,7 @@ def shell(title, canonical, body, md_href=None):
 
 GROUPS = [
     # key (url dir), nav title, docs, source dir, github base, by_source
-    ("meoarch", "MeoArch", MEOARCH_DOCS, WS, WS_REPO, MEOARCH_BY_SOURCE, "MeoArch-os-workspace/docs/"),
+    ("guide", "MeoArch", GUIDE_DOCS, CONTENT, CONTENT_REPO, GUIDE_BY_SOURCE, "content/"),
     ("meoui", "MeoUI", DOCS, UI, REPO, BY_SOURCE, "MeoUI/docs/"),
 ]
 
@@ -225,7 +225,7 @@ def doc_nav(group, active):
 def main():
     for _, _, _, root, _, _, _ in GROUPS:
         if not root.is_dir():
-            sys.exit(f"docs not found at {root}; set MEO_UI_ROOT / MEO_WORKSPACE_ROOT")
+            sys.exit(f"docs not found at {root}; set MEO_UI_ROOT")
     for key, _, docs, root, repo_base, by_source, label in GROUPS:
         out_dir = ROOT / "docs" / key
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -256,7 +256,7 @@ def main():
 
     def card_group(key, title_g, docs):
         cards = "".join(
-            f'<a class="mini" href="/docs/{key}/{slug}.html"><h3>{html.escape(title)}</h3><p>{html.escape(summary)}</p><span>{"Markdown · " if slug in ("for-agents", "master") else ""}→</span></a>'
+            f'<a class="mini" href="/docs/{key}/{slug}.html"><h3>{html.escape(title)}</h3><p>{html.escape(summary)}</p><span>{"Markdown · " if slug == "for-agents" else ""}→</span></a>'
             for slug, _, title, summary in docs)
         return f'<h2 class="docs-group">{title_g}</h2>\n      <div class="mini-grid">{cards}</div>'
     groups_html = "\n      ".join(card_group(k, t, d) for k, t, d, *_ in GROUPS)
@@ -277,31 +277,16 @@ def main():
     llms = [
         "# MeoArch",
         "",
-        "> MeoArch is an Arch Linux based desktop and a set of Qt/QML apps built on the MeoUI design system.",
-        "> These files are the published copy of the MeoArch master doc and the MeoUI specification for coding agents.",
-        "> The canonical sources are the repositories (MeoArch-os-workspace `docs/`, MeoUI `docs/`); if they disagree, the repository wins.",
+        "> MeoArch is an Arch Linux based desktop system (Meo = Modern, Expressive, Open). Its apps share the MeoUI Qt Quick / QML design system.",
+        "> This file is for coding agents that build on MeoUI. Repository-specific rules live in each repository's AGENTS.md; read it first, it takes precedence.",
         "",
-        "Start with the MeoArch Master Doc: it maps every repository, where it lives locally and in the cloud, how to build, verify, release and deploy.",
-        "For UI work read \"Rules for Coding Agents\" next, then only the document that matches the task.",
-        "Always read the target repository's AGENTS.md first: its owner workflow rules take precedence.",
-        "",
-        "## MeoArch master doc",
+        "## About",
         "",
     ]
-    llms += [f"- [{title}]({SITE}/docs/meoarch/{slug}.md): {summary}" for slug, _, title, summary in MEOARCH_DOCS]
-    llms += ["", "## MeoUI specification", ""]
+    llms += [f"- [{title}]({SITE}/docs/guide/{slug}.md): {summary}" for slug, _, title, summary in GUIDE_DOCS]
+    llms += ["", "## MeoUI specification", "", "Start with \"Rules for Coding Agents\", then read only the document that matches the task.", ""]
     llms += [f"- [{title}]({SITE}/docs/meoui/{slug}.md): {summary}" for slug, _, title, summary in DOCS]
-    llms += [
-        "",
-        "## Repositories",
-        "",
-        "- [MeoUI](https://github.com/QwQdoge/MeoUI): shared QML design system (tokens, controls, patterns, Showcase)",
-        "- [MeoSettings](https://github.com/QwQdoge/MeoSettings): system settings app; product contracts in docs/",
-        "- [meo-kde](https://github.com/QwQdoge/meo-kde): Plasma/KWin integration, shell surfaces, title bar colors",
-        "- [MeoArch-os-workspace](https://github.com/QwQdoge/MeoArch-os-workspace): ISO, installer, repair, AI router; owns the master doc",
-        "- [meo-repo](https://github.com/QwQdoge/meo-repo): signed pacman repository, release manifests and the release workflow",
-        "",
-    ]
+    llms += [""]
     (ROOT / "llms.txt").write_text("\n".join(llms), encoding="utf-8")
     print(f"generated {sum(len(g[2]) for g in GROUPS)} documents")
 

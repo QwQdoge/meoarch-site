@@ -1,19 +1,16 @@
 # MeoArch
 
-> MeoArch is an Arch Linux based desktop and a set of Qt/QML apps built on the MeoUI design system.
-> These files are the published copy of the MeoArch master doc and the MeoUI specification for coding agents.
-> The canonical sources are the repositories (MeoArch-os-workspace `docs/`, MeoUI `docs/`); if they disagree, the repository wins.
+> MeoArch is an Arch Linux based desktop system (Meo = Modern, Expressive, Open). Its apps share the MeoUI Qt Quick / QML design system.
+> This file is for coding agents that build on MeoUI. Repository-specific rules live in each repository's AGENTS.md; read it first, it takes precedence.
 
-Start with the MeoArch Master Doc: it maps every repository, where it lives locally and in the cloud, how to build, verify, release and deploy.
-For UI work read "Rules for Coding Agents" next, then only the document that matches the task.
-Always read the target repository's AGENTS.md first: its owner workflow rules take precedence.
+## About
 
-## MeoArch master doc
-
-- [MeoArch Master Doc](https://meoarch.org/docs/meoarch/master.md): Map of every repository: what it owns, where it lives, how to build, verify, release and deploy it, and where each online resource runs.
-- [All Documents](https://meoarch.org/docs/meoarch/doc-index.md): Generated list of every Markdown document across the MeoArch repositories.
+- [About MeoArch](https://meoarch.org/docs/guide/about.md): What MeoArch is and why it is called that.
+- [Requirements](https://meoarch.org/docs/guide/requirements.md): What you need to try MeoArch, Meo AI and the Meo apps.
 
 ## MeoUI specification
+
+Start with "Rules for Coding Agents", then read only the document that matches the task.
 
 - [MeoUI Specification](https://meoarch.org/docs/meoui/index.md): Index and core rules: ownership, tokens, components, localization, evidence, files.
 - [App Shell](https://meoarch.org/docs/meoui/app-shell.md): Window chrome and toolbar, where app settings live and how they are grouped, About, open-source credits.
@@ -23,11 +20,3 @@ Always read the target repository's AGENTS.md first: its owner workflow rules ta
 - [API Lifecycle](https://meoarch.org/docs/meoui/api-lifecycle.md): Current, deprecated, experimental and internal components.
 - [Localization](https://meoarch.org/docs/meoui/localization.md): Language precedence, translation catalogs and accessible names.
 - [Rules for Coding Agents](https://meoarch.org/docs/meoui/for-agents.md): The same rules as decision tables and checklists for AI coding agents.
-
-## Repositories
-
-- [MeoUI](https://github.com/QwQdoge/MeoUI): shared QML design system (tokens, controls, patterns, Showcase)
-- [MeoSettings](https://github.com/QwQdoge/MeoSettings): system settings app; product contracts in docs/
-- [meo-kde](https://github.com/QwQdoge/meo-kde): Plasma/KWin integration, shell surfaces, title bar colors
-- [MeoArch-os-workspace](https://github.com/QwQdoge/MeoArch-os-workspace): ISO, installer, repair, AI router; owns the master doc
-- [meo-repo](https://github.com/QwQdoge/meo-repo): signed pacman repository, release manifests and the release workflow
