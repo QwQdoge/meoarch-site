@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
-"""Generate /docs/ from the canonical MeoUI specification.
+"""Generate /docs/ from the canonical sources in the product repositories.
 
-Source: $MEO_UI_ROOT/docs (default: ../MeoUI next to this repository). Never edit the generated files.
-Output for people: /docs/index.html and /docs/meoui/<slug>.html.
-Output for agents: /docs/meoui/<slug>.md (verbatim, links rewritten) and /llms.txt."""
+Sources (never edit the generated files; change the source and regenerate):
+  - MeoUI specification: $MEO_UI_ROOT/docs (default: ../MeoUI next to this repository)
+  - MeoArch master doc:  $MEO_WORKSPACE_ROOT/docs (default: ../MeoArch-os-workspace)
+Output for people: /docs/index.html, /docs/meoui/<slug>.html and /docs/meoarch/<slug>.html.
+Output for agents: the same pages as .md (verbatim, links rewritten) and /llms.txt.
+The sync-docs workflow runs this on a schedule so the site follows the repositories."""
 import html, os, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 UI = pathlib.Path(os.environ.get("MEO_UI_ROOT") or ROOT.parent / "MeoUI") / "docs"
+WS = pathlib.Path(os.environ.get("MEO_WORKSPACE_ROOT") or ROOT.parent / "MeoArch-os-workspace") / "docs"
+WS_REPO = "https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/"
 SITE = "https://meoarch.org"
 REPO = "https://github.com/QwQdoge/MeoUI/blob/main/docs/"
 DOCS = [
@@ -21,25 +26,30 @@ DOCS = [
     ("localization", "localization.md", "Localization", "Language precedence, translation catalogs and accessible names."),
     ("for-agents", "design/FOR_AGENTS.md", "Rules for Coding Agents", "The same rules as decision tables and checklists for AI coding agents."),
 ]
+MEOARCH_DOCS = [
+    ("master", "MEOARCH_MASTER.md", "MeoArch Master Doc", "Map of every repository: what it owns, where it lives, how to build, verify, release and deploy it, and where each online resource runs."),
+    ("doc-index", "MEOARCH_DOC_INDEX.md", "All Documents", "Generated list of every Markdown document across the MeoArch repositories."),
+]
 BY_SOURCE = {src: slug for slug, src, _, _ in DOCS}
+MEOARCH_BY_SOURCE = {src: slug for slug, src, _, _ in MEOARCH_DOCS}
 
 
-def resolve(link, current):
-    """Map a relative link between MeoUI docs to a site slug, or None."""
+def resolve(link, current, by_source=BY_SOURCE):
+    """Map a relative link between docs of one group to a site slug, or None."""
     target = os.path.normpath(os.path.join(os.path.dirname(current), link)).replace("\\", "/")
-    return BY_SOURCE.get(target)
+    return by_source.get(target)
 
 
-def rewrite_links(md, current, ext):
+def rewrite_links(md, current, ext, by_source=BY_SOURCE, repo=REPO):
     def sub(m):
         text, link = m.group(1), m.group(2)
         if re.match(r"[a-z]+:|#", link):
             return m.group(0)
         path, _, frag = link.partition("#")
-        slug = resolve(path, current)
+        slug = resolve(path, current, by_source)
         if slug:
             return f"[{text}]({slug}{ext}{'#' + frag if frag else ''})"
-        return f"[{text}]({REPO}{os.path.normpath(os.path.join(os.path.dirname(current), path))})"
+        return f"[{text}]({repo}{os.path.normpath(os.path.join(os.path.dirname(current), path)).replace(chr(92), chr(47))})"
     return re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", sub, md)
 
 
@@ -85,6 +95,16 @@ def render(md):
             out.append(f'<h{level} id="{anchor}">{inline(text)}</h{level}>')
             i += 1
             continue
+        if re.match(r"-{3,}\s*$", line):
+            out.append("<hr>")
+            i += 1
+            continue
+        if line.startswith(">"):
+            quote = []
+            while i < len(lines) and lines[i].startswith(">"):
+                quote.append(lines[i].lstrip(">").strip()); i += 1
+            out.append(f"<blockquote>{inline(' '.join(q for q in quote if q))}</blockquote>")
+            continue
         if line.startswith("|") and i + 1 < len(lines) and re.match(r"\|\s*:?-", lines[i + 1]):
             row = lambda l: [c.strip() for c in l.strip().strip("|").split("|")]
             head = row(line)
@@ -122,7 +142,7 @@ def render(md):
             continue
         para = [line.strip()]
         i += 1
-        while i < len(lines) and lines[i].strip() and not re.match(r"(#|```|\||\s*([-*]|\d+\.)\s)", lines[i]):
+        while i < len(lines) and lines[i].strip() and not re.match(r"(#|```|\||>|-{3,}\s*$|\s*([-*]|\d+\.)\s)", lines[i]):
             para.append(lines[i].strip()); i += 1
         out.append(f"<p>{inline(' '.join(para))}</p>")
     return "\n".join(out), toc
@@ -172,46 +192,61 @@ def shell(title, canonical, body, md_href=None):
 '''
 
 
-def doc_nav(active):
+GROUPS = [
+    # key (url dir), nav title, docs, source dir, github base, by_source
+    ("meoarch", "MeoArch", MEOARCH_DOCS, WS, WS_REPO, MEOARCH_BY_SOURCE, "MeoArch-os-workspace/docs/"),
+    ("meoui", "MeoUI", DOCS, UI, REPO, BY_SOURCE, "MeoUI/docs/"),
+]
+
+
+def doc_nav(group, active):
     current = ' aria-current="page"'
-    items = "".join(
-        f'<li><a href="/docs/meoui/{slug}.html"{current if slug == active else ""}>{html.escape(title)}</a></li>'
-        for slug, _, title, _ in DOCS)
-    return f'<nav class="doc-nav" aria-label="MeoUI"><p class="eyebrow">MeoUI</p><ul>{items}</ul></nav>'
+    nav = ""
+    for key, title_g, docs, _, _, _, _ in GROUPS:
+        items = "".join(
+            f'<li><a href="/docs/{key}/{slug}.html"{current if (key == group and slug == active) else ""}>{html.escape(title)}</a></li>'
+            for slug, _, title, _ in docs)
+        nav += f'<p class="eyebrow">{title_g}</p><ul>{items}</ul>'
+    return f'<nav class="doc-nav" aria-label="Docs">{nav}</nav>'
 
 
 def main():
-    if not UI.is_dir():
-        sys.exit(f"MeoUI docs not found at {UI}; set MEO_UI_ROOT")
-    out_dir = ROOT / "docs" / "meoui"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    for slug, src, title, summary in DOCS:
-        md = (UI / src).read_text(encoding="utf-8")
-        note = f"<!-- Generated from MeoUI/docs/{src}. Edit the source, not this copy. -->\n\n"
-        (out_dir / f"{slug}.md").write_text(note + rewrite_links(md, src, ".md"), encoding="utf-8")
-        body_html, toc = render(rewrite_links(md, src, ".html"))
-        toc_html = ("<nav class=\"doc-toc\" aria-labelledby=\"toc-title\"><p id=\"toc-title\" class=\"eyebrow\" data-i18n=\"docs.toc\">本页</p><ul>"
-                    + "".join(f'<li><a href="#{a}">{inline(t)}</a></li>' for a, t in toc) + "</ul></nav>") if len(toc) > 2 else ""
-        if toc_html and "</h1>" in body_html:
-            body_html = body_html.replace("</h1>", "</h1>\n" + toc_html, 1)
-            toc_html = ""
-        agent = slug == "for-agents"
-        banner = (f'<p class="doc-banner"><span data-i18n="docs.{"agentpage" if agent else "source"}"></span> '
-                  f'<a href="{REPO}{src}" target="_blank" rel="noreferrer">MeoUI/docs/{src} ↗</a> · '
-                  f'<a href="/docs/meoui/{slug}.md" data-i18n="docs.markdown">Markdown</a></p>')
-        body = f'''    <div class="wrap doc-layout">
-      {doc_nav(slug)}
+    for _, _, _, root, _, _, _ in GROUPS:
+        if not root.is_dir():
+            sys.exit(f"docs not found at {root}; set MEO_UI_ROOT / MEO_WORKSPACE_ROOT")
+    for key, _, docs, root, repo_base, by_source, label in GROUPS:
+        out_dir = ROOT / "docs" / key
+        out_dir.mkdir(parents=True, exist_ok=True)
+        for slug, src, title, summary in docs:
+            md = (root / src).read_text(encoding="utf-8")
+            note = f"<!-- Generated from {label}{src}. Edit the source, not this copy. -->\n\n"
+            (out_dir / f"{slug}.md").write_text(note + rewrite_links(md, src, ".md", by_source, repo_base), encoding="utf-8")
+            body_html, toc = render(rewrite_links(md, src, ".html", by_source, repo_base))
+            toc_html = ("<nav class=\"doc-toc\" aria-labelledby=\"toc-title\"><p id=\"toc-title\" class=\"eyebrow\" data-i18n=\"docs.toc\">本页</p><ul>"
+                        + "".join(f'<li><a href="#{a}">{inline(t)}</a></li>' for a, t in toc) + "</ul></nav>") if len(toc) > 2 else ""
+            if toc_html and "</h1>" in body_html:
+                body_html = body_html.replace("</h1>", "</h1>\n" + toc_html, 1)
+                toc_html = ""
+            agent = slug == "for-agents"
+            banner = (f'<p class="doc-banner"><span data-i18n="docs.{"agentpage" if agent else "source"}"></span> '
+                      f'<a href="{repo_base}{src}" target="_blank" rel="noreferrer">{label}{src} ↗</a> · '
+                      f'<a href="/docs/{key}/{slug}.md" data-i18n="docs.markdown">Markdown</a></p>')
+            body = f'''    <div class="wrap doc-layout">
+      {doc_nav(key, slug)}
       <article class="doc">
         {banner}
         {toc_html}
 {body_html}
       </article>
     </div>'''
-        (out_dir / f"{slug}.html").write_text(shell(title, f"/docs/meoui/{slug}", body, f"/docs/meoui/{slug}.md"), encoding="utf-8")
+            (out_dir / f"{slug}.html").write_text(shell(title, f"/docs/{key}/{slug}", body, f"/docs/{key}/{slug}.md"), encoding="utf-8")
 
-    cards = "".join(
-        f'<a class="mini" href="/docs/meoui/{slug}.html"><h3>{html.escape(title)}</h3><p>{html.escape(summary)}</p><span>{"Markdown · " if slug == "for-agents" else ""}→</span></a>'
-        for slug, _, title, summary in DOCS)
+    def card_group(key, title_g, docs):
+        cards = "".join(
+            f'<a class="mini" href="/docs/{key}/{slug}.html"><h3>{html.escape(title)}</h3><p>{html.escape(summary)}</p><span>{"Markdown · " if slug in ("for-agents", "master") else ""}→</span></a>'
+            for slug, _, title, summary in docs)
+        return f'<h2 class="docs-group">{title_g}</h2>\n      <div class="mini-grid">{cards}</div>'
+    groups_html = "\n      ".join(card_group(k, t, d) for k, t, d, *_ in GROUPS)
     hub = f'''    <section class="section docs-hub"><div class="wrap">
       <div class="heading">
         <p class="eyebrow" data-i18n="docs.eyebrow">文档</p>
@@ -222,8 +257,7 @@ def main():
         <div><h2 class="h3" data-i18n="docs.human.t">给人看</h2><p data-i18n="docs.human.p"></p></div>
         <div><h2 class="h3" data-i18n="docs.agent.t">给 AI Agent</h2><p data-i18n="docs.agent.p"></p><code class="install">{SITE}/llms.txt</code></div>
       </div>
-      <h2 class="docs-group">MeoUI</h2>
-      <div class="mini-grid">{cards}</div>
+      {groups_html}
     </div></section>'''
     (ROOT / "docs" / "index.html").write_text(shell("Docs", "/docs/", hub), encoding="utf-8")
 
@@ -231,15 +265,18 @@ def main():
         "# MeoArch",
         "",
         "> MeoArch is an Arch Linux based desktop and a set of Qt/QML apps built on the MeoUI design system.",
-        "> These files are the published copy of the MeoUI specification for coding agents. The canonical source is",
-        "> the MeoUI repository (`docs/`); if they disagree, the repository wins.",
+        "> These files are the published copy of the MeoArch master doc and the MeoUI specification for coding agents.",
+        "> The canonical sources are the repositories (MeoArch-os-workspace `docs/`, MeoUI `docs/`); if they disagree, the repository wins.",
         "",
-        "Start with \"Rules for Coding Agents\". Then read only the document that matches the task.",
+        "Start with the MeoArch Master Doc: it maps every repository, where it lives locally and in the cloud, how to build, verify, release and deploy.",
+        "For UI work read \"Rules for Coding Agents\" next, then only the document that matches the task.",
         "Always read the target repository's AGENTS.md first: its owner workflow rules take precedence.",
         "",
-        "## MeoUI specification",
+        "## MeoArch master doc",
         "",
     ]
+    llms += [f"- [{title}]({SITE}/docs/meoarch/{slug}.md): {summary}" for slug, _, title, summary in MEOARCH_DOCS]
+    llms += ["", "## MeoUI specification", ""]
     llms += [f"- [{title}]({SITE}/docs/meoui/{slug}.md): {summary}" for slug, _, title, summary in DOCS]
     llms += [
         "",
@@ -248,11 +285,12 @@ def main():
         "- [MeoUI](https://github.com/QwQdoge/MeoUI): shared QML design system (tokens, controls, patterns, Showcase)",
         "- [MeoSettings](https://github.com/QwQdoge/MeoSettings): system settings app; product contracts in docs/",
         "- [meo-kde](https://github.com/QwQdoge/meo-kde): Plasma/KWin integration, shell surfaces, title bar colors",
-        "- [MeoArch-os-workspace](https://github.com/QwQdoge/MeoArch-os-workspace): ISO, installer, repair, AI router",
+        "- [MeoArch-os-workspace](https://github.com/QwQdoge/MeoArch-os-workspace): ISO, installer, repair, AI router; owns the master doc",
+        "- [meo-repo](https://github.com/QwQdoge/meo-repo): signed pacman repository, release manifests and the release workflow",
         "",
     ]
     (ROOT / "llms.txt").write_text("\n".join(llms), encoding="utf-8")
-    print(f"generated {len(DOCS)} documents from {UI}")
+    print(f"generated {sum(len(g[2]) for g in GROUPS)} documents")
 
 
 if __name__ == "__main__":

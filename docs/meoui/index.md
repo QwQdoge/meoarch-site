@@ -1,5 +1,7 @@
 <!-- Generated from MeoUI/docs/design/README.md. Edit the source, not this copy. -->
 
+> 📚 [MeoArch 主文档 / Master Doc](https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md)：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。<!-- meoarch-master -->
+
 # MeoUI Specification
 
 MeoUI is the shared Qt Quick / QML Material Design 3 design system of
@@ -56,8 +58,8 @@ site.
 ### Components
 
 - Every public component has a lifecycle class (`../api-lifecycle.md`). New
-  work uses Current components. `MeoBottomAppBar` is deprecated; use
-  `MeoDockedToolbar` for docked actions.
+  work uses Current components; docked actions use `MeoDockedToolbar`.
+  Removed types and their replacements are listed in `../api-lifecycle.md`.
 - Every public QML export has a Showcase sample; visible changes update it.
 
 ### Localization and accessibility

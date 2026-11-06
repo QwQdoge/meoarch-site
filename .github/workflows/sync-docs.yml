@@ -1,0 +1,53 @@
+name: Sync docs
+
+# Regenerates /docs/ and /llms.txt from the canonical repositories (MeoUI and
+# MeoArch-os-workspace) so meoarch.org/docs follows them without hand edits.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/build_docs.py
+      - .github/workflows/sync-docs.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-docs
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: QwQdoge/MeoUI
+          path: _src/MeoUI
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: QwQdoge/MeoArch-os-workspace
+          path: _src/MeoArch-os-workspace
+          persist-credentials: false
+      - name: Generate docs
+        env:
+          MEO_UI_ROOT: ${{ github.workspace }}/_src/MeoUI
+          MEO_WORKSPACE_ROOT: ${{ github.workspace }}/_src/MeoArch-os-workspace
+        run: python3 scripts/build_docs.py
+      - name: Commit generated docs
+        run: |
+          rm -rf _src
+          if [ -n "$(git status --porcelain docs llms.txt)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs llms.txt
+            git commit -m "docs: sync from MeoUI and MeoArch-os-workspace"
+            git push
+          else
+            echo "docs already up to date"
+          fi

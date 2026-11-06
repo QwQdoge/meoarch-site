@@ -1,5 +1,7 @@
 <!-- Generated from MeoUI/docs/design/APP_SHELL.md. Edit the source, not this copy. -->
 
+> 📚 [MeoArch 主文档 / Master Doc](https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md)：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。<!-- meoarch-master -->
+
 # App Shell Contract
 
 How a MeoUI application window is put together: window chrome and the
@@ -41,8 +43,8 @@ Rules:
 ### Toolbar layout
 
 Use `MeoTopAppBar` (`type: "small"`, 64dp) for the window toolbar, or
-`MeoToolbar` (56dp, 48dp compact) for dense tool windows. `MeoBottomAppBar`
-is deprecated; docked action surfaces use `MeoDockedToolbar` (see
+`MeoToolbar` (56dp, 48dp compact) for dense tool windows. Docked action
+surfaces use `MeoDockedToolbar` (`MeoBottomAppBar` was removed; see
 `../api-lifecycle.md`). No traditional menu bar: Meo apps do not ship a
 File/Edit/View menu bar or a global menu.
 
