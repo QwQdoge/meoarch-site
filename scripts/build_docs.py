@@ -34,6 +34,18 @@ BY_SOURCE = {src: slug for slug, src, _, _ in DOCS}
 MEOARCH_BY_SOURCE = {src: slug for slug, src, _, _ in MEOARCH_DOCS}
 
 
+PRIVATE = re.compile(
+    r"[A-Za-z0-9._-]+@(gmail|outlook|hotmail|qq|163|icloud|yahoo)[.]com|/home/[a-z]|C:/Users|wsl[$]|[/]Users[/][A-Za-z0-9._]+|cii_evidence",
+    re.IGNORECASE)
+
+
+def check_public(text, name):
+    """The site is public: refuse to publish personal or machine-specific details."""
+    hits = sorted({m.group(0) for m in PRIVATE.finditer(text)})
+    if hits:
+        sys.exit(f"{name} contains private/local details {hits}; remove them from the source repository (see AGENTS.md)")
+
+
 def resolve(link, current, by_source=BY_SOURCE):
     """Map a relative link between docs of one group to a site slug, or None."""
     target = os.path.normpath(os.path.join(os.path.dirname(current), link)).replace("\\", "/")
@@ -219,6 +231,7 @@ def main():
         out_dir.mkdir(parents=True, exist_ok=True)
         for slug, src, title, summary in docs:
             md = (root / src).read_text(encoding="utf-8")
+            check_public(md, f"{label}{src}")
             note = f"<!-- Generated from {label}{src}. Edit the source, not this copy. -->\n\n"
             (out_dir / f"{slug}.md").write_text(note + rewrite_links(md, src, ".md", by_source, repo_base), encoding="utf-8")
             body_html, toc = render(rewrite_links(md, src, ".html", by_source, repo_base))
