@@ -43,3 +43,14 @@ Every project on the home page has two buttons: **Details** (its intro page on t
 
 Add a project: add its card to `index.html` (two buttons), its text keys to `app.js`, and a row to `scripts/build_details.py` (or route an existing intro page).
 Deploy the Worker with `cd workers/paths && wrangler deploy` (rollback = delete its routes). The site itself deploys on push to `main` through Cloudflare Pages.
+
+## Updating docs and notices without a build
+
+- **Our own docs** (`content/*.md`): edit the Markdown and push. The pages are pre-rendered, and `docs-live.js` draws the
+  current `content/<name>.md` over them when a page opens, so no one needs to run `scripts/build_docs.py`. The `.md` of each
+  page (`/docs/guide/<name>.md`, listed in `llms.txt`) is the same file through `_redirects`. A new document still needs one
+  entry in `GUIDE_DOCS` and a run of the script, because the navigation is generated.
+- **Update notice**: every site loads `https://meoarch.org/notice.js`, which shows one small notice from `notice.json`.
+  Add an object to `notices` (`id`, `text.zh`/`text.en`, `label`, `href`, optional `sites`, `exclude`, `until`) and push.
+  Closing it stores the id in a cookie on `.meoarch.org`, so it never appears again on any subdomain. Use a new `id` for
+  each new notice. VRC Memories is excluded from Meo notices; give it its own entry with `"sites": ["vrc.meoarch.org"]`.
