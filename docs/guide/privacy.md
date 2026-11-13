@@ -2,174 +2,178 @@
 
 # 隐私政策 / Privacy Policy
 
-最后更新：2026-11-13。本政策同时适用于 **Meo 账号**（account.meoarch.org）和 **Meo AI**（网页、桌面和 Android）。两者共用同一个账号和同一套数据，所以共用同一份政策。Meo 仍在公开开发中，目前是测试版。
+最后更新：2026-11-13。
 
-## 一句话版本
+本政策适用于 **Meo 账号**（account.meoarch.org）及 **Meo AI**（网页、桌面和 Android 客户端）。二者使用同一账号和同一套数据，因此适用同一份政策。Meo 目前处于公开开发阶段，提供的是测试版本。
 
-- 你的聊天、项目、记忆和文件存在你的 Meo 账号里，只有你能看到，用来在你的设备之间同步。
-- 我们不卖数据，不投放广告，不接入第三方统计或追踪，也不用你的内容训练模型。
-- 你让 AI 回答时，需要的内容会发给**你自己连接的模型提供商**，这是回答所必需的一步。
-- 你可以随时导出全部数据，也可以删除账号，删除后数据一并删除。
+## 1. 概述
 
-## 我们保存什么
+1. 您的聊天、项目、记忆和文件保存在您的 Meo 账号中，用于在您的设备之间同步，仅限您本人访问。
+2. 我们不出售个人数据，不投放广告，不接入第三方统计或追踪组件，不使用您的内容训练模型。
+3. 当您请求 AI 生成回答时，生成回答所必需的内容将发送至您自行连接的模型提供商。
+4. 您可以随时导出全部数据，亦可删除账号；账号删除后，其数据一并删除。
+
+## 2. 我们保存的信息
 
 | 类别 | 内容 | 用途 |
 |---|---|---|
-| 账号 | 邮箱、名称、用户名、登录方式（密码的哈希或 Google / GitHub 关联）、会话、两步验证、已登记的设备、安全事件（例如登录、删除账号） | 让你登录并保护账号 |
-| Meo AI 内容 | 聊天和消息、项目（名称、说明、项目记忆）、个人记忆、你上传的文件、模型方案和路由、设置、已安装的插件和授权 | 提供功能并在设备间同步 |
-| 模型提供商密钥 | 你添加的 API 密钥，加密后保存 | 代你调用你选的模型 |
-| 用量记录 | 每次回答的估算 token 数、模型名、提供商名、时间、所属项目名 | “用量”页的统计；token 数是按文字长度估的 |
-| 授权审计 | 每次请求的编号、内容哈希、提供商、模型、数据类别、你是否同意 | 证明某次请求经过了你的同意；**不保存请求的内容** |
-| 远程任务 | 你让另一台设备运行的任务的事件记录 | 在你的设备之间转交和续跑任务 |
+| 账号信息 | 邮箱、名称、用户名、登录方式（密码哈希，或 Google / GitHub 关联）、会话、两步验证设置、已登记设备、安全事件（如登录、账号删除） | 登录验证与账号保护 |
+| Meo AI 内容 | 聊天与消息、项目（名称、说明、项目记忆）、个人记忆、上传的文件、模型方案与路由、设置、已安装的插件及授权 | 提供功能并在设备间同步 |
+| 模型提供商密钥 | 您添加的 API 密钥（加密存储） | 代您调用所选模型 |
+| 用量记录 | 每次回答的估算 token 数、模型名、提供商名、时间、所属项目名 | 用量统计；token 数依据文本长度估算 |
+| 授权审计 | 每次请求的编号、内容哈希、提供商、模型、数据类别、是否获得同意 | 证明请求经过同意；不保存请求内容 |
+| 远程任务 | 您委托给另一台设备执行的任务的事件记录 | 在您的设备之间转交并续跑任务 |
 
-## 保存在你设备上的内容
+## 3. 保存在您设备上的信息
 
-- 聊天的离线缓存和偏好设置，方便没网时也能看。登录令牌放在系统的安全存储里，不放普通配置文件。
-- Work 用到的本地文件、文件夹路径、命令输出**留在你的设备上**。只有你在对话里让模型读取的那部分内容，才会作为这次请求的一部分发给模型提供商。
-- 项目绑定的本地文件夹路径不会存到服务器。你自己的几台在线设备之间会实时互相转发这些信息，服务器不保存。
-- 电脑控制和浏览器控制默认关闭。你打开后，截图只在模型请求且你授权的操作里才会发给模型。
+1. 聊天的离线缓存与偏好设置保存在设备本地。登录令牌保存在操作系统的安全存储中，不写入普通配置文件。
+2. Work 使用的本地文件、文件夹路径与命令输出保留在您的设备上。仅当您要求模型读取时，被读取的部分才会作为该次请求的一部分发送至模型提供商。
+3. 项目绑定的本地文件夹路径不存储于服务器；该信息仅在您已登录的在线设备之间实时转发，服务器不保留。
+4. 电脑控制与浏览器控制默认关闭。启用后，屏幕截图仅在模型提出操作且经您授权时才会发送给模型。
 
-## 我们会把数据发给谁
+## 4. 信息的接收方
 
-只在提供功能所必需的时候发送，并且不发给广告或数据经纪商：
+我们仅在提供相应功能所必需时共享信息，不向广告商或数据经纪商提供任何信息。
 
-| 接收方 | 发送什么 | 为什么 |
+| 接收方 | 共享内容 | 目的 |
 |---|---|---|
-| **你连接的模型提供商** | 你的消息、对话上下文、附件和图片、被选中的记忆、项目说明、工具和搜索结果 | 生成回答。提供商如何处理这些内容，受它自己的政策约束，请在连接前阅读 |
-| 网页搜索（Tavily、Brave） | 搜索词 | 你开启联网搜索时，由 Meo API 代你搜索 |
-| 网页读取 | 你或模型要读的网址 | 由 Meo API 代你取回页面内容 |
-| 你启用的应用和连接器（MCP） | 该应用需要的请求内容 | 让模型使用 GitHub、Notion 等应用；你授权后才会发送，数据遵守对方的政策 |
-| Resend | 你的邮箱和邮件内容 | 发送验证和安全邮件 |
-| Cloudflare | 访问请求，以及人机验证（Turnstile）所需的信息 | 托管网站和 API，防止滥用 |
-| Neon | 全部已保存的数据（加密传输） | 数据库，位于 AWS 新加坡区域 |
-| 浏览器厂商 | 麦克风音频 | 只在你点网页版的麦克风按钮时，由浏览器自带的语音识别处理，**不经过 Meo** |
+| 您连接的模型提供商 | 消息、对话上下文、附件与图片、所选记忆、项目说明、工具与搜索结果 | 生成回答；提供商对这些内容的处理适用其自身政策，请在连接前阅读 |
+| 网页搜索（Tavily、Brave） | 搜索关键词 | 您启用联网搜索时，由 Meo API 代为检索 |
+| 网页读取 | 需读取的网址 | 由 Meo API 代为获取页面内容 |
+| 您启用的应用与连接器（MCP） | 该应用所需的请求内容 | 使模型能够调用 GitHub、Notion 等应用；仅在您授权后发送，适用对方的政策 |
+| Resend | 您的邮箱地址与邮件内容 | 发送验证与安全邮件 |
+| Cloudflare | 访问请求及人机验证（Turnstile）所需信息 | 托管网站与 API，防止滥用 |
+| Neon | 全部已保存的数据（传输加密） | 数据库服务，位于 AWS 新加坡区域 |
+| 浏览器厂商 | 麦克风音频 | 仅在您使用网页版语音输入时，由浏览器自带的语音识别处理，不经过 Meo |
 
-我们没有接入统计、广告或崩溃上报类的第三方 SDK。
+我们的客户端不包含第三方统计、广告或崩溃上报组件。
 
-## 我们怎么对待你的内容
+## 5. 我们如何处理您的内容
 
-- 不出售，不用于广告，不用来训练模型。
-- 运营者不会为了好奇去阅读你的聊天内容。只有在你主动报告问题需要排查，或为了处理滥用、安全事件、法律要求时，才可能查看相关数据。
-- 管理后台显示的是账号信息（邮箱、角色、登录时间、数量统计），不是聊天内容。
-- 需要对外说明的是：数据库由运营者管理，因此技术上运营者有权限访问存储的数据。以上是我们的承诺，不是技术上的不可能。
+1. 我们不出售您的内容，不将其用于广告，亦不用于训练模型。
+2. 我们不会主动查阅您的聊天内容。仅在您报告问题且排查需要，或为处理滥用、安全事件及履行法律义务时，才可能查看相关数据。
+3. 管理后台显示的是账号层面的信息（邮箱、角色、登录时间、数量统计），不显示聊天内容。
+4. 加密情况说明：传输过程使用 TLS；模型提供商密钥以 AES-GCM 加密存储。聊天消息、项目与记忆等内容目前**未**在应用层单独加密，其存储保护依赖数据库服务提供商的存储安全与访问控制。数据库由运营者管理，因此运营者在技术上具备访问所存储数据的权限；上述第 2 款为我们的承诺，而非技术上的限制。
 
-## 保存多久，怎么删除
+## 6. 保存期限与删除
 
-- **删除某个聊天、项目、记忆或文件**：对应数据随之删除。
-- **删除账号**：在 Meo 账号的“隐私”里操作，需要再次验证并输入 DELETE。账号和属于它的数据会一起删除。账号所有者需要先转让所有权。
-- **数据库的时间点历史**：数据库提供商保留的短期历史约 6 小时，之后不再保留。
-- **导出**：在 Meo 账号的“隐私”里可以下载全部数据（JSON）。导出里**不含**密钥这类机密信息。
-- **设备上的缓存**：退出登录或卸载后可删除；你也可以手动清除应用数据。
-- **用量记录和授权审计**随账号保存，账号删除时一并删除。
+1. 删除某个聊天、项目、记忆或文件时，对应数据一并删除。
+2. 删除账号：在 Meo 账号的“隐私”中操作，需再次验证身份并输入 DELETE。账号及其名下数据一并删除；账号所有者须先转让所有权。
+3. 数据库提供商保留的时间点历史约为 6 小时，期满后不再保留。
+4. 导出：在 Meo 账号的“隐私”中可下载全部数据（JSON 格式）。导出文件不包含密钥等机密信息。
+5. 设备本地缓存可在退出登录、卸载应用或清除应用数据时删除。
+6. 用量记录与授权审计随账号保存，并在账号删除时一并删除。
 
-## 你的控制权
+## 7. 您的控制权
 
-- 随时在设置里关闭联网搜索、记忆、自动命名标题、电脑控制、浏览器控制。
-- 每个插件和应用的授权可以单独撤销；每台设备的会话可以单独退出。
-- 修改、导出、删除你的数据，直接在应用里做，不需要联系我们。
+1. 您可随时在设置中关闭联网搜索、记忆、自动生成标题、电脑控制与浏览器控制。
+2. 每个插件与应用的授权可单独撤销；每台设备的会话可单独退出。
+3. 您可直接在应用内更正、导出和删除您的数据，无需联系我们。
 
-## 安全
+## 8. 安全
 
-- 传输使用 TLS；模型提供商密钥加密保存；登录令牌放在系统安全存储。
-- 会话可撤销，敏感操作需要再次验证。
-- 没有任何系统是绝对安全的。如果发生影响你的数据泄露，我们会尽快通知你。
+1. 数据传输使用 TLS；模型提供商密钥加密存储；登录令牌保存在系统安全存储中。
+2. 会话可撤销，敏感操作需再次验证。
+3. 任何系统均无法保证绝对安全。如发生影响您数据的泄露事件，我们将及时通知您。
 
-## 未成年人
+## 9. 未成年人
 
-Meo 不面向 13 岁以下的儿童，也不会有意收集他们的数据。所在地区有更高年龄要求的，以当地规定为准。
+Meo 不面向 13 岁以下的儿童，亦不会有意收集其个人信息。所在地区对年龄有更高要求的，从其规定。
 
-## 政策的变化
+## 10. 政策变更
 
-我们会在本页更新日期，重要变化会在应用里提示。继续使用表示你接受更新后的政策。
+我们会更新本页顶部的日期，并在应用内提示重要变更。变更生效后继续使用 Meo，视为您接受更新后的政策。
 
-## 联系方式
+## 11. 联系方式
 
-通过 [GitHub 上的 meo-ai 仓库](https://github.com/QwQdoge/meo-ai/issues) 提出问题或请求。
+如有疑问或请求，请通过 [meo-ai 的 GitHub 仓库](https://github.com/QwQdoge/meo-ai/issues) 提出。
 
 ---
 
 # Privacy Policy (English)
 
-Last updated: 2026-11-13. This policy covers **Meo Account** (account.meoarch.org) and **Meo AI** (web, desktop and Android). They share one account and one set of data, so they share one policy. Meo is in public development and is currently a beta.
+Last updated: 2026-11-13.
 
-## In short
+This policy applies to **Meo Account** (account.meoarch.org) and **Meo AI** (web, desktop and Android clients). Both use one account and one set of data and are therefore governed by one policy. Meo is in public development and is offered as a beta.
 
-- Your chats, projects, memories and files are stored in your Meo account, visible only to you, so they follow you across devices.
-- We do not sell data, show ads, use third-party analytics or tracking, or train models on your content.
-- When you ask the AI something, what the answer needs is sent to **the model provider you connected**. That is required to answer.
-- You can export all your data at any time and delete your account; deleting removes the data with it.
+## 1. Summary
 
-## What we store
+1. Your chats, projects, memories and files are stored in your Meo account to synchronize across your devices, and are accessible only to you.
+2. We do not sell personal data, display advertising, include third-party analytics or tracking components, or use your content to train models.
+3. When you request an AI response, the content needed to produce it is sent to the model provider you have connected.
+4. You may export all of your data at any time and may delete your account; on deletion, its data is deleted with it.
 
-| Category | What | Why |
+## 2. Information we store
+
+| Category | Content | Purpose |
 |---|---|---|
-| Account | Email, name, username, sign-in method (password hash or Google / GitHub link), sessions, two-factor settings, registered devices, security events (such as sign-in and account deletion) | To sign you in and protect the account |
-| Meo AI content | Chats and messages, projects (name, instructions, project memory), personal memory, files you upload, model profiles and routes, settings, installed plugins and grants | To provide the features and sync them |
-| Provider keys | The API keys you add, stored encrypted | To call your chosen models for you |
-| Usage records | Estimated tokens per answer, model, provider, time, project name | The Usage page; token counts are estimated from text length |
-| Consent audit | Per request: an id, a content hash, provider, model, data categories and whether you approved | To prove a request was approved; **the request content is not kept** |
-| Remote tasks | Event records of a task you hand to another device | To pass a task between your devices and resume it |
+| Account | Email, name, username, sign-in method (password hash, or Google / GitHub link), sessions, two-factor settings, registered devices, security events (such as sign-in and account deletion) | Authentication and account protection |
+| Meo AI content | Chats and messages, projects (name, instructions, project memory), personal memory, uploaded files, model profiles and routes, settings, installed plugins and grants | Providing the features and synchronizing them |
+| Provider keys | API keys you add (stored encrypted) | Calling your chosen models on your behalf |
+| Usage records | Estimated tokens per answer, model, provider, time, project name | Usage statistics; token counts are estimated from text length |
+| Consent audit | Per request: an identifier, a content hash, provider, model, data categories and whether consent was given | Evidencing that a request was approved; request content is not retained |
+| Remote tasks | Event records of a task you delegate to another device | Handing a task between your devices and resuming it |
 
-## What stays on your device
+## 3. Information kept on your device
 
-- An offline cache of chats and your preferences. The sign-in token lives in the system's secure store, not in an ordinary config file.
-- Local files, folder paths and command output used by Work **stay on your device**. Only the part you ask the model to read is sent to the model provider as part of that request.
-- Local folder paths bound to a project are not stored on the server. Your own signed-in devices relay them to each other live; the server does not keep them.
-- Computer control and browser control are off by default. When on, a screenshot goes to the model only for an action the model requests and you allow.
+1. An offline cache of chats and your preferences are stored locally. The sign-in token is held in the operating system's secure store and is not written to an ordinary configuration file.
+2. Local files, folder paths and command output used by Work remain on your device. Only the portion you ask the model to read is sent to the model provider, as part of that request.
+3. Local folder paths bound to a project are not stored on the server; they are relayed in real time only between your own signed-in online devices and are not retained by the server.
+4. Computer control and browser control are off by default. When enabled, a screenshot is sent to the model only for an action the model proposes and you authorize.
 
-## Who receives data
+## 4. Recipients of information
 
-Only when needed to provide the feature, and never to advertisers or data brokers:
+We share information only where necessary to provide the relevant feature, and never with advertisers or data brokers.
 
-| Recipient | What | Why |
+| Recipient | Information shared | Purpose |
 |---|---|---|
-| **The model provider you connected** | Your messages, conversation context, attachments and images, selected memory, project instructions, tool and search results | To generate the answer. How the provider handles it is governed by its own policy; read it before you connect |
-| Web search (Tavily, Brave) | The search query | When you turn on web search, Meo API searches for you |
-| Page fetch | The URL you or the model want read | Meo API fetches the page for you |
-| Apps and connectors (MCP) you enable | The request that app needs | So the model can use apps such as GitHub or Notion; sent only after you authorize, under that app's policy |
-| Resend | Your email address and message | To send verification and security email |
-| Cloudflare | Requests, and what the Turnstile bot check needs | Hosting the site and API, preventing abuse |
-| Neon | All stored data (encrypted in transit) | The database, in the AWS Singapore region |
-| Your browser vendor | Microphone audio | Only when you press the microphone button on the web; the browser's own speech recognition handles it, **not Meo** |
+| The model provider you connect | Messages, conversation context, attachments and images, selected memory, project instructions, tool and search results | Generating the response; the provider's handling of this content is governed by its own policy, which you should read before connecting |
+| Web search (Tavily, Brave) | The search query | When you enable web search, Meo API searches on your behalf |
+| Page retrieval | The URL to be read | Meo API retrieves the page content on your behalf |
+| Apps and connectors (MCP) you enable | The request content that app requires | Enabling the model to use apps such as GitHub or Notion; sent only after you authorize, and subject to that app's policy |
+| Resend | Your email address and message content | Sending verification and security email |
+| Cloudflare | Requests, and the information the Turnstile bot check requires | Hosting the site and API; preventing abuse |
+| Neon | All stored data (encrypted in transit) | Database service, in the AWS Singapore region |
+| Your browser vendor | Microphone audio | Only when you use web voice input, processed by the browser's built-in speech recognition and not by Meo |
 
-We do not include analytics, advertising or crash-reporting SDKs from third parties.
+Our clients do not include third-party analytics, advertising or crash-reporting components.
 
-## How we treat your content
+## 5. How we handle your content
 
-- We do not sell it, use it for ads, or train models on it.
-- Operators do not read your chats out of curiosity. Related data may be viewed only when you report a problem that needs investigating, or to deal with abuse, security incidents or legal requirements.
-- The admin console shows account information (email, role, sign-in times, counts), not chat content.
-- To be plain: the database is run by the operators, so technically they can access stored data. The above is our commitment, not a technical impossibility.
+1. We do not sell your content, use it for advertising, or use it to train models.
+2. We do not proactively review your chat content. Related data may be accessed only where you report a problem and investigation requires it, or to address abuse or security incidents, or to meet legal obligations.
+3. The administration console displays account-level information (email, role, sign-in times, counts), not chat content.
+4. Encryption: data in transit is protected with TLS; model provider keys are stored encrypted with AES-GCM. Chat messages, projects and memories are not currently encrypted separately at the application layer; their storage protection relies on the database provider's storage security and on access control. The database is administered by the operators, who therefore have technical access to stored data; paragraph 2 above is our commitment and not a technical restriction.
 
-## How long, and how to delete
+## 6. Retention and deletion
 
-- **Deleting a chat, project, memory or file** deletes that data.
-- **Deleting your account**: in Meo Account under Privacy, with re-verification and typing DELETE. The account and the data that belongs to it are deleted together. An account owner must transfer ownership first.
-- **Database point-in-time history**: the database provider keeps short-lived history, about six hours, then it is gone.
-- **Export**: Meo Account under Privacy lets you download all your data (JSON). The export **omits** secrets such as keys.
-- **On-device cache**: removed when you sign out or uninstall; you can also clear app data yourself.
-- **Usage records and the consent audit** are kept with the account and deleted with it.
+1. Deleting a chat, project, memory or file deletes the corresponding data.
+2. Account deletion: performed in Meo Account under Privacy, with re-verification and by typing DELETE. The account and the data belonging to it are deleted together; an account owner must first transfer ownership.
+3. The database provider retains point-in-time history for approximately six hours, after which it is not retained.
+4. Export: Meo Account under Privacy allows you to download all of your data (JSON). The export omits secrets such as keys.
+5. The on-device cache is removed on sign-out, uninstallation or clearing of app data.
+6. Usage records and the consent audit are kept with the account and deleted with it.
 
-## Your controls
+## 7. Your controls
 
-- Turn off web search, memory, automatic titles, computer control and browser control in Settings at any time.
-- Each plugin and app grant can be revoked on its own; each device's session can be signed out on its own.
-- Change, export and delete your data right in the app, without contacting us.
+1. You may turn off web search, memory, automatic titles, computer control and browser control in Settings at any time.
+2. Each plugin and app grant may be revoked individually; each device's session may be signed out individually.
+3. You may correct, export and delete your data directly in the app, without contacting us.
 
-## Security
+## 8. Security
 
-- TLS in transit; provider keys encrypted at rest; sign-in tokens in the system secure store.
-- Sessions are revocable and sensitive actions need re-verification.
-- No system is perfectly secure. If a breach affects your data, we will tell you promptly.
+1. Data in transit uses TLS; model provider keys are stored encrypted; sign-in tokens are kept in the system secure store.
+2. Sessions are revocable and sensitive actions require re-verification.
+3. No system can be guaranteed to be perfectly secure. If a breach affects your data, we will notify you promptly.
 
-## Children
+## 9. Children
 
-Meo is not for children under 13 and does not knowingly collect their data. Where your region sets a higher age, that applies.
+Meo is not directed at children under 13 and does not knowingly collect their personal information. Where your region sets a higher minimum age, that age applies.
 
-## Changes
+## 10. Changes to this policy
 
-We update the date above, and show important changes in the app. Continuing to use Meo means you accept the updated policy.
+We will update the date at the top of this page and indicate material changes in the app. Continued use of Meo after a change takes effect constitutes acceptance of the updated policy.
 
-## Contact
+## 11. Contact
 
-Raise questions or requests through the [meo-ai repository on GitHub](https://github.com/QwQdoge/meo-ai/issues).
+For questions or requests, please use the [meo-ai repository on GitHub](https://github.com/QwQdoge/meo-ai/issues).
