@@ -6,6 +6,7 @@ MeoArch 各站点和应用的政策与许可证集中在这一页。本页链接
 
 | 文档 | 适用范围 |
 |---|---|
+| [服务条款 / Terms of Service](terms.md) | Meo 账号与 Meo AI：账号、您的内容、AI 回答、工具与设备控制、可接受的使用、责任 |
 | [隐私政策 / Privacy Policy](privacy.md) | Meo 账号与 Meo AI：保存什么、共享给谁、保存多久、如何导出和删除 |
 | [使用要求 / Requirements](requirements.md) | 试用 MeoArch、Meo AI 和 Meo 应用所需的条件 |
 
@@ -38,6 +39,7 @@ Policies and licenses for MeoArch's sites and apps are collected on this page. T
 
 | Document | Scope |
 |---|---|
+| [Terms of Service](terms.md) | Meo Account and Meo AI: accounts, your content, AI output, tools and device control, acceptable use, liability |
 | [Privacy Policy](privacy.md) | Meo Account and Meo AI: what is stored, who receives it, how long, and how to export or delete it |
 | [Requirements](requirements.md) | What is needed to try MeoArch, Meo AI and the Meo apps |
 

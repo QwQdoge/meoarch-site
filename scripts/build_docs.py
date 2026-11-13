@@ -30,6 +30,7 @@ GUIDE_DOCS = [
     ("about", "about.md", "About MeoArch", "What MeoArch is and why it is called that."),
     ("requirements", "requirements.md", "Requirements", "What you need to try MeoArch, Meo AI and the Meo apps."),
     ("legal", "legal.md", "Legal", "All policies and open-source licenses of MeoArch's sites and apps in one place."),
+    ("terms", "terms.md", "Terms of Service", "The terms for using Meo Account and Meo AI: accounts, your content, AI output, tools, acceptable use, liability."),
     ("privacy", "privacy.md", "Privacy Policy", "What Meo Account and Meo AI store, who receives data, how long, and how to export or delete it."),
     ("account-api", "account-api.md", "Meo Account API", "How to sign in, read account data, manage sessions and backups, and call Meo AI."),
 ]
