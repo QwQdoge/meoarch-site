@@ -1,0 +1,15 @@
+{
+  "notices": [
+    {
+      "id": "2026-11-13-legal",
+      "sites": ["*"],
+      "exclude": ["vrc.meoarch.org"],
+      "text": {
+        "zh": "服务条款和隐私政策已发布。",
+        "en": "The Terms of Service and Privacy Policy are now published."
+      },
+      "label": { "zh": "查看", "en": "Read" },
+      "href": "https://meoarch.org/docs/guide/legal"
+    }
+  ]
+}

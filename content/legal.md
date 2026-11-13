@@ -10,6 +10,12 @@ MeoArch 各站点和应用的政策与许可证集中在这一页。本页链接
 | [隐私政策 / Privacy Policy](privacy.md) | Meo 账号与 Meo AI：保存什么、共享给谁、保存多久、如何导出和删除 |
 | [使用要求 / Requirements](requirements.md) | 试用 MeoArch、Meo AI 和 Meo 应用所需的条件 |
 
+## 其他产品 / Other products
+
+| 文档 | 适用范围 |
+|---|---|
+| [VRC Memories：隐私、数据与测试版说明](https://vrc.meoarch.org/legal.html) | VRC Memories 有自己的说明，不适用上面的 Meo 政策 |
+
 ## 开源许可证 / Licenses
 
 各组件按自己的许可证发布，完整条款见各仓库中的 LICENSE 文件。
@@ -42,6 +48,12 @@ Policies and licenses for MeoArch's sites and apps are collected on this page. T
 | [Terms of Service](terms.md) | Meo Account and Meo AI: accounts, your content, AI output, tools and device control, acceptable use, liability |
 | [Privacy Policy](privacy.md) | Meo Account and Meo AI: what is stored, who receives it, how long, and how to export or delete it |
 | [Requirements](requirements.md) | What is needed to try MeoArch, Meo AI and the Meo apps |
+
+## Other products
+
+| Document | Scope |
+|---|---|
+| [VRC Memories: Privacy, Data and Beta Notice](https://vrc.meoarch.org/legal.html) | VRC Memories has its own notice; the Meo policies above do not apply to it |
 
 ## Open-source licenses
 

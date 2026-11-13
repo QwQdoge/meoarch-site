@@ -70,6 +70,7 @@ def page(slug, name, badge, desc, image, install, repo):
     <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
   </div></footer>
   <script src="/app.js"></script>
+  <script src="/notice.js" defer></script>
 </body>
 </html>
 '''

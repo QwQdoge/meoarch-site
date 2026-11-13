@@ -1,0 +1,12 @@
+/notice.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+
+/notice.js
+  Cache-Control: public, max-age=3600
+
+/docs-live.js
+  Cache-Control: public, max-age=3600
+
+/content/*
+  Cache-Control: public, max-age=0, must-revalidate
