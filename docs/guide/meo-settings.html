@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meo Settings · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/guide/meo-settings">
+  <link rel="alternate" type="text/markdown" href="/docs/guide/meo-settings.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/install.html">Install Guide</a></li><li><a href="/docs/guide/projects.html">Projects Overview</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li></ul><p class="eyebrow">Projects</p><ul><li><a href="/docs/guide/meoarch-iso.html">MeoArch Image and Installer</a></li><li><a href="/docs/guide/meo-desktop.html">Meo Desktop</a></li><li><a href="/docs/guide/meo-settings.html" aria-current="page">Meo Settings</a></li><li><a href="/docs/guide/omnistore.html">OmniStore</a></li><li><a href="/docs/guide/meo-ai.html">Meo AI</a></li><li><a href="/docs/guide/meo-login.html">Meo Login</a></li><li><a href="/docs/guide/meo-repo.html">Meo Package Repository</a></li><li><a href="/docs/guide/meo-account.html">Meo Account</a></li></ul><p class="eyebrow">Developers</p><ul><li><a href="/docs/guide/account-api.html">Meo Account API</a></li><li><a href="/docs/guide/api-reference.html">Meo API Reference</a></li><li><a href="/docs/guide/account-native-apps.html">Native App Integration</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc" data-live-src="/content/meo-settings.md">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/meoarch-site/blob/main/content/meo-settings.md" target="_blank" rel="noreferrer">content/meo-settings.md ↗</a> · <a href="/docs/guide/meo-settings.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<h1 id="meo-settings">Meo Settings</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#">它的边界</a></li><li><a href="#">安装</a></li><li><a href="#">和其他部分的关系</a></li><li><a href="#">开发者</a></li></ul></nav>
+<p>Meo Settings 是 MeoArch 的日常系统设置应用。它以 <a href="/docs/meoui/index.html">MeoUI</a> 的通用界面为基础，通过稳定的 Qt/KDE 接口、已安装的 Meo Desktop 运行时，和明确的 KDE 设置页交接来提供真实的设置流程。</p>
+<h2 id="">它的边界</h2>
+<p>Meo Settings <strong>不取代</strong> NetworkManager、BlueZ、PipeWire、KScreen、PowerDevil、KWin 或 KDE 系统设置。</p>
+<ul><li>只使用可验证的 KDE、Qt 和 Meo.System 公共接口。</li><li>原生控制没有完整的安全和恢复路径时，会清楚地交接到维护中的 KDE 设置页，而不是伪造一个本地状态。</li><li>敏感、特权、破坏性或与恢复相关的操作，保留在权威的系统工具里。</li></ul>
+<h2 id="">安装</h2>
+<pre><code>yay -Syu meo-settings</code></pre>
+<p>要一次装好全部 MeoArch 软件，见 <a href="install.html">安装指南</a>。</p>
+<h2 id="">和其他部分的关系</h2>
+<ul><li>设置应用的界面规范：<a href="/docs/meoui/settings.html">MeoUI 的设置规范</a> 和 <a href="/docs/meoui/app-shell.html">应用外壳</a>。</li><li>云端备份：设置清单可以通过 Meo Account 备份和恢复（恢复前会先预览，只应用受支持的外观设置，不恢复凭据、文件或自动重装应用）。清单格式见 <a href="account-api.html">Meo Account API</a> 的“云端备份”一节。</li><li>设备和系统信息（关于页面）只在 Meo Settings 里显示，其他应用不重复。</li></ul>
+<h2 id="">开发者</h2>
+<p>仓库：<a href="https://github.com/QwQdoge/MeoSettings">MeoSettings</a>。<code>docs/</code> 里有架构、备份与恢复、日常控制、隐私与权限、运行时系统信息、存储用量和设置覆盖范围等契约。许可证 <code>GPL-3.0-or-later</code>。</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

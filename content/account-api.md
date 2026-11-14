@@ -1,5 +1,7 @@
 # Meo Account API
 
+本页是指南：登录、令牌、流式对话、错误码、额度和备份格式。全部接口的路由表见 [Meo API 参考](api-reference.md)；桌面应用见 [原生应用接入](account-native-apps.md)。
+
 怎么用 Meo Account 的接口：登录、读取账号信息、管理会话和云端备份、调用 Meo AI。仍在开发中，接口可能变化；以线上实际行为为准。
 
 ## 基本信息

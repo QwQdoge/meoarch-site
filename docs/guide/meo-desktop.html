@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meo Desktop · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/guide/meo-desktop">
+  <link rel="alternate" type="text/markdown" href="/docs/guide/meo-desktop.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/install.html">Install Guide</a></li><li><a href="/docs/guide/projects.html">Projects Overview</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li></ul><p class="eyebrow">Projects</p><ul><li><a href="/docs/guide/meoarch-iso.html">MeoArch Image and Installer</a></li><li><a href="/docs/guide/meo-desktop.html" aria-current="page">Meo Desktop</a></li><li><a href="/docs/guide/meo-settings.html">Meo Settings</a></li><li><a href="/docs/guide/omnistore.html">OmniStore</a></li><li><a href="/docs/guide/meo-ai.html">Meo AI</a></li><li><a href="/docs/guide/meo-login.html">Meo Login</a></li><li><a href="/docs/guide/meo-repo.html">Meo Package Repository</a></li><li><a href="/docs/guide/meo-account.html">Meo Account</a></li></ul><p class="eyebrow">Developers</p><ul><li><a href="/docs/guide/account-api.html">Meo Account API</a></li><li><a href="/docs/guide/api-reference.html">Meo API Reference</a></li><li><a href="/docs/guide/account-native-apps.html">Native App Integration</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc" data-live-src="/content/meo-desktop.md">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/meoarch-site/blob/main/content/meo-desktop.md" target="_blank" rel="noreferrer">content/meo-desktop.md ↗</a> · <a href="/docs/guide/meo-desktop.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<h1 id="meo-desktop-meokde">Meo Desktop（MeoKDE）</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#">它做什么，不做什么</a></li><li><a href="#">安装</a></li><li><a href="#">会话</a></li><li><a href="#">开发者</a></li></ul></nav>
+<p>Meo Desktop 是 MeoArch 对 KDE Plasma 6 的原生集成：Shell、Plasmoid、主题、默认配置，以及 KDE/Qt 的原生桥接。通用的界面组件和设计令牌来自 <a href="/docs/meoui/index.html">MeoUI</a>，Meo Desktop 不复制它们。</p>
+<h2 id="">它做什么，不做什么</h2>
+<ul><li>Plasma、KWin 和 KDE 服务始终是窗口、任务、网络、音频、电源和会话状态的<strong>权威</strong>。Meo Desktop 通过真实的 KDE/D-Bus/系统接口，或明确交接到维护中的 KDE 设置页，不用装饰性的本地假开关。</li><li>它在 Plasma 之上工作，Arch 或 KDE 正常升级时 Meo 也继续跟随。</li></ul>
+<h2 id="">安装</h2>
+<p>只装 Meo Desktop（AUR）：</p>
+<pre><code>yay -Syu meo-desktop</code></pre>
+<p>在已经配置了官方签名 MeoArch 软件源的系统上，公开的安装入口是：</p>
+<pre><code>curl -fsSL https://raw.githubusercontent.com/QwQdoge/meo-kde/main/bootstrap.sh | bash</code></pre>
+<div class="table-scroll"><table><thead><tr><th>选项</th><th>作用</th></tr></thead><tbody><tr><td><code>-y</code></td><td>非交互安装</td></tr><tr><td><code>--dry-run</code></td><td>只检查仓库和包是否满足安全安装条件，不安装</td></tr></tbody></table></div>
+<p>它通过 pacman 安装软件源里的 <code>meo-desktop</code> 包。它<strong>不会</strong>从源码覆盖当前 Plasma，也不会修改你现有 KDE 的面板、主题、<code>~/.config</code>、<code>/etc/xdg</code>、显示管理器或默认登录会话。如果软件源里的包版本低于要求，安装器会停下来，而不是退回旧的“直接改当前 KDE”的方式。</p>
+<p>要装整套 MeoArch 软件，用 <a href="install.html">安装指南</a> 里的整套脚本。</p>
+<h2 id="">会话</h2>
+<p>装好后，显示管理器会新增一个独立的 <strong>Meo Desktop</strong> Wayland 会话：</p>
+<ul><li>它使用自己的配置与状态目录（默认 <code>~/.config/meo-desktop</code> 和 <code>~/.local/state/meo-desktop</code>）；</li><li>普通的 <strong>Plasma (Wayland)</strong> 会话保留原配置，不会因为装了 Meo Desktop 被改写；</li><li>Meo Desktop 本身不强制安装或替换显示管理器。完整 ISO 的安装流程会另外安装 <a href="meo-login.html">Meo Login</a> 并预选 Meo 会话，这是整机的安装策略。</li></ul>
+<h2 id="">开发者</h2>
+<p>源码、架构与契约在 <a href="https://github.com/QwQdoge/meo-kde">meo-kde 仓库</a> 的 <code>docs/</code> 里，包括 Shell 配置、主题、动态色、输入法、快捷键、快速设置后端和锁屏。改动前先读仓库里的 <code>AGENTS.md</code>。构建或离屏预览不能证明真实 Plasma/KWin 会话的行为，涉及用户配置、显示或会话的动作需要最小范围、可恢复的处理。</p>
+<p>许可证：原创代码为 <code>GPL-3.0-or-later</code>；KDE/Plasma 衍生文件、第三方实现、字体和上游小部件保留各自的许可证。</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

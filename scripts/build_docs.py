@@ -47,6 +47,23 @@ GUIDE_DOCS = [
     ("privacy", "privacy.md", "Privacy Policy", "What Meo Account and Meo AI store, who receives data, how long, and how to export or delete it."),
     ("account-api", "account-api.md", "Meo Account API", "How to sign in, read account data, manage sessions and backups, call Meo AI, and read the streaming format, errors, models and plan limits."),
     ("account-native-apps", "account-native-apps.md", "Native App Integration", "How a desktop app uses Meo Account: client manifest, getting its own token, asking the broker to call the API, usage upload."),
+    ("api-reference", "api-reference.md", "Meo API Reference", "Every route an app can use: account, sessions, backups, conversations, chat, models, projects, files, plugins, devices, usage, realtime."),
+    ("projects", "projects.md", "Projects Overview", "What each MeoArch project is, how they fit together, how to get them and where their docs are."),
+    ("install", "install.md", "Install Guide", "Install MeoArch from the ISO, on an existing Arch system, or one app at a time."),
+    ("meo-desktop", "meo-desktop.md", "Meo Desktop", "The Plasma 6 integration: install, the Meo Desktop session, what it does and does not control."),
+    ("meo-settings", "meo-settings.md", "Meo Settings", "The everyday system settings app: boundaries, install, backup."),
+    ("omnistore", "omnistore.md", "OmniStore", "The software store: sources, tasks, updates, custom repositories, AI and account."),
+    ("meo-ai", "meo-ai.md", "Meo AI", "The assistant: downloads, what works now, data and network boundaries, troubleshooting."),
+    ("meo-login", "meo-login.md", "Meo Login", "The login and display manager: compatibility boundary, install, configuration."),
+    ("meo-repo", "meo-repo.md", "Meo Package Repository", "The signed Stable and Beta pacman repositories and how releases are made."),
+    ("meoarch-iso", "meoarch-iso.md", "MeoArch Image and Installer", "The ISO, the Live desktop, the installer and the repair tool."),
+    ("meo-account", "meo-account.md", "Meo Account", "What the account does, its security model and where to find the developer docs."),
+]
+# The guide pages share one URL directory (their relative links rely on it); the navigation shows them in sections.
+GUIDE_SECTIONS = [
+    ("MeoArch", ["about", "requirements", "install", "projects", "legal", "terms", "privacy"]),
+    ("Projects", ["meoarch-iso", "meo-desktop", "meo-settings", "omnistore", "meo-ai", "meo-login", "meo-repo", "meo-account"]),
+    ("Developers", ["account-api", "api-reference", "account-native-apps"]),
 ]
 EXTERNAL_DOCS = [
     ("隐私、数据与测试版说明", "https://vrc.meoarch.org/legal.html", "VRC Memories 的隐私、数据处理、测试版风险和使用条款摘要。"),
@@ -77,7 +94,7 @@ def resolve(link, current, by_source=BY_SOURCE):
 def rewrite_links(md, current, ext, by_source=BY_SOURCE, repo=REPO):
     def sub(m):
         text, link = m.group(1), m.group(2)
-        if re.match(r"[a-z]+:|#", link):
+        if re.match(r"[a-z]+:|#|/", link):
             return m.group(0)
         path, _, frag = link.partition("#")
         slug = resolve(path, current, by_source)
@@ -235,14 +252,27 @@ GROUPS = [
 ]
 
 
+def sections_of(key, docs):
+    """(title, docs) sections of a group: the guide is split into sections, the others are one section."""
+    if key != "guide":
+        return [(None, docs)]
+    by_slug = {d[0]: d for d in docs}
+    placed = {slug for _, slugs in GUIDE_SECTIONS for slug in slugs}
+    missing = sorted(set(by_slug) - placed)
+    if missing:
+        sys.exit(f"guide docs without a section: {missing}")
+    return [(title, [by_slug[slug] for slug in slugs]) for title, slugs in GUIDE_SECTIONS]
+
+
 def doc_nav(group, active):
     current = ' aria-current="page"'
     nav = ""
     for key, title_g, docs, _, _, _, _ in GROUPS:
-        items = "".join(
-            f'<li><a href="/docs/{key}/{slug}.html"{current if (key == group and slug == active) else ""}>{html.escape(title)}</a></li>'
-            for slug, _, title, _ in docs)
-        nav += f'<p class="eyebrow">{title_g}</p><ul>{items}</ul>'
+        for section, items_docs in sections_of(key, docs):
+            items = "".join(
+                f'<li><a href="/docs/{key}/{slug}.html"{current if (key == group and slug == active) else ""}>{html.escape(title)}</a></li>'
+                for slug, _, title, _ in items_docs)
+            nav += f'<p class="eyebrow">{section or title_g}</p><ul>{items}</ul>'
     return f'<nav class="doc-nav" aria-label="Docs">{nav}</nav>'
 
 
@@ -288,7 +318,7 @@ def main():
             f'<a class="mini" href="/docs/{key}/{slug}.html"><h3>{html.escape(title)}</h3><p>{html.escape(summary)}</p><span>{"Markdown · " if slug == "for-agents" else ""}→</span></a>'
             for slug, _, title, summary in docs)
         return f'<h2 class="docs-group">{title_g}</h2>\n      <div class="mini-grid">{cards}</div>'
-    groups_html = "\n      ".join(card_group(k, t, d) for k, t, d, *_ in GROUPS)
+    groups_html = "\n      ".join(card_group(k, sec or t, d) for k, t, docs, *_ in GROUPS for sec, d in sections_of(k, docs))
     # Documents that live with another product are listed here too, and open where they are kept.
     external = "".join(
         f'<a class="mini" href="{href}"><h3>{html.escape(title)}</h3><p>{html.escape(summary)}</p><span>→</span></a>'
@@ -317,7 +347,11 @@ def main():
         "## About",
         "",
     ]
-    llms += [f"- [{title}]({SITE}/docs/guide/{slug}.md): {summary}" for slug, _, title, summary in GUIDE_DOCS]
+    guide_by_slug = {d[0]: d for d in GUIDE_DOCS}
+    for section, slugs in GUIDE_SECTIONS:
+        if section != "MeoArch":
+            llms += ["", f"## {section}", ""]
+        llms += [f"- [{guide_by_slug[x][2]}]({SITE}/docs/guide/{x}.md): {guide_by_slug[x][3]}" for x in slugs]
     llms += ["", "## MeoUI specification", "", "Start with \"Rules for Coding Agents\", then read only the document that matches the task.", ""]
     llms += [f"- [{title}]({SITE}/docs/meoui/{slug}.md): {summary}" for slug, _, title, summary in DOCS]
     llms += [""]
