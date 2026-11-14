@@ -21,6 +21,7 @@ DOCS = [
     ("app-shell", "design/APP_SHELL.md", "App Shell", "Window chrome and toolbar, where app settings live and how they are grouped, About, open-source credits."),
     ("settings", "design/SETTINGS.md", "Settings Pattern", "Settings rows, groups, sidebar, task sheet, state layer and motion."),
     ("page-types", "design/PAGE_TYPES.md", "Page Types", "Page kinds, the two-level rule and registry metadata."),
+    ("store-feedback", "design/STORE_FEEDBACK.md", "Store Feedback", "Store pages, install button states, progress indicators, error and empty states."),
     ("dynamic-color", "design/DYNAMIC_COLOR.md", "Dynamic Color", "The mandatory dynamic color role table and who generates it."),
     ("api-lifecycle", "api-lifecycle.md", "API Lifecycle", "Current, deprecated, experimental and internal components."),
     ("localization", "localization.md", "Localization", "Language precedence, translation catalogs and accessible names."),
