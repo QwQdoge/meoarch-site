@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Native App Integration · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/guide/account-native-apps">
+  <link rel="alternate" type="text/markdown" href="/docs/guide/account-native-apps.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li><li><a href="/docs/guide/account-api.html">Meo Account API</a></li><li><a href="/docs/guide/account-native-apps.html" aria-current="page">Native App Integration</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc" data-live-src="/content/account-native-apps.md">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/meoarch-site/blob/main/content/account-native-apps.md" target="_blank" rel="noreferrer">content/account-native-apps.md ↗</a> · <a href="/docs/guide/account-native-apps.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<h1 id="meo-account">Meo Account 原生应用接入</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#">总览</a></li><li><a href="#">先声明：客户端清单</a></li><li><a href="#authorize-client">自己取令牌：<code>authorize_client</code></a></li><li><a href="#">让代理代办</a></li><li><a href="#">登记客户端</a></li><li><a href="#">常见问题</a></li></ul></nav>
+<p>给在 MeoArch 桌面上开发或打包应用的人：应用怎么使用 Meo Account，怎么拿到令牌，需要声明什么。接口细节见 <a href="https://github.com/QwQdoge/meoarch-site/blob/main/content//docs/guide/account-api.html">Meo Account API</a>。仍在开发中，以实际行为为准。</p>
+<h2 id="">总览</h2>
+<p>桌面上由一个按用户运行的 Meo Account 代理（D-Bus 名称 <code>org.meo.Accounts1</code>）保存系统登录。它：</p>
+<ul><li>把登录信息保存在 KWallet 里，<strong>不会把访问令牌或刷新令牌交给任何应用</strong>，D-Bus 上没有返回令牌的方法；</li><li>在应用发起请求时，由代理带上令牌去调用 Meo API，只把结果交给应用；</li><li>要显示的授权、同意和重新验证对话框都由代理弹出，应用拿不到密码。</li></ul>
+<p>应用想使用账号，有两种方式：</p>
+<div class="table-scroll"><table><thead><tr><th>方式</th><th>适合</th><th>令牌在哪</th></tr></thead><tbody><tr><td>让代理代办（<code>StartAccountOperation</code>、<code>StartCloudAiOperation</code>、<code>StartLocalAiOperation</code>、<code>StartUsageOperation</code>）</td><td>备份、本机或云端 AI 对话、用量上报</td><td>只在代理里</td></tr><tr><td>应用自己取令牌（<code>authorize_client</code>）</td><td>需要流式对话（<code>/v1/chat/stream</code>）或代理没有的接口</td><td>在应用自己手里，须存入系统钥匙串</td></tr></tbody></table></div>
+<p>代理的 AI 对话是<strong>一次返回整段答案</strong>，没有流式方法。需要流式回答，只能走第二种方式。</p>
+<h2 id="">先声明：客户端清单</h2>
+<p>应用的安装包要在 <code>/usr/share/meo-account/clients/&lt;名称&gt;.json</code> 放一份清单。代理只信任清单里写明的可执行文件，调用方的真实路径对不上就拒绝。清单规则不满足时整份被忽略。</p>
+<div class="table-scroll"><table><thead><tr><th>字段</th><th>要求</th></tr></thead><tbody><tr><td><code>id</code></td><td>不为空，≤128 字符，例如 <code>org.meo.OmniStore</code></td></tr><tr><td><code>name</code></td><td>不为空，≤160 字符</td></tr><tr><td><code>oauthClientId</code></td><td>不为空，≤256 字符；必须是已登记的 OAuth 客户端</td></tr><tr><td><code>redirectUri</code></td><td>路径必须是 <code>/callback</code>，不能带查询、片段、用户信息或端口。形式只能是 <code>https://&lt;域名&gt;/callback</code>，或 <code>&lt;自定义协议&gt;://auth/callback</code>（协议不能是 <code>http</code>、<code>https</code>、<code>file</code>、<code>data</code>、<code>javascript</code>）</td></tr><tr><td><code>executables</code></td><td>不为空的绝对路径列表，调用方的真实可执行文件必须在其中</td></tr><tr><td><code>scopes</code></td><td>不为空，只能是 <code>openid</code>、<code>profile</code>、<code>email</code>、<code>phone</code>、<code>offline_access</code>、<code>meo:read</code>、<code>meo:write</code></td></tr><tr><td><code>capabilities</code></td><td>可选，只能是 <code>local_ai</code>、<code>ai_usage_sync</code>、<code>ai_personalization</code>；只在本机生效，不会发给账号服务</td></tr></tbody></table></div>
+<p>清单里的 scope 应当是登记时批准的 scope 的子集；超出的部分授权时会被拒绝。能力由安装包拥有：卸载或替换安装包就撤销了它，没有第二份可修改的权限库。</p>
+<pre><code>{
+  &quot;id&quot;: &quot;org.example.App&quot;,
+  &quot;name&quot;: &quot;Example&quot;,
+  &quot;oauthClientId&quot;: &quot;&lt;已登记的客户端 id&gt;&quot;,
+  &quot;redirectUri&quot;: &quot;exampleapp://auth/callback&quot;,
+  &quot;executables&quot;: [&quot;/usr/bin/example&quot;],
+  &quot;scopes&quot;: [&quot;openid&quot;, &quot;profile&quot;],
+  &quot;capabilities&quot;: []
+}</code></pre>
+<h2 id="authorize-client">自己取令牌：<code>authorize_client</code></h2>
+<ol><li>应用生成相互独立的随机 <code>state</code>（32–256 字符）和 PKCE S256 的 <code>code_challenge</code>（43–128 字符），调用 <code>RequestAuthentication(clientId, &quot;authorize_client&quot;, { state, codeChallenge })</code>，得到 <code>requestId</code>。</li><li>代理核对调用方，弹出原生授权对话框。用户同意后，代理用系统浏览器打开 <code>/v1/auth/oauth2/authorize</code>，参数包括 <code>client_id</code>、<code>redirect_uri</code>、<code>response_type=code</code>、<code>resource=https://api.meoarch.org</code>、清单里的 scope、<code>state</code>、<code>code_challenge</code> 和 <code>code_challenge_method=S256</code>。</li><li>浏览器把一次性的 <code>code</code> 带回应用的回调地址。应用先校验 <code>state</code>，再自己向 <code>POST /v1/auth/oauth2/token</code> 用 <code>code_verifier</code> 换取令牌。</li><li>应用调用 <code>RegisterClientSession(clientId, sessionId, accountId, logoutEpoch)</code>。代理只保存 <code>clientId</code>、<code>sessionId</code>、<code>accountId</code>、登记时间和本地登出代数，系统登出时据此撤销这个应用的远程会话，并发出 <code>clientSignOutRequested</code>。</li></ol>
+<p>请求状态：<code>waiting_for_user</code> → <code>opening_browser</code> → <code>waiting_for_callback</code> → <code>completed</code>，或 <code>denied</code>、<code>failed</code>、<code>expired</code>。请求 5 分钟后过期。用 <code>GetRequest(requestId)</code> 轮询，或监听 <code>requestChanged</code> 信号。</p>
+<p>自己持有令牌的应用必须：</p>
+<ul><li>把令牌放进 KWallet 或系统钥匙串，不写进配置文件、日志或环境变量；</li><li>访问令牌 15 分钟过期，需要刷新时才申请 <code>offline_access</code>；</li><li>清除本地令牌不等于撤销远程会话，要撤销请调用 <code>POST /v1/auth/oauth2/revoke</code>。</li></ul>
+<h2 id="">让代理代办</h2>
+<h3 id="">账号与备份</h3>
+<p><code>StartAccountOperation(action, arguments)</code> 返回 <code>requestId</code>，结果通过 <code>requestChanged</code> 或 <code>GetRequest</code> 取得，只对发起请求的应用可见。备份相关的动作：</p>
+<div class="table-scroll"><table><thead><tr><th><code>action</code></th><th>参数</th><th>说明</th></tr></thead><tbody><tr><td><code>list_backups</code></td><td></td><td>列出云端备份</td></tr><tr><td><code>upload_backup</code></td><td><code>manifestJson</code></td><td>上传一份 <code>org.meo.backup/v1</code> 清单</td></tr><tr><td><code>download_backup</code></td><td><code>backupId</code></td><td>下载</td></tr><tr><td><code>delete_backup</code></td><td><code>backupId</code></td><td>删除</td></tr></tbody></table></div>
+<p>清单格式见 API 文档“云端备份”一节。</p>
+<h3 id="ai">AI 对话</h3>
+<p>对话分三步，并要求用户明确同意：</p>
+<ol><li><code>prepare_inference</code>：返回一份将要发送内容的摘要和 5 分钟有效的摘要哈希。</li><li>应用把摘要展示给用户并取得同意。</li><li><code>invoke</code>：只接受与第 1 步完全相同的内容。内容变了，或需要再发起一次网络请求，必须重新同意。</li></ol>
+<p>两类入口：</p>
+<div class="table-scroll"><table><thead><tr><th>入口</th><th>连接来自</th><th>动作</th></tr></thead><tbody><tr><td><code>StartLocalAiOperation(clientId, action, arguments)</code></td><td>本机保存的连接（Ollama、OpenAI 兼容）；密钥只存在代理里，应用拿不到</td><td><code>prepare_inference</code>、<code>invoke</code>、<code>revoke_catalog_consent</code> 等</td></tr><tr><td><code>StartCloudAiOperation(clientId, action, arguments)</code></td><td>你账号里的云端模型连接</td><td><code>list_connections</code>、<code>discover_models</code>、<code>prepare_inference</code>、<code>invoke</code>、<code>deny_inference</code></td></tr></tbody></table></div>
+<p>两者都要求清单声明 <code>local_ai</code> 能力。<code>ListAvailableLocalAiConnections(clientId)</code> 只返回提供商、显示名、地址、默认模型、是否启用等元数据，不返回密钥。自定义的 OpenAI 兼容连接必须是 HTTPS，且拒绝本机、私有和链路本地地址；代理不跟随重定向。</p>
+<h3 id="">用量</h3>
+<p>清单声明 <code>ai_usage_sync</code> 的应用，可以通过 <code>/org/meo/Accounts1/Usage</code> 对象提交或读取用量：<code>StartUsageOperation(clientId, action, payloadJson)</code>，<code>GetUsageRequest(clientId, requestId)</code>，状态变化由 <code>usageRequestChanged</code> 通知。代理只放行约定好的字段（来源、会话、项目标识、提供商、模型、时间、token 数、耗时、估算费用），其余字段在发出前丢弃，所以文件名、本地路径、提示词和消息内容都不会离开本机。</p>
+<h2 id="">登记客户端</h2>
+<p>OAuth 客户端目前只能由 Meo 维护者登记，没有自助注册，也还没有公开的申请流程。以下是登记时需要提供的信息（具体流程尚未公开）：</p>
+<ul><li>唯一的客户端 id；</li><li>确切的回调地址（同清单里的 <code>redirectUri</code>）；</li><li>申请的 scope：写入权限 <code>meo:write</code> 只在确实需要时申请，只读功能用 <code>meo:read</code>；</li><li>说明用途，以及是否需要 <code>offline_access</code>（刷新令牌）。</li></ul>
+<p>登记完成前，清单里不要写会被拒绝的 scope，也不要使用占位的客户端 id。</p>
+<h2 id="">常见问题</h2>
+<div class="table-scroll"><table><thead><tr><th>现象</th><th>原因</th></tr></thead><tbody><tr><td><code>RequestAuthentication</code> 返回空</td><td>调用方的可执行文件不在清单里，或清单无效</td></tr><tr><td>授权页提示 <code>invalid_target</code></td><td>客户端没有绑定到 <code>https://api.meoarch.org</code></td></tr><tr><td>API 返回 <code>403 insufficient_scope</code></td><td>令牌没有 <code>meo:read</code> / <code>meo:write</code></td></tr><tr><td>API 返回 <code>403 oauth_client_mismatch</code></td><td>请求里的 <code>clientId</code> 与令牌所属客户端不一致</td></tr><tr><td>授权对话框弹出但一直 <code>waiting_for_user</code></td><td>用户还没有操作；5 分钟后过期</td></tr></tbody></table></div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

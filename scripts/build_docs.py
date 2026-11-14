@@ -45,7 +45,8 @@ GUIDE_DOCS = [
     ("legal", "legal.md", "Legal", "All policies and open-source licenses of MeoArch's sites and apps in one place."),
     ("terms", "terms.md", "Terms of Service", "The terms for using Meo Account and Meo AI: accounts, your content, AI output, tools, acceptable use, liability."),
     ("privacy", "privacy.md", "Privacy Policy", "What Meo Account and Meo AI store, who receives data, how long, and how to export or delete it."),
-    ("account-api", "account-api.md", "Meo Account API", "How to sign in, read account data, manage sessions and backups, and call Meo AI."),
+    ("account-api", "account-api.md", "Meo Account API", "How to sign in, read account data, manage sessions and backups, call Meo AI, and read the streaming format, errors, models and plan limits."),
+    ("account-native-apps", "account-native-apps.md", "Native App Integration", "How a desktop app uses Meo Account: client manifest, getting its own token, asking the broker to call the API, usage upload."),
 ]
 EXTERNAL_DOCS = [
     ("隐私、数据与测试版说明", "https://vrc.meoarch.org/legal.html", "VRC Memories 的隐私、数据处理、测试版风险和使用条款摘要。"),
