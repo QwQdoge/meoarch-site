@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lists · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/lists">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/lists.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li><li><a href="/docs/guide/account-api.html">Meo Account API</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html" aria-current="page">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/LISTS.md" target="_blank" rel="noreferrer">MeoUI/docs/design/LISTS.md ↗</a> · <a href="/docs/meoui/lists.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<blockquote>📚 <a href="https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md">MeoArch 主文档 / Master Doc</a>：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。&lt;!-- meoarch-master --&gt;</blockquote>
+<h1 id="lists-rows-and-sections">Lists, Rows and Sections</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#1-components">1. Components</a></li><li><a href="#2-anatomy-of-a-row">2. Anatomy of a row</a></li><li><a href="#3-choose-the-row-style">3. Choose the row style</a></li><li><a href="#4-behavior">4. Behavior</a></li><li><a href="#5-sections-and-headers">5. Sections and headers</a></li><li><a href="#6-tables">6. Tables</a></li><li><a href="#7-long-lists-and-loading">7. Long lists and loading</a></li><li><a href="#8-example">8. Example</a></li><li><a href="#9-checklist">9. Checklist</a></li></ul></nav>
+<p>Lists are the workhorse of MeoUI pages. This page covers content lists (files, apps, messages); settings rows follow <code>SETTINGS.md</code> and share the same connected-surface engine.</p>
+<h2 id="1-components">1. Components</h2>
+<div class="table-scroll"><table><thead><tr><th>Component</th><th>Role</th></tr></thead><tbody><tr><td><code>MeoListView</code></td><td>The scrolling container (transitions, scroll position)</td></tr><tr><td><code>MeoListItem</code></td><td>A content row (headline, supporting text, leading/trailing parts)</td></tr><tr><td><code>MeoSegmentedList</code> / <code>MeoGroupedList</code></td><td>Connected rounded group of rows</td></tr><tr><td><code>MeoSettingsRow</code> + <code>MeoSettingsGroup</code></td><td>Settings rows with a typed trailing control</td></tr><tr><td><code>MeoListHeader</code></td><td>Section header above a group</td></tr><tr><td><code>MeoDivider</code></td><td>Quiet separator when a connected surface is not used</td></tr><tr><td><code>MeoSwipeToDismiss</code></td><td>Swipe actions on touch</td></tr><tr><td><code>MeoDataTable</code></td><td>Dense, sortable tabular data on wide windows</td></tr></tbody></table></div>
+<h2 id="2-anatomy-of-a-row">2. Anatomy of a row</h2>
+<pre><code>[leading]  Overline                         [trailing]
+           Headline
+           Supporting text (1–3 lines)</code></pre>
+<p><code>MeoListItem</code> properties: <code>overline</code>, <code>headline</code>, <code>supportingText</code>, <code>supportingTextLines</code> (1, 2 or 3), <code>leadingIcon</code>, <code>leadingImage</code> (<code>leadingImageVariant</code> <code>square</code> or <code>circle</code>, <code>leadingImageSize</code> 40 / 56 / 64), <code>leadingComponent</code>, <code>trailingComponent</code>, <code>badgeText</code>, <code>actions</code>, <code>selected</code>, <code>interactive</code>.</p>
+<div class="table-scroll"><table><thead><tr><th>Part</th><th>Rule</th></tr></thead><tbody><tr><td>Leading</td><td>One of: icon, avatar (40), small image (56), large image (64). Same kind in a list</td></tr><tr><td>Headline</td><td>The identity of the row; one line, elided</td></tr><tr><td>Supporting</td><td>The one fact that helps decide (version, size, date). ≤3 lines</td></tr><tr><td>Trailing</td><td>One control or one status: a value, a switch, a chevron, an action. Not several</td></tr><tr><td>Badge</td><td><code>badgeText</code> for count/new; a dot for unread</td></tr></tbody></table></div>
+<p>Height follows content: 56dp one line, 72dp two lines, 88dp three lines; <code>isDense</code> gives 48 / 64 / 72dp. A large leading image raises the height.</p>
+<h2 id="3-choose-the-row-style">3. Choose the row style</h2>
+<div class="table-scroll"><table><thead><tr><th>Need</th><th>Property</th></tr></thead><tbody><tr><td>Separate rows with lines on a flat page</td><td><code>showDivider: true</code>, <code>dividerInset</code> to align with text</td></tr><tr><td>Rounded connected group (default for ≤ ~15 rows)</td><td><code>isSegmented: true</code>, set <code>roundingStrategy</code> (<code>top</code>, <code>middle</code>, <code>bottom</code>, <code>all</code>) per position, or use <code>MeoSegmentedList</code></td></tr><tr><td>Dense list (file manager, logs)</td><td><code>isDense: true</code></td></tr><tr><td>Emphasize a key row</td><td><code>isEmphasized: true</code> (bold)</td></tr><tr><td>Selected row</td><td><code>selected: true</code>; vibrant selection with <code>vibrant: true</code></td></tr></tbody></table></div>
+<p>Do not mix segmented rows and divider rows in one list. A long, virtualized list (hundreds of rows) uses divider rows; connected groups are for short sets.</p>
+<h2 id="4-behavior">4. Behavior</h2>
+<ul><li>A row is <strong>either</strong> interactive as a whole <strong>or</strong> contains controls. If it has a trailing switch, the whole row toggles it (as <code>MeoSettingsRow</code> does); if it has a trailing action button, the row body opens details.</li><li>Selection: tap/click selects; in multi-select mode the leading element becomes a checkbox and the top app bar turns contextual (<code>NAVIGATION.md</code>).</li><li>Swipe actions are a shortcut for touch; the same actions exist in a context menu (<code>MeoContextMenu</code>) and the row's detail.</li><li>Reordering and removal animate with <code>MeoListTransitions</code>; Reduce Motion makes them instant.</li><li>Right-click / long-press opens <code>MeoContextMenu</code> with the row's actions.</li></ul>
+<h2 id="5-sections-and-headers">5. Sections and headers</h2>
+<ul><li><code>MeoListHeader { text: ... }</code> names a group; <code>type: &quot;emphasized&quot;</code> for the first section on a page.</li><li>A header describes <strong>what</strong> the rows are ("Updates (3)"), not what to do.</li><li>A section with more rows than fit shows a "See all" text button in the header row, not a row at the end.</li><li>Empty section: hide the header unless the empty state needs it (<code>STATES.md</code>).</li></ul>
+<h2 id="6-tables">6. Tables</h2>
+<p>Use <code>MeoDataTable</code> when the user compares columns or sorts (package list with name, version, size, source). On compact windows a table becomes a list with the most important column as the headline.</p>
+<ul><li>Header row sticky; click sorts; arrow icon shows direction.</li><li>Right-align numbers, left-align text.</li><li>Never let the table scroll horizontally on expanded windows; hide the least important columns first.</li></ul>
+<h2 id="7-long-lists-and-loading">7. Long lists and loading</h2>
+<ul><li>Virtualize: use <code>ListView</code> models; never create a row per item in a <code>Column</code>.</li><li>First load: <code>MeoSkeleton</code> rows with the final row height (<code>MeoLoadingFeedback { placeholder }</code>).</li><li>Loading more: a single row at the end with <code>MeoLoadingIndicator</code>, not a full skeleton.</li><li>Refresh: keep old rows until new data arrives; update in place.</li><li>Empty: <code>MeoEmptyState</code>. Error: inline message with Retry (<code>STATES.md</code>).</li></ul>
+<h2 id="8-example">8. Example</h2>
+<pre><code>import QtQuick
+import MeoUI
+
+MeoListView {
+    id: updates
+    model: updatesModel
+    delegate: MeoListItem {
+        required property var model
+        width: ListView.view.width
+        headline: model.name
+        supportingText: qsTr(&quot;%1 → %2 · %3&quot;).arg(model.current).arg(model.next).arg(model.size)
+        leadingImage: model.icon
+        leadingImageSize: 40
+        leadingImageVariant: &quot;circle&quot;
+        badgeText: model.security ? qsTr(&quot;Security&quot;) : &quot;&quot;
+        showDivider: true
+        onClicked: openDetails(model.id)
+    }
+}</code></pre>
+<p>Property names come from <code>MeoListItem</code> and <code>MeoListView</code>; the snippet has not been run in this pass.</p>
+<h2 id="9-checklist">9. Checklist</h2>
+<ul><li class="check"><span aria-hidden="true">☐</span> Rows have one leading kind and ≤1 trailing element.</li><li class="check"><span aria-hidden="true">☐</span> Whole-row action and inner controls do not conflict.</li><li class="check"><span aria-hidden="true">☐</span> Virtualized; skeleton rows match final height.</li><li class="check"><span aria-hidden="true">☐</span> Headers describe content; "See all" in the header.</li><li class="check"><span aria-hidden="true">☐</span> Context menu and keyboard (Enter, Space, Delete) equal to swipe.</li><li class="check"><span aria-hidden="true">☐</span> Text scale 200% and long translations tested.</li></ul>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

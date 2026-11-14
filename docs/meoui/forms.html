@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buttons and Forms · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/forms">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/forms.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li><li><a href="/docs/guide/account-api.html">Meo Account API</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html" aria-current="page">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/FORMS.md" target="_blank" rel="noreferrer">MeoUI/docs/design/FORMS.md ↗</a> · <a href="/docs/meoui/forms.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<blockquote>📚 <a href="https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md">MeoArch 主文档 / Master Doc</a>：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。&lt;!-- meoarch-master --&gt;</blockquote>
+<h1 id="buttons-inputs-and-forms">Buttons, Inputs and Forms</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#1-button-hierarchy">1. Button hierarchy</a></li><li><a href="#2-text-fields">2. Text fields</a></li><li><a href="#3-choosing-a-selection-control">3. Choosing a selection control</a></li><li><a href="#4-form-layout">4. Form layout</a></li><li><a href="#5-autosave-versus-explicit-save">5. Autosave versus explicit save</a></li><li><a href="#6-validation-and-errors">6. Validation and errors</a></li><li><a href="#7-example">7. Example</a></li><li><a href="#8-checklist">8. Checklist</a></li></ul></nav>
+<h2 id="1-button-hierarchy">1. Button hierarchy</h2>
+<p><code>MeoButton.type</code>: <code>filled</code>, <code>tonal</code>, <code>outlined</code>, <code>elevated</code>, <code>text</code>. Sizes <code>xs</code>, <code>s</code>, <code>m</code>, <code>l</code>, <code>xl</code>. Shape <code>round</code> (default) or <code>square</code>.</p>
+<div class="table-scroll"><table><thead><tr><th>Type</th><th>Emphasis</th><th>Use</th></tr></thead><tbody><tr><td><code>filled</code></td><td>highest</td><td>The single primary action of a page or dialog (Install, Save, Sign in)</td></tr><tr><td><code>tonal</code></td><td>high</td><td>Important secondary action (Update all, Open)</td></tr><tr><td><code>elevated</code></td><td>medium</td><td>Needs separation on a busy surface; avoid on a tinted page</td></tr><tr><td><code>outlined</code></td><td>medium</td><td>Equal alternative (Cancel in a form, Learn more)</td></tr><tr><td><code>text</code></td><td>lowest</td><td>Tertiary, inline, dialog actions (<code>MeoDialog</code> uses text buttons)</td></tr></tbody></table></div>
+<p>Rules:</p>
+<ul><li><strong>One filled button per view.</strong> Two filled buttons compete; make one tonal.</li><li>Order of actions in a row, left to right: dismissive (Cancel) then affirmative (Save). In a dialog the confirm action is on the right (<code>MeoDialog</code> already does this).</li><li>Never disable the primary action to hide an error: show what is missing (inline field error) and keep the button enabled when the form can be submitted to show errors. Disable only while an operation is running.</li><li>Loading: <code>loading: true</code> shows an in-button indicator and keeps the label and width; the button ignores clicks.</li><li>Destructive actions use the same button type, the label names the effect ("Remove Firefox"), and they go through a confirmation (<code>DIALOGS.md</code>). There is no red filled button; use the error tone on the icon and message.</li><li>Icon + label is preferred; icon-only buttons (<code>MeoIconButton</code>) need <code>toolTipText</code>.</li><li>A <code>MeoSplitButton</code> combines a default action with alternatives (Install ▾ with "Install without updates"). Do not use it when there is no clear default.</li><li>Toggle buttons (<code>toggle: true</code>, <code>selected</code>) and <code>MeoIconToggleButton</code> show a state, not an action; label stays constant.</li></ul>
+<p>Sizing: use <code>m</code> in dialogs and forms, <code>s</code> in rows and cards, <code>l</code>/<code>xl</code> for hero actions. Hit area ≥ <code>minimumTargetSize</code>.</p>
+<h2 id="2-text-fields">2. Text fields</h2>
+<p><code>MeoTextField</code>: <code>type</code> <code>filled</code> (default on tinted pages) or <code>outlined</code>; <code>label</code>, <code>placeholder</code>, <code>supportingText</code>/<code>helperText</code>, <code>isError</code> + <code>errorText</code>, <code>showClearButton</code>, <code>leadingIcon</code>, <code>trailingIcon</code> (<code>trailingIconClicked</code>), <code>prefixText</code>, <code>suffixText</code>, <code>maxLength</code> + <code>showCounter</code>, <code>isPassword</code> with <code>passwordVisible</code>.</p>
+<p>Rules:</p>
+<ul><li>A visible <code>label</code> always. A placeholder is an example, not a label.</li><li>Helper text explains the format ("8–64 characters"); an error replaces it with what to fix ("Use at least 8 characters").</li><li>Validate on blur and on submit, not on every keystroke, except for live constraints (counter, password strength).</li><li>Keep the user's input on error. Never clear a field to show an error.</li><li><code>MeoTextArea</code> for multi-line, with a counter when limited.</li><li>Number input: <code>MeoSpinBox</code>. Dates: <code>MeoDateInput</code>/<code>MeoDatePicker</code>; time: <code>MeoTimeInput</code>/<code>MeoTimePicker</code>; color: <code>MeoColorField</code>; choice from a long list: <code>MeoExposedDropdown</code>.</li><li>Secrets use <code>isPassword</code>; never log or persist them (keyring only).</li></ul>
+<h2 id="3-choosing-a-selection-control">3. Choosing a selection control</h2>
+<div class="table-scroll"><table><thead><tr><th>Choice</th><th>Control</th></tr></thead><tbody><tr><td>On/off that takes effect immediately</td><td><code>MeoSwitch</code></td></tr><tr><td>On/off that is applied on Save, or one of several independent options</td><td><code>MeoCheckbox</code> (supports <code>indeterminate</code> for "some")</td></tr><tr><td>One of 2–5 visible options</td><td><code>MeoRadioButton</code> group or <code>MeoSegmentedButtons</code></td></tr><tr><td>One of many</td><td><code>MeoExposedDropdown</code></td></tr><tr><td>A number in a range</td><td><code>MeoSlider</code> (continuous), <code>MeoSteppedSlider</code> (steps), <code>MeoRangeSlider</code></td></tr><tr><td>A rating the user gives</td><td><code>MeoRatingBar</code></td></tr><tr><td>Tags the user adds</td><td>input chips (<code>MeoInputChip</code>)</td></tr><tr><td>Filters</td><td><code>MeoFilterChip</code> in a <code>MeoFilterGroup</code></td></tr></tbody></table></div>
+<p>Rules:</p>
+<ul><li>A switch changes state <strong>now</strong>. If the user must press Save, use a checkbox.</li><li>The label describes the <strong>on</strong> state ("Notify me about updates"), never "Enable/Disable …" ("Disable notifications" with a switch on is confusing).</li><li>Toggle-like controls may preview the requested state immediately, but the backend stays authoritative and the control rolls back if it fails (<code>SETTINGS.md</code>).</li><li>Group related options under a header; do not use more than 7 checkboxes in a row without grouping.</li></ul>
+<h2 id="4-form-layout">4. Form layout</h2>
+<ul><li>One column, labels above or inside fields, fields fill the column width up to <code>maximumContentWidth</code> (forms ≈ 560dp).</li><li>Order by the user's thinking, required first. Mark optional fields "Optional" rather than starring required ones.</li><li>Group with headers; separate groups by <code>sectionSpacing</code>.</li><li>Primary and cancel actions at the bottom of the form (or in a docked toolbar for long forms), right-aligned on wide windows.</li><li>Multi-step tasks use <code>MeoStepper</code>; each step validates before Next, Back never loses input.</li></ul>
+<h2 id="5-autosave-versus-explicit-save">5. Autosave versus explicit save</h2>
+<div class="table-scroll"><table><thead><tr><th>Case</th><th>Behavior</th></tr></thead><tbody><tr><td>Preferences (<code>SETTINGS.md</code>)</td><td>Apply immediately, no Save/Apply buttons</td></tr><tr><td>Creating or editing a record</td><td>Explicit Save; Cancel with a discard confirmation if edited</td></tr><tr><td>Privileged, destructive or restart-needed change</td><td>Explicit confirmation (<code>DIALOGS.md</code>)</td></tr><tr><td>Long form</td><td>Save draft locally; warn before leaving with unsaved changes</td></tr></tbody></table></div>
+<h2 id="6-validation-and-errors">6. Validation and errors</h2>
+<ul><li>Validate the data, not the user: "Enter a valid email address", not "Invalid input".</li><li>Field error: red outline + error icon + text under the field; the form-level summary only for errors not tied to a field.</li><li>Focus moves to the first invalid field on submit.</li><li>Server failures keep the form filled and show a banner at the top of the form (<code>STATES.md</code>).</li></ul>
+<h2 id="7-example">7. Example</h2>
+<pre><code>import QtQuick
+import QtQuick.Layouts
+import MeoUI
+
+ColumnLayout {
+    spacing: MeoTheme.space16
+    MeoListHeader { text: qsTr(&quot;Custom repository&quot;) }
+    MeoTextField {
+        id: name
+        Layout.fillWidth: true
+        label: qsTr(&quot;Name&quot;)
+        isError: submitted &amp;&amp; text === &quot;&quot;
+        errorText: qsTr(&quot;Enter a name&quot;)
+    }
+    MeoTextField {
+        id: url
+        Layout.fillWidth: true
+        label: qsTr(&quot;Address&quot;)
+        placeholder: &quot;https://example.org/repo&quot;
+        supportingText: qsTr(&quot;HTTPS only&quot;)
+        isError: submitted &amp;&amp; !valid(url.text)
+        errorText: qsTr(&quot;Enter a valid HTTPS address&quot;)
+        showClearButton: true
+    }
+    RowLayout {
+        Layout.alignment: Qt.AlignRight
+        spacing: MeoTheme.space8
+        MeoButton { type: &quot;outlined&quot;; text: qsTr(&quot;Cancel&quot;); onClicked: close() }
+        MeoButton { type: &quot;filled&quot;; text: qsTr(&quot;Add&quot;); loading: adding; onClicked: submit() }
+    }
+}</code></pre>
+<p>Property names are those of <code>MeoTextField</code>/<code>MeoButton</code>/<code>MeoListHeader</code>; the snippet has not been run in this pass (<code>submitted</code>, <code>valid</code>, <code>adding</code>, <code>submit</code>, <code>close</code> belong to the host).</p>
+<h2 id="8-checklist">8. Checklist</h2>
+<ul><li class="check"><span aria-hidden="true">☐</span> One filled button; labels name the effect.</li><li class="check"><span aria-hidden="true">☐</span> Every field has a visible label; errors say how to fix.</li><li class="check"><span aria-hidden="true">☐</span> Switch for instant, checkbox for deferred.</li><li class="check"><span aria-hidden="true">☐</span> Input is kept after an error; focus goes to the first error.</li><li class="check"><span aria-hidden="true">☐</span> Keyboard: Enter submits, Escape cancels, Tab order follows reading order.</li><li class="check"><span aria-hidden="true">☐</span> Secrets never logged or stored in plain text.</li></ul>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

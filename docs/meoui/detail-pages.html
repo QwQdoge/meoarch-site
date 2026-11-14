@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detail Pages · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/detail-pages">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/detail-pages.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li><li><a href="/docs/guide/account-api.html">Meo Account API</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html" aria-current="page">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/DETAIL_PAGES.md" target="_blank" rel="noreferrer">MeoUI/docs/design/DETAIL_PAGES.md ↗</a> · <a href="/docs/meoui/detail-pages.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<blockquote>📚 <a href="https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md">MeoArch 主文档 / Master Doc</a>：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。&lt;!-- meoarch-master --&gt;</blockquote>
+<h1 id="detail-pages">Detail Pages</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#1-page-kind">1. Page kind</a></li><li><a href="#2-anatomy">2. Anatomy</a></li><li><a href="#3-adaptive-layout">3. Adaptive layout</a></li><li><a href="#4-states-of-a-detail-page">4. States of a detail page</a></li><li><a href="#5-actions">5. Actions</a></li><li><a href="#6-trust-source-and-safety">6. Trust, source and safety</a></li><li><a href="#7-example">7. Example</a></li><li><a href="#8-checklist">8. Checklist</a></li></ul></nav>
+<p>A detail page shows one object in full: an app, a package, a device, a document, an account. It answers "what is this, is it right for me, what can I do with it?". The reference case is a store's app details page; the structure applies to any entity.</p>
+<h2 id="1-page-kind">1. Page kind</h2>
+<p>A detail page is a <code>settings-detail</code>/<code>info-page</code>-style level-2 page (<code>PAGE_TYPES.md</code>): reached from a list or card, has a back arrow, and does not push another persistent page. Secondary views (all versions, permissions, licenses) are transient overlays (<code>MeoSettingsTaskSheet</code>, side sheet, dialog).</p>
+<h2 id="2-anatomy">2. Anatomy</h2>
+<pre><code>┌ Top app bar: ← back · title (collapses in) · overflow ┐
+├ Header ────────────────────────────────────────────────┤
+│ [Icon 96]  Name              [Primary action]          │
+│            Developer · Source badge                     │
+│            Facts strip: rating | size | version | age   │
+├ Tabs or anchors (optional): Overview · Reviews · Changes┤
+├ Media: screenshots carousel (if any)                    │
+├ Description (collapsible after ~6 lines)                │
+├ Details group: version, size, license, source, updated  │
+├ Related: &quot;More from developer&quot;, &quot;Similar&quot;               │
+└─────────────────────────────────────────────────────────┘</code></pre>
+<div class="table-scroll"><table><thead><tr><th>Part</th><th>Rule</th></tr></thead><tbody><tr><td>Header</td><td>Identity first: icon (<code>MeoCachedImage</code>, 96dp, rounded <code>shapeExtraLarge</code>), name (<code>headlineSmall</code>/<code>titleLarge</code>), one subtitle line (developer, source). The <strong>primary action sits in the header</strong>, not at the bottom</td></tr><tr><td>Primary action</td><td>One <code>filled</code> <code>MeoButton</code>, state-driven (<code>STORE_FEEDBACK.md</code> §2); fixed width; progress shown in it or just under</td></tr><tr><td>Facts strip</td><td>3–4 short facts, each with a label (<code>labelSmall</code>) and value; omit any that are unknown; never "0" or "N/A" as a fact</td></tr><tr><td>Tabs</td><td>Only if there are ≥3 substantial sections; otherwise one scrolling page with <code>MeoListHeader</code> sections</td></tr><tr><td>Media</td><td><code>MeoCarousel</code>; keep aspect ratios; skeleton while loading; omit the section if none</td></tr><tr><td>Description</td><td>Plain text, <code>bodyLarge</code>, max 680dp wide; "Show more" after ~6 lines; no invented text</td></tr><tr><td>Details</td><td><code>MeoSettingsGroup</code> of read-only rows (<code>trailingKind: &quot;value&quot;</code>), selectable text for IDs/hashes</td></tr><tr><td>Related</td><td>Strip of cards (<code>CARDS.md</code>), ≤10, "See all"</td></tr></tbody></table></div>
+<h2 id="3-adaptive-layout">3. Adaptive layout</h2>
+<div class="table-scroll"><table><thead><tr><th>Class</th><th>Layout</th></tr></thead><tbody><tr><td>compact</td><td>Single column; header stacks (icon over text, full-width action); facts scroll horizontally; tabs scrollable</td></tr><tr><td>medium</td><td>Single column up to <code>maximumContentWidth</code> (840); header is a row</td></tr><tr><td>expanded+</td><td>Content column (≤ 840) + supporting pane (<code>MeoSupportingPaneLayout</code>): details/related on the side, or <code>MeoListDetailLayout</code> when opened from a list</td></tr></tbody></table></div>
+<p>Rules:</p>
+<ul><li>The same data and the same actions on every size; only arrangement changes.</li><li>On wide windows keep the list visible on the left (<code>MeoListDetailLayout</code>) so the user can move between items without going back.</li><li>Backend JSON shape does not dictate layout; map it to sections (<code>NATIVE_MEOUI_FRONTEND.md</code> in OmniStore).</li></ul>
+<h2 id="4-states-of-a-detail-page">4. States of a detail page</h2>
+<div class="table-scroll"><table><thead><tr><th>State</th><th>Show</th></tr></thead><tbody><tr><td>Loading</td><td>Header skeleton with the final geometry (icon, title, button, facts), then sections fill in as they arrive</td></tr><tr><td>Loaded, some data missing</td><td>Omit the missing sections and facts</td></tr><tr><td>Not found / removed</td><td>Full-page state: "This app is no longer available." + Back</td></tr><tr><td>Failed to load</td><td>Full-page error with Retry; keep the back arrow</td></tr><tr><td>Action in progress</td><td>Primary action shows the task (<code>PROGRESS.md</code>); the rest stays usable</td></tr><tr><td>Action failed</td><td>Inline message under the header with Retry and "View log"</td></tr><tr><td>Offline</td><td>Show cached data with a <code>warning</code> banner; disable network actions with a reason</td></tr></tbody></table></div>
+<p>The header loads first and is never replaced by a spinner; content below may fill in progressively.</p>
+<h2 id="5-actions">5. Actions</h2>
+<ul><li><strong>Primary</strong>: the one thing most users want here (Install, Open, Update).</li><li><strong>Secondary</strong>: tonal or text buttons in the header, ≤2 (Share, Website).</li><li><strong>Overflow</strong> (<code>more_vert</code>): everything else (Report, Copy link, Remove (destructive last, with confirmation)).</li><li>Destructive actions confirm (<code>DIALOGS.md</code>); reversible ones show a snackbar with Undo.</li><li>Keyboard: Enter activates the primary action when the header is focused; all actions reachable by Tab.</li></ul>
+<h2 id="6-trust-source-and-safety">6. Trust, source and safety</h2>
+<ul><li>Show the <strong>source</strong> (Meo repo, Flatpak, AUR…) next to the name with a <code>MeoChip</code>/<code>MeoBadge</code>; community or unreviewed sources use the tertiary tone and words ("Community").</li><li>Never show permissions, ratings, screenshots, sizes or developer data the backend did not provide.</li><li>A security-relevant fact (needs review, untrusted source) is a <code>warning</code> banner under the header, not a footnote.</li></ul>
+<h2 id="7-example">7. Example</h2>
+<pre><code>import QtQuick
+import QtQuick.Layouts
+import MeoUI
+
+MeoPageLayout {
+    id: page
+    title: details.name
+
+    ColumnLayout {
+        spacing: MeoTheme.space16
+
+        RowLayout {
+            spacing: MeoTheme.space16
+            MeoCachedImage { source: details.icon; Layout.preferredWidth: 96 * MeoTheme.globalScale; Layout.preferredHeight: 96 * MeoTheme.globalScale }
+            ColumnLayout {
+                Layout.fillWidth: true
+                MeoText { text: details.name; typeRole: &quot;title&quot;; typeSize: &quot;big&quot;; Layout.fillWidth: true; elide: Text.ElideRight }
+                MeoText { text: details.developer; typeRole: &quot;body&quot;; typeSize: &quot;medium&quot;; color: MeoTheme.contentOnSurfaceVariant; visible: details.developer !== &quot;&quot; }
+                MeoChip { type: &quot;assist&quot;; label: details.sourceName; size: &quot;xs&quot; }
+            }
+            MeoButton { type: &quot;filled&quot;; size: &quot;m&quot;; text: details.actionLabel; loading: details.busy; onClicked: details.run() }
+        }
+
+        MeoBanner {
+            visible: details.needsReview
+            Layout.fillWidth: true
+            tone: &quot;warning&quot;; icon: &quot;warning&quot;
+            title: qsTr(&quot;This source needs review&quot;)
+            text: qsTr(&quot;It is community maintained and not reviewed by MeoArch.&quot;)
+        }
+
+        MeoListHeader { text: qsTr(&quot;About&quot;) }
+        MeoText { text: details.description; typeRole: &quot;body&quot;; typeSize: &quot;big&quot;; wrapMode: Text.Wrap; Layout.fillWidth: true; Layout.maximumWidth: 680 * MeoTheme.globalScale; visible: details.description !== &quot;&quot; }
+
+        MeoListHeader { text: qsTr(&quot;Details&quot;) }
+        MeoSettingsGroup { /* MeoSettingsRow items with trailingKind: &quot;value&quot; */ }
+    }
+}</code></pre>
+<p>Names come from <code>MeoPageLayout</code>, <code>MeoCachedImage</code>, <code>MeoText</code>, <code>MeoChip</code>, <code>MeoButton</code>, <code>MeoBanner</code>, <code>MeoListHeader</code>, <code>MeoSettingsGroup</code>; the snippet has not been run in this pass, and <code>details</code> is the host's data object.</p>
+<h2 id="8-checklist">8. Checklist</h2>
+<ul><li class="check"><span aria-hidden="true">☐</span> Header with identity + primary action loads first, never a spinner.</li><li class="check"><span aria-hidden="true">☐</span> Unknown facts omitted; no invented media or ratings.</li><li class="check"><span aria-hidden="true">☐</span> One primary action; destructive actions confirm.</li><li class="check"><span aria-hidden="true">☐</span> Adaptive: list+detail on wide, route on compact.</li><li class="check"><span aria-hidden="true">☐</span> Source and trust visible; risky state is a banner.</li><li class="check"><span aria-hidden="true">☐</span> Back keeps list position; Escape/back are consistent.</li><li class="check"><span aria-hidden="true">☐</span> Verified compact, medium, expanded; 200% text.</li></ul>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

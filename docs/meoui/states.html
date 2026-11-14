@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Empty and Error States · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/states">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/states.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li><li><a href="/docs/guide/account-api.html">Meo Account API</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html" aria-current="page">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/STATES.md" target="_blank" rel="noreferrer">MeoUI/docs/design/STATES.md ↗</a> · <a href="/docs/meoui/states.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<blockquote>📚 <a href="https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md">MeoArch 主文档 / Master Doc</a>：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。&lt;!-- meoarch-master --&gt;</blockquote>
+<h1 id="empty-error-and-status-states">Empty, Error and Status States</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#1-the-state-matrix">1. The state matrix</a></li><li><a href="#2-empty-states">2. Empty states</a></li><li><a href="#3-errors">3. Errors</a></li><li><a href="#4-banners">4. Banners</a></li><li><a href="#5-offline-and-stale-data">5. Offline and stale data</a></li><li><a href="#6-permission-account-and-quota">6. Permission, account and quota</a></li><li><a href="#7-status-indicators">7. Status indicators</a></li><li><a href="#8-writing-states">8. Writing states</a></li><li><a href="#9-checklist">9. Checklist</a></li></ul></nav>
+<p>Every list, page and task has more than a happy path. Design these states first; they are what users meet most when something is wrong or new.</p>
+<h2 id="1-the-state-matrix">1. The state matrix</h2>
+<div class="table-scroll"><table><thead><tr><th>State</th><th>Meaning</th><th>Show</th></tr></thead><tbody><tr><td>Loading</td><td>First load, layout known/unknown</td><td>Skeleton / indicator (<code>PROGRESS.md</code>)</td></tr><tr><td>Empty (first use)</td><td>Nothing yet, user can add</td><td><code>MeoEmptyState</code> with an action</td></tr><tr><td>Empty (filtered)</td><td>Nothing matches</td><td><code>MeoEmptyState</code>, "Clear filters"</td></tr><tr><td>Empty (done)</td><td>Nothing left to do</td><td><code>MeoEmptyState</code>, positive tone, no action</td></tr><tr><td>Partial</td><td>Some data failed</td><td>Content + inline error on the failed part</td></tr><tr><td>Stale</td><td>Showing saved data</td><td>Content + <code>tonal</code> banner "Last updated …"</td></tr><tr><td>Offline</td><td>No network</td><td>Content (cached) + <code>warning</code> banner</td></tr><tr><td>Error (recoverable)</td><td>Failed, retry may work</td><td>Inline message + Retry</td></tr><tr><td>Error (blocking)</td><td>Nothing can be shown</td><td>Full-page error state + action</td></tr><tr><td>No access</td><td>Needs sign-in / permission</td><td>Explain + the one action that fixes it</td></tr><tr><td>Unavailable</td><td>Not supported here</td><td>Explain why; hide the control, don't disable it silently</td></tr></tbody></table></div>
+<p>Never leave a blank area, an endless spinner or a raw error.</p>
+<h2 id="2-empty-states">2. Empty states</h2>
+<p><code>MeoEmptyState</code>: <code>icon</code>, <code>title</code>, <code>description</code>, <code>actionText</code>, <code>customContent</code>, signal <code>actionClicked()</code>. It centers a 64dp icon, a headline and body text in a column up to 400dp wide.</p>
+<div class="table-scroll"><table><thead><tr><th>Case</th><th>Title</th><th>Description</th><th>Action</th></tr></thead><tbody><tr><td>First use</td><td>"No apps installed yet"</td><td>"Browse Explore to find software."</td><td>"Explore"</td></tr><tr><td>No results</td><td>"No results for “firefox”"</td><td>"Check the spelling, or try another source."</td><td>"Clear search"</td></tr><tr><td>Filtered</td><td>"Nothing matches these filters"</td><td></td><td>"Clear filters"</td></tr><tr><td>All done</td><td>"You're up to date"</td><td>"Last checked 2 minutes ago."</td><td>"Check again"</td></tr><tr><td>Category empty</td><td>"Nothing here yet"</td><td></td><td>"Back"</td></tr></tbody></table></div>
+<p>Rules:</p>
+<ul><li>Say <strong>what</strong> is empty and <strong>what to do</strong>; one action only.</li><li>Empty is not an error: no error color, no Retry.</li><li>Icon is a quiet, generic symbol; never an illustration that implies content.</li><li>Keep the page's header and search; replace only the content area.</li><li>A positive "all done" state has no action unless re-checking is meaningful.</li></ul>
+<h2 id="3-errors">3. Errors</h2>
+<h3 id="3-1-choose-the-surface">3.1 Choose the surface</h3>
+<div class="table-scroll"><table><thead><tr><th>Situation</th><th>Surface</th></tr></thead><tbody><tr><td>Action finished/failed, nothing blocked</td><td><code>MeoSnackbar</code> (with action)</td></tr><tr><td>Affects the page, stays until fixed</td><td><code>MeoBanner { tone: &quot;error&quot; }</code></td></tr><tr><td>One item failed</td><td>Message in that row/card with Retry</td></tr><tr><td>A field is invalid</td><td>Field error (<code>FORMS.md</code>)</td></tr><tr><td>A decision is needed</td><td><code>MeoDialog</code> (<code>DIALOGS.md</code>)</td></tr><tr><td>Page cannot load</td><td>Full-page error (below)</td></tr></tbody></table></div>
+<p>One failure → one message. Do not stack a banner, a snackbar and a dialog.</p>
+<h3 id="3-2-message-structure">3.2 Message structure</h3>
+<ol><li><strong>What failed</strong>, in the user's terms ("Couldn't install Firefox").</li><li><strong>Why</strong>, only if known and useful ("Not enough disk space").</li><li><strong>What to do</strong>, as an action ("Free 120 MB, then try again").</li><li><strong>Details</strong> collapsed (code, log link) for support.</li></ol>
+<p>Never: raw exception, backend JSON, HTTP status alone, or a code without words. When the cause is unknown say so: "Something went wrong. Try again, or open the log."</p>
+<h3 id="3-3-full-page-error">3.3 Full-page error</h3>
+<p>Use <code>MeoEmptyState</code> with an error icon, a title ("Couldn't load Explore"), one sentence, and <strong>Retry</strong>; add "Open log" for developer or support audiences. Keep navigation and the top bar so the user can leave.</p>
+<h3 id="3-4-inline-error-with-retry">3.4 Inline error with retry</h3>
+<pre><code>RowLayout {
+    visible: item.failed
+    spacing: MeoTheme.space8
+    MeoIcon { icon: &quot;error&quot;; color: MeoTheme.error }
+    MeoText { text: item.errorText; color: MeoTheme.error; Layout.fillWidth: true; wrapMode: Text.Wrap }
+    MeoButton { type: &quot;text&quot;; size: &quot;s&quot;; text: qsTr(&quot;Retry&quot;); onClicked: item.retry() }
+}</code></pre>
+<h2 id="4-banners">4. Banners</h2>
+<p><code>MeoBanner.tone</code>:</p>
+<div class="table-scroll"><table><thead><tr><th>Tone</th><th>Container</th><th>Use</th></tr></thead><tbody><tr><td><code>tonal</code></td><td>secondary-ish</td><td>Info, stale data, tips</td></tr><tr><td><code>warning</code></td><td><code>warningContainer</code></td><td>Degraded but working</td></tr><tr><td><code>error</code></td><td><code>errorContainer</code></td><td>The requested thing did not happen</td></tr><tr><td><code>success</code></td><td><code>successContainer</code></td><td>Rare; prefer a snackbar</td></tr></tbody></table></div>
+<p>A banner has a title (the accessible name), text, an icon and optionally <code>confirmText</code>/<code>cancelText</code>. The icon and title carry the meaning, color is reinforcement. At most one banner per page.</p>
+<h2 id="5-offline-and-stale-data">5. Offline and stale data</h2>
+<ul><li>Cache the last good data and show it; mark it ("Last updated 10:42").</li><li>Disable only actions that need the network, with a reason in the tooltip or supporting text, not silently.</li><li>Return to normal automatically when the connection returns; update in place.</li><li>Don't show a modal "No connection".</li></ul>
+<h2 id="6-permission-account-and-quota">6. Permission, account and quota</h2>
+<ul><li><strong>Not signed in</strong> (feature needs an account): inline in that feature only; never block unrelated features ("Sign in to Meo Account to use AI.", action "Open Meo Settings").</li><li><strong>Not allowed</strong> (policy): say who controls it; hide, not disable, controls the user can never use.</li><li><strong>Quota or plan limit</strong>: only if the service defines it. Do not show a limit or a remaining count the API does not provide (<code>MEO_API_FACTS.md</code> in OmniStore documents that Meo defines none today).</li></ul>
+<h2 id="7-status-indicators">7. Status indicators</h2>
+<p>For persistent status (connected, updating, source trusted):</p>
+<div class="table-scroll"><table><thead><tr><th>Need</th><th>Use</th></tr></thead><tbody><tr><td>Count or unread</td><td><code>MeoBadge</code> (<code>maxCount</code> 99, <code>isDot</code>)</td></tr><tr><td>A category or state label</td><td><code>MeoChip</code> / <code>MeoAssistChip</code></td></tr><tr><td>A system-like status line</td><td><code>MeoStatusStrip</code></td></tr><tr><td>A row with status</td><td><code>MeoSettingsRow { trailingKind: &quot;status&quot;; statusTone }</code></td></tr></tbody></table></div>
+<p>Status text + icon + tone together; a colored dot alone is never enough.</p>
+<h2 id="8-writing-states">8. Writing states</h2>
+<ul><li>Sentence case, no exclamation marks, no blame ("Couldn't…", not "You failed to…").</li><li>Specific nouns ("Firefox", "the source"), not "the item".</li><li>One sentence for the cause, one for the fix.</li><li>Keep error codes out of the headline; put them under Details.</li><li>Examples in <code>WRITING.md</code>.</li></ul>
+<h2 id="9-checklist">9. Checklist</h2>
+<ul><li class="check"><span aria-hidden="true">☐</span> Every list/page defines loading, empty, error, offline.</li><li class="check"><span aria-hidden="true">☐</span> Empty states have one action or none; never an error color.</li><li class="check"><span aria-hidden="true">☐</span> Errors use the right surface; no stacking.</li><li class="check"><span aria-hidden="true">☐</span> Nothing renders a raw exception or JSON.</li><li class="check"><span aria-hidden="true">☐</span> State is not conveyed by color alone.</li><li class="check"><span aria-hidden="true">☐</span> Retry actually retries and shows progress.</li></ul>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

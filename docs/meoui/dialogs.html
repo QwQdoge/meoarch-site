@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dialogs and Alerts · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/dialogs">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/dialogs.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li><li><a href="/docs/guide/account-api.html">Meo Account API</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html" aria-current="page">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/DIALOGS.md" target="_blank" rel="noreferrer">MeoUI/docs/design/DIALOGS.md ↗</a> · <a href="/docs/meoui/dialogs.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<blockquote>📚 <a href="https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md">MeoArch 主文档 / Master Doc</a>：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。&lt;!-- meoarch-master --&gt;</blockquote>
+<h1 id="dialogs-alerts-confirmations-and-sheets">Dialogs, Alerts, Confirmations and Sheets</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#1-choose-the-surface">1. Choose the surface</a></li><li><a href="#2-meodialog">2. <code>MeoDialog</code></a></li><li><a href="#3-variants-by-purpose">3. Variants by purpose</a></li><li><a href="#4-sheets">4. Sheets</a></li><li><a href="#5-snackbars">5. Snackbars</a></li><li><a href="#6-banners">6. Banners</a></li><li><a href="#7-menus-and-tooltips">7. Menus and tooltips</a></li><li><a href="#8-writing">8. Writing</a></li><li><a href="#9-example">9. Example</a></li><li><a href="#10-known-gaps">10. Known gaps</a></li><li><a href="#11-checklist">11. Checklist</a></li></ul></nav>
+<p>Interrupting the user is expensive. Use the lightest surface that does the job, and use a dialog only when the user must decide before anything else can happen.</p>
+<h2 id="1-choose-the-surface">1. Choose the surface</h2>
+<div class="table-scroll"><table><thead><tr><th>Situation</th><th>Surface</th><th>Component</th><th>Blocks the page?</th></tr></thead><tbody><tr><td>An action finished or failed; nothing else needed</td><td>Snackbar</td><td><code>MeoSnackbar</code></td><td>No</td></tr><tr><td>A condition affects the page and stays until fixed</td><td>Banner</td><td><code>MeoBanner</code></td><td>No</td></tr><tr><td>A hint that appears on hover/focus</td><td>Tooltip</td><td><code>MeoTooltip</code>, <code>MeoRichTooltip</code></td><td>No</td></tr><tr><td>A choice among actions for one item</td><td>Menu</td><td><code>MeoMenu</code>, <code>MeoContextMenu</code></td><td>Light (dismiss on outside click)</td></tr><tr><td>A yes/no decision or a short alert</td><td>Dialog</td><td><code>MeoDialog</code></td><td>Yes</td></tr><tr><td>A destructive or session-ending action</td><td>Dialog, or hold-to-confirm</td><td><code>MeoDialog</code>, <code>MeoHoldToConfirm</code></td><td>Yes</td></tr><tr><td>A short choice, credential or one setting edit inside Settings</td><td>Task sheet</td><td><code>MeoSettingsTaskSheet</code></td><td>Overlay</td></tr><tr><td>A longer task related to the current page (filters, a form, details)</td><td>Side sheet (wide) / bottom sheet (compact)</td><td><code>MeoSideSheet</code>, <code>MeoBottomSheet</code>, <code>MeoStandardBottomSheet</code></td><td>Optional</td></tr><tr><td>A task needing the whole screen (compose, multi-field edit, steps)</td><td>Full-screen dialog</td><td><code>MeoFullScreenDialog</code></td><td>Yes</td></tr><tr><td>Something requiring progress and recovery</td><td>A page (<code>PAGE_TYPES.md</code> <code>task-page</code>)</td><td></td><td>n/a</td></tr></tbody></table></div>
+<p>If the user can ignore it, it is not a dialog. If it can be undone, prefer a snackbar with <strong>Undo</strong> over a confirmation.</p>
+<h2 id="2-meodialog">2. <code>MeoDialog</code></h2>
+<p><code>MeoDialog</code> is the standard modal. Properties: <code>icon</code>, <code>title</code>, <code>message</code>, <code>supportingContent</code> (a <code>Component</code> for custom body), <code>confirmText</code>, <code>cancelText</code>, <code>showAcceptButton</code>, <code>showRejectButton</code>, <code>showDivider</code>, <code>preferredDialogWidth</code> (default 400dp), <code>initialFocusTarget</code>; signals <code>confirmed()</code>, <code>cancelled()</code>, <code>dismissed()</code>. Both actions are text buttons; cancel is left of confirm. Radius is <code>dialogRadius</code> (28dp), elevation 3.</p>
+<p>Anatomy:</p>
+<pre><code>        [icon]            optional, centered when there is no body content
+        Title             headline, ≤ 2 lines, a question or the action
+        Message           what happens, consequences, ≤ 4 lines
+        [supportingContent] optional: a list, a field, a checkbox
+                [Cancel]  [Confirm]</code></pre>
+<p>Rules:</p>
+<ul><li><strong>Title</strong> names the decision ("Remove Firefox?"), not the surface ("Confirmation"). No "Are you sure?".</li><li><strong>Message</strong> states what will happen and what cannot be undone; not what the user already knows.</li><li><strong>Buttons</strong> are verbs. "Remove" / "Cancel", not "OK" / "Yes" / "No". The confirm label repeats the title's verb.</li><li>At most two actions. A third choice ("Don't ask again") is a checkbox in <code>supportingContent</code>, not a button.</li><li>Initial focus: the <strong>safe</strong> action (Cancel) for destructive dialogs; the field for input dialogs. Set <code>initialFocusTarget</code>.</li><li><code>MeoDialog</code> is modal with <code>closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside</code>. Escape or a click outside closes it and emits <code>dismissed()</code> (not <code>cancelled()</code>, which is only the Cancel button). The host must treat <code>dismissed()</code> as a cancel and never as a confirm.</li><li>For an irreversible, in-flight or must-answer dialog set <code>closePolicy: Popup.NoAutoClose</code> on the dialog so only its buttons close it.</li><li>Recommended: Enter confirms when focus is not in a text area.</li><li>No dialog stacking. A dialog may open a menu, not another dialog; chain the decision into one.</li><li>Do not open a dialog at startup or on a background event. Only the user's own action opens one; a background condition becomes a banner.</li><li>Content never scrolls inside a dialog more than ~half the window. If it does, use a full-screen dialog or a sheet.</li></ul>
+<h2 id="3-variants-by-purpose">3. Variants by purpose</h2>
+<h3 id="3-1-informational-alert">3.1 Informational alert</h3>
+<p>One action ("Got it"), <code>showRejectButton: false</code>. Use only when the user must read something before continuing (a security notice). Otherwise a banner.</p>
+<h3 id="3-2-confirmation-reversible">3.2 Confirmation (reversible)</h3>
+<pre><code>Title:   Replace the current theme?
+Message: Your color settings change immediately. You can switch back in Appearance.
+Actions: Cancel   Replace</code></pre>
+<h3 id="3-3-destructive-confirmation">3.3 Destructive confirmation</h3>
+<p><code>MeoDialog</code> has no destructive tone property. Compose it:</p>
+<ul><li><code>icon: &quot;warning&quot;</code> (or <code>delete</code>),</li><li>title names the object ("Remove Firefox?"),</li><li>message says what is lost and that it cannot be undone,</li><li>confirm label is the specific verb ("Remove"),</li><li>initial focus on Cancel.</li></ul>
+<pre><code>Title:   Remove Firefox?
+Message: The app and its cached data are removed from this device. Your profile in
+         your home folder is kept.
+Actions: Cancel   Remove</code></pre>
+<p>For <strong>bulk</strong> destructive actions say the count ("Remove 12 apps?"). For data that cannot be recovered, ask the user to type the name or use hold-to-confirm.</p>
+<h3 id="3-4-session-ending-or-high-impact-action-hold-to-confirm">3.4 Session-ending or high-impact action: hold to confirm</h3>
+<p><code>MeoHoldToConfirm</code> requires a continuous press (default 5 s, <code>holdDuration</code>). Releasing, losing focus, disabling or Escape cancels. Use for shutdown, sign-out of all devices, wipe, factory reset. Properties: <code>confirmationText</code>, <code>holdingText</code>, <code>iconName</code>, <code>tone</code> (<code>error</code>, <code>primary</code>, <code>neutral</code>); signals <code>confirmed()</code>, <code>cancelled()</code>. It exposes progress to assistive technology ("Confirmation in N percent"). Always provide a keyboard-accessible equivalent (hold Space/Enter) and say it in the label.</p>
+<h3 id="3-5-input-dialog">3.5 Input dialog</h3>
+<p>Put one <code>MeoTextField</code> in <code>supportingContent</code>; confirm is disabled until the value is valid; Enter confirms. More than two fields → a sheet or page.</p>
+<h3 id="3-6-choice-dialog">3.6 Choice dialog</h3>
+<p>Radio list in <code>supportingContent</code>; confirm applies. For ≤5 options with an immediate effect, a menu is lighter.</p>
+<h3 id="3-7-progress-dialog">3.7 Progress dialog</h3>
+<p>Avoid. Progress belongs on the page or in a task sheet (<code>PROGRESS.md</code>). If an operation blocks everything, show an indeterminate or determinate bar, a Cancel button when it can be cancelled, and no Confirm.</p>
+<h3 id="3-8-permission-and-authorization">3.8 Permission and authorization</h3>
+<p>System authorization (polkit, Meo Account) is shown by the system. The app explains <strong>why</strong> before triggering it ("Updating system packages needs your password") and never asks for the password itself.</p>
+<h2 id="4-sheets">4. Sheets</h2>
+<div class="table-scroll"><table><thead><tr><th>Sheet</th><th>Use</th><th>Notes</th></tr></thead><tbody><tr><td><code>MeoBottomSheet</code> (modal)</td><td>Touch/compact choices, share, filters</td><td><code>dismissible</code>; max height ratio 0.72; max width 640dp</td></tr><tr><td><code>MeoStandardBottomSheet</code></td><td>A persistent secondary surface under content (player controls)</td><td>Does not block the page</td></tr><tr><td><code>MeoSideSheet</code> (<code>isOpen</code>, <code>title</code>, <code>content</code>, <code>showCloseButton</code>)</td><td>Task list, filters, details beside the page on wide windows</td><td>Not modal; Escape closes</td></tr><tr><td><code>MeoSideSheetModal</code></td><td>Same on medium windows, with a scrim</td><td></td></tr><tr><td><code>MeoSettingsTaskSheet</code></td><td>Third-level Settings overlay</td><td>Retracts on accept, reject or navigation (<code>SETTINGS.md</code>)</td></tr><tr><td><code>MeoFullScreenDialog</code></td><td>Compose or multi-field edit; <code>actions</code> in the header, <code>bottomActions</code> at the bottom</td><td>Close = discard; confirm if there are edits</td></tr></tbody></table></div>
+<p>Sheet rules:</p>
+<ul><li>Always a close affordance (button, drag handle, Escape).</li><li>A sheet holds one task; do not push pages inside it.</li><li>On compact windows a side sheet becomes a bottom sheet or a route.</li></ul>
+<h2 id="5-snackbars">5. Snackbars</h2>
+<p><code>MeoSnackbar</code>: <code>message</code>, <code>actionText</code>, <code>icon</code>, <code>dismissible</code>, <code>duration</code> (4000 ms default), signals <code>actionClicked()</code>, <code>dismissed()</code>.</p>
+<ul><li>One short sentence, ≤2 lines. Past tense for results ("Firefox installed").</li><li>At most one action (Undo, Retry, View). The action is a verb.</li><li>Auto-dismisses; <strong>never</strong> the only place an important failure appears: also keep it in the row or page where the user can act later.</li><li>Never stack; a new message replaces the old one (queue if each matters).</li><li>Do not cover the primary action; place above the bottom bar or FAB.</li><li>Do not use a snackbar for errors that need a decision: use a banner or dialog.</li></ul>
+<h2 id="6-banners">6. Banners</h2>
+<p><code>MeoBanner</code>: <code>title</code>, <code>text</code>, <code>icon</code>, <code>tone</code> (<code>tonal</code>, <code>warning</code>, <code>success</code>, <code>error</code>), <code>confirmText</code>, <code>cancelText</code>, <code>confirmed()</code>, <code>cancelled()</code>. It has the <code>AlertMessage</code> role so assistive technology announces it.</p>
+<ul><li>Sits at the top of the content it describes, pushes content down, never overlays.</li><li>Persists until the cause is gone or the user dismisses it; not for transient results.</li><li>Title says the situation, text says the effect, one action says the fix.</li><li>At most one banner per page at a time; combine messages, most severe first.</li><li>Error tone is for "the thing you asked for did not happen"; warning for "degraded but working".</li></ul>
+<h2 id="7-menus-and-tooltips">7. Menus and tooltips</h2>
+<ul><li>Menus: ≤7 items, grouped with dividers; destructive item last, with the error tone icon. Anchor with <code>openFrom(button)</code> and <code>placement: &quot;auto&quot;</code> (<code>FOR_AGENTS.md</code>).</li><li>Tooltips (<code>MeoTooltip</code>): label only, appear after <code>tooltipShowDelay</code> (500 ms), never on touch. Rich tooltips (<code>MeoRichTooltip</code>) carry a title, text and ≤2 actions; they are not for essential information.</li></ul>
+<h2 id="8-writing">8. Writing</h2>
+<ul><li>Title: verb + object, a question for decisions ("Delete 3 files?").</li><li>Message: consequence first, then recovery ("Items in the trash are deleted after 30 days.").</li><li>Confirm: the specific verb. Cancel: "Cancel".</li><li>No technical codes in dialog text; offer "Details" for logs.</li><li>See <code>WRITING.md</code> for tone and examples.</li></ul>
+<h2 id="9-example">9. Example</h2>
+<pre><code>import QtQuick
+import MeoUI
+
+MeoDialog {
+    id: removeDialog
+    property string appName
+    property int appCount: 1
+
+    icon: &quot;warning&quot;
+    title: appCount === 1 ? qsTr(&quot;Remove %1?&quot;).arg(appName)
+                          : qsTr(&quot;Remove %1 apps?&quot;).arg(appCount)
+    message: qsTr(&quot;The app and its cached data are removed from this device. Your files in your home folder are kept.&quot;)
+    confirmText: qsTr(&quot;Remove&quot;)
+    cancelText: qsTr(&quot;Cancel&quot;)
+    // Set initialFocusTarget to the safe action when your host exposes it.
+    onConfirmed: transactions.submitRemove(appName)
+    onDismissed: transactions.cancelPendingRemove(appName)
+}</code></pre>
+<p>Open with <code>removeDialog.open()</code> (it is a <code>Popup</code>). Property and signal names are from <code>MeoDialog</code>; the snippet has not been run in this pass.</p>
+<h2 id="10-known-gaps">10. Known gaps</h2>
+<ul><li><code>MeoDialog</code> has no destructive tone or automatic safe-focus: compose as in 3.3 and set <code>initialFocusTarget</code> yourself.</li><li>There is no built-in "type to confirm" dialog; build it with a text field in <code>supportingContent</code>.</li><li>A global dialog queue does not exist; the host must prevent stacking.</li></ul>
+<h2 id="11-checklist">11. Checklist</h2>
+<ul><li class="check"><span aria-hidden="true">☐</span> The lightest surface that works (snackbar → banner → menu → dialog).</li><li class="check"><span aria-hidden="true">☐</span> Title names the decision; buttons are verbs; max two actions.</li><li class="check"><span aria-hidden="true">☐</span> Destructive: names the object, states loss, safe action focused.</li><li class="check"><span aria-hidden="true">☐</span> No dialog from a background event; no stacking.</li><li class="check"><span aria-hidden="true">☐</span> Escape and focus return to the opener.</li><li class="check"><span aria-hidden="true">☐</span> Reduce Motion respected; text scale 200% fits.</li></ul>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

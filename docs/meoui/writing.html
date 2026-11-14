@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Writing · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/writing">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/writing.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li><li><a href="/docs/guide/account-api.html">Meo Account API</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html" aria-current="page">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/WRITING.md" target="_blank" rel="noreferrer">MeoUI/docs/design/WRITING.md ↗</a> · <a href="/docs/meoui/writing.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<blockquote>📚 <a href="https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md">MeoArch 主文档 / Master Doc</a>：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。&lt;!-- meoarch-master --&gt;</blockquote>
+<h1 id="writing-for-the-interface">Writing for the Interface</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#1-voice">1. Voice</a></li><li><a href="#2-casing-and-punctuation">2. Casing and punctuation</a></li><li><a href="#3-buttons">3. Buttons</a></li><li><a href="#4-titles-and-headers">4. Titles and headers</a></li><li><a href="#5-messages-by-situation">5. Messages by situation</a></li><li><a href="#6-tooltips-and-accessible-names">6. Tooltips and accessible names</a></li><li><a href="#7-localization-safe-writing">7. Localization-safe writing</a></li><li><a href="#8-do-and-don-t">8. Do and don't</a></li><li><a href="#9-checklist">9. Checklist</a></li></ul></nav>
+<p>Words are part of the component. English is the source language; every string goes through <code>qsTr()</code> and is translated (<code>../localization.md</code>; <code>zh_CN</code> is the first reviewed catalog). Write sources so they translate well.</p>
+<h2 id="1-voice">1. Voice</h2>
+<ul><li>Plain, calm, specific. Say what happened and what the user can do.</li><li>Address the user as "you" only when needed; prefer imperative verbs on buttons.</li><li>No jargon the user did not choose ("transaction", "daemon", "backend") unless the product is a developer tool.</li><li>No humor in errors; light friendliness in empty/success states is fine.</li><li>No blame, no exclamation marks, no ALL CAPS.</li></ul>
+<h2 id="2-casing-and-punctuation">2. Casing and punctuation</h2>
+<div class="table-scroll"><table><thead><tr><th>Element</th><th>Style</th></tr></thead><tbody><tr><td>Buttons, tabs, menu items, titles, headers</td><td>Sentence case ("Check for updates")</td></tr><tr><td>Product and brand names</td><td>As written (MeoArch, OmniStore, Meo Account)</td></tr><tr><td>Button labels</td><td>No trailing period; ellipsis <code>…</code> only when the action needs more input</td></tr><tr><td>Dialog, banner, snackbar</td><td>Full sentences with a period, except one-word titles</td></tr><tr><td>Placeholders</td><td>Examples, no period ("name@example.org")</td></tr><tr><td>Numbers</td><td>Locale-formatted via the framework; units after a space ("12.4 MB")</td></tr></tbody></table></div>
+<h2 id="3-buttons">3. Buttons</h2>
+<ul><li>Verb + object when ambiguous ("Remove Firefox"), verb alone when clear ("Install").</li><li>Pairs: Cancel / the specific action. Never OK / Cancel, Yes / No.</li><li>State labels change with state: Install → Installing → Open. Reserve width for the longest.</li><li>"Retry" for failed operations, "Try again" in sentences.</li></ul>
+<h2 id="4-titles-and-headers">4. Titles and headers</h2>
+<div class="table-scroll"><table><thead><tr><th>Surface</th><th>Pattern</th><th>Example</th></tr></thead><tbody><tr><td>Page</td><td>Noun</td><td>"Installed", "Updates"</td></tr><tr><td>Section header</td><td>Noun phrase, count in parentheses</td><td>"Updates (3)"</td></tr><tr><td>Dialog</td><td>Question or verb + object</td><td>"Remove Firefox?"</td></tr><tr><td>Empty state</td><td>What is empty</td><td>"No apps installed yet"</td></tr><tr><td>Error</td><td>What failed</td><td>"Couldn't install Firefox"</td></tr><tr><td>Banner</td><td>Situation</td><td>"You're offline"</td></tr></tbody></table></div>
+<h2 id="5-messages-by-situation">5. Messages by situation</h2>
+<div class="table-scroll"><table><thead><tr><th>Situation</th><th>Message</th></tr></thead><tbody><tr><td>Success</td><td>"Firefox installed." (past tense, short)</td></tr><tr><td>Offline</td><td>"You're offline. Showing what was saved."</td></tr><tr><td>Failure</td><td>"Couldn't install Firefox. Not enough disk space." + Retry</td></tr><tr><td>Cancelled by user</td><td>"Installation cancelled." (no error tone)</td></tr><tr><td>Waiting</td><td>"Waiting for another change to finish."</td></tr><tr><td>Needs account</td><td>"Sign in to Meo Account to use AI."</td></tr><tr><td>Needs authorization</td><td>"Updating system packages needs your password."</td></tr><tr><td>Unknown cause</td><td>"Something went wrong. Try again, or open the log."</td></tr><tr><td>Destructive</td><td>"The app and its cached data are removed. This can't be undone."</td></tr><tr><td>Empty search</td><td>"No results for “firefox”"</td></tr><tr><td>Rate limit (provider)</td><td>"Your AI provider is limiting requests. Try again later."</td></tr></tbody></table></div>
+<h2 id="6-tooltips-and-accessible-names">6. Tooltips and accessible names</h2>
+<ul><li>Tooltip = the action ("Refresh"), not a sentence.</li><li>Accessible name = what the control is or does; for an icon button it equals the tooltip. For an item, name + state ("Firefox, installed, update available").</li><li>Progress: "Downloading Firefox, 40 percent" (updates announced on phase change, not each percent).</li><li>Never rely on the visible icon, color or position in the name.</li></ul>
+<h2 id="7-localization-safe-writing">7. Localization-safe writing</h2>
+<ul><li>Whole sentences, never concatenated pieces; use <code>qsTr(&quot;Remove %1?&quot;).arg(name)</code> and plural forms via <code>qsTr(&quot;%n app(s)&quot;, &quot;&quot;, count)</code>.</li><li>Leave room: translations run up to ~40% longer (German, Russian) and Chinese is shorter but taller (line height).</li><li>Don't embed formatting in strings (no bold fragments inside a sentence).</li><li>Do not translate or alter identifiers: package names, command names, paths.</li><li>Dates, sizes, numbers: format by locale, not by hand.</li><li>A translated string is never a key or a stored value (<code>FOR_AGENTS.md</code>).</li></ul>
+<h2 id="8-do-and-don-t">8. Do and don't</h2>
+<div class="table-scroll"><table><thead><tr><th>Don't</th><th>Do</th></tr></thead><tbody><tr><td>"Are you sure you want to proceed?"</td><td>"Remove Firefox?"</td></tr><tr><td>"Error 502"</td><td>"Couldn't reach the server. Try again."</td></tr><tr><td>"Operation failed."</td><td>"Couldn't update 2 apps. See details."</td></tr><tr><td>"Click here"</td><td>"View log"</td></tr><tr><td>"Invalid input"</td><td>"Use at least 8 characters"</td></tr><tr><td>"OK"</td><td>"Got it" (info) / the action verb</td></tr><tr><td>"Please wait…" with no context</td><td>"Downloading Firefox…"</td></tr><tr><td>"No data"</td><td>"Nothing here yet" + what to do</td></tr></tbody></table></div>
+<h2 id="9-checklist">9. Checklist</h2>
+<ul><li class="check"><span aria-hidden="true">☐</span> All strings in <code>qsTr()</code>; no concatenated fragments.</li><li class="check"><span aria-hidden="true">☐</span> Buttons are verbs; dialogs ask the real question.</li><li class="check"><span aria-hidden="true">☐</span> Every error says what failed and what to do.</li><li class="check"><span aria-hidden="true">☐</span> Sentence case; no exclamation marks; no codes in headlines.</li><li class="check"><span aria-hidden="true">☐</span> Accessible names are specific and state-aware.</li></ul>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

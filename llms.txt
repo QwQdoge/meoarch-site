@@ -20,6 +20,18 @@ Start with "Rules for Coding Agents", then read only the document that matches t
 - [App Shell](https://meoarch.org/docs/meoui/app-shell.md): Window chrome and toolbar, where app settings live and how they are grouped, About, open-source credits.
 - [Settings Pattern](https://meoarch.org/docs/meoui/settings.md): Settings rows, groups, sidebar, task sheet, state layer and motion.
 - [Page Types](https://meoarch.org/docs/meoui/page-types.md): Page kinds, the two-level rule and registry metadata.
+- [Foundations](https://meoarch.org/docs/meoui/foundations.md): Page style, surfaces, color, type, shape, spacing, elevation, icons, motion, accessibility.
+- [Layout](https://meoarch.org/docs/meoui/layout.md): Window size classes, page skeletons, columns, scrolling and compact behavior.
+- [Navigation](https://meoarch.org/docs/meoui/navigation.md): Bottom bar, rail, sidebar, tabs, back, search and the top app bar.
+- [Cards](https://meoarch.org/docs/meoui/cards.md): Card versus row versus group, types, anatomy, sizes, states and grids.
+- [Lists](https://meoarch.org/docs/meoui/lists.md): List rows, connected groups, headers, tables and long lists.
+- [Buttons and Forms](https://meoarch.org/docs/meoui/forms.md): Button hierarchy, text fields, selection controls and form layout.
+- [Dialogs and Alerts](https://meoarch.org/docs/meoui/dialogs.md): Choosing a surface, dialogs, destructive confirmation, sheets, snackbars and banners.
+- [Progress and Loading](https://meoarch.org/docs/meoui/progress.md): Progress indicators, skeletons, long-running tasks and timing.
+- [Empty and Error States](https://meoarch.org/docs/meoui/states.md): Empty, error, offline, stale and no-access states.
+- [Detail Pages](https://meoarch.org/docs/meoui/detail-pages.md): Entity and app detail page anatomy, adaptive layout and states.
+- [Writing](https://meoarch.org/docs/meoui/writing.md): Voice, buttons, messages, tooltips and localization-safe wording.
+- [Worked Examples](https://meoarch.org/docs/meoui/examples.md): Worked compositions and a page review procedure.
 - [Store Feedback](https://meoarch.org/docs/meoui/store-feedback.md): Store pages, install button states, progress indicators, error and empty states.
 - [Dynamic Color](https://meoarch.org/docs/meoui/dynamic-color.md): The mandatory dynamic color role table and who generates it.
 - [API Lifecycle](https://meoarch.org/docs/meoui/api-lifecycle.md): Current, deprecated, experimental and internal components.

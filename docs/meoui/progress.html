@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Progress and Loading · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/progress">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/progress.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li><li><a href="/docs/guide/account-api.html">Meo Account API</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html" aria-current="page">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/PROGRESS.md" target="_blank" rel="noreferrer">MeoUI/docs/design/PROGRESS.md ↗</a> · <a href="/docs/meoui/progress.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<blockquote>📚 <a href="https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md">MeoArch 主文档 / Master Doc</a>：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。&lt;!-- meoarch-master --&gt;</blockquote>
+<h1 id="progress-and-loading">Progress and Loading</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#1-three-questions">1. Three questions</a></li><li><a href="#2-choose-the-indicator">2. Choose the indicator</a></li><li><a href="#3-meoprogressbar">3. <code>MeoProgressBar</code></a></li><li><a href="#4-skeletons-and-delayed-feedback">4. Skeletons and delayed feedback</a></li><li><a href="#5-long-running-work">5. Long-running work</a></li><li><a href="#6-timing-guide">6. Timing guide</a></li><li><a href="#7-accessibility">7. Accessibility</a></li><li><a href="#8-examples">8. Examples</a></li><li><a href="#9-checklist">9. Checklist</a></li></ul></nav>
+<p>How MeoUI shows that something is happening. This is the canonical page; <code>STORE_FEEDBACK.md</code> applies it to a store.</p>
+<h2 id="1-three-questions">1. Three questions</h2>
+<ol><li><strong>Will the user wait, or can they leave?</strong> Waiting: show progress where the result will appear. Can leave: use a task row + a completion notice.</li><li><strong>Do you know how far along it is?</strong> Yes → determinate. No → indeterminate.</li><li><strong>Do you know the shape of the result?</strong> Yes → skeleton. No → indicator.</li></ol>
+<h2 id="2-choose-the-indicator">2. Choose the indicator</h2>
+<div class="table-scroll"><table><thead><tr><th>Situation</th><th>Component</th></tr></thead><tbody><tr><td>Known fraction (bytes, items)</td><td><code>MeoProgressBar</code> determinate (<code>indeterminate: false</code>, <code>value</code> 0–1)</td></tr><tr><td>Unknown fraction (resolving, waiting for a lock)</td><td><code>MeoProgressBar { indeterminate: true }</code></td></tr><tr><td>Content area loading, layout known</td><td><code>MeoLoadingFeedback { placeholder }</code> + <code>MeoSkeleton</code></td></tr><tr><td>Content area loading, layout unknown</td><td><code>MeoLoadingFeedback</code> (default 48dp <code>MeoLoadingIndicator</code>)</td></tr><tr><td>A page route loading</td><td><code>MeoPageHost { loadingPlaceholder }</code></td></tr><tr><td>An action in a button</td><td><code>MeoButton { loading: true }</code></td></tr><tr><td>Pull to reload</td><td><code>MeoPullToRefresh</code></td></tr><tr><td>Stepwise task</td><td><code>MeoStepper</code> + a bar for the current step</td></tr><tr><td>Streaming text</td><td>Append text as it arrives; no bar</td></tr></tbody></table></div>
+<h2 id="3-meoprogressbar">3. <code>MeoProgressBar</code></h2>
+<div class="table-scroll"><table><thead><tr><th>Property</th><th>Meaning</th></tr></thead><tbody><tr><td><code>value</code></td><td>0–1 (clamped)</td></tr><tr><td><code>indeterminate</code></td><td>unknown amount</td></tr><tr><td><code>type</code></td><td><code>linear</code> or <code>circular</code></td></tr><tr><td><code>linearStyle</code></td><td><code>standard</code> or <code>pill</code></td></tr><tr><td><code>isThick</code>, <code>showTrack</code></td><td>geometry</td></tr><tr><td><code>wavy</code></td><td>expressive wavy active segment</td></tr><tr><td><code>vibrant</code></td><td>tertiary container tones</td></tr><tr><td><code>leadingIcon</code></td><td>icon at the start of a pill bar</td></tr><tr><td><code>activeColor</code>, <code>trackColor</code></td><td>override only with role tokens</td></tr></tbody></table></div>
+<p>Role and name for assistive technology: <code>ProgressBar</code>, "Progress N%" or "Loading progress". Give the host item a more specific <code>Accessible.name</code>.</p>
+<p>Rules:</p>
+<ul><li><strong>Linear</strong> when there is width (row, sheet, page top); <strong>circular</strong> in a button or a small slot.</li><li><strong>Top-of-page</strong> thin linear bar for page-level loading; <strong>inline</strong> bar for an item's own task.</li><li>Never move backwards on the same phase. Restarting work resets and says so ("Retrying…").</li><li>Do not show a percentage you made up. If you only know "between phases", go indeterminate for the unknown phase.</li><li>Do not stall at 100%: show "Finishing…" (indeterminate) while verifying.</li><li>Reduce Motion freezes wave and spinner pose but the value still updates, so show progress as text too.</li><li>Keep colors default (<code>primary</code> on <code>secondaryContainer</code>); error tone only on failure, replacing the bar.</li></ul>
+<h2 id="4-skeletons-and-delayed-feedback">4. Skeletons and delayed feedback</h2>
+<p><code>MeoLoadingFeedback</code>:</p>
+<div class="table-scroll"><table><thead><tr><th>Property</th><th>Default</th><th>Meaning</th></tr></thead><tbody><tr><td><code>active</code></td><td>false</td><td>set in the same turn as the user's action</td></tr><tr><td><code>placeholder</code></td><td>none</td><td>a <code>Component</code> with the final geometry; shows with <code>delay: 0</code></td></tr><tr><td><code>delay</code></td><td>120 ms (<code>loadingFeedbackDelay</code>); 0 with a placeholder</td><td>anti-flash</td></tr><tr><td><code>minimumVisibleDuration</code></td><td>300 ms</td><td>once shown, stays at least this long</td></tr><tr><td><code>accessibleName</code></td><td>"Loading"</td><td>announced</td></tr></tbody></table></div>
+<p>Rules:</p>
+<ul><li>Set <code>active</code> in the same input turn as the press; the press ripple is never delayed by backend work.</li><li>If the result arrives inside 120 ms, show nothing.</li><li>A placeholder has the same size and position as the final content so nothing jumps. <code>MeoSkeleton</code> types: <code>text</code>, <code>avatar</code>, <code>card</code>, <code>pill</code>, <code>block</code>; <code>animationStyle</code> <code>breathing</code>, <code>shimmer</code>, <code>none</code>.</li><li>A skeleton may not appear longer than ~10 s without a fallback: after that show a message ("This is taking longer than expected") with Retry/Cancel.</li><li>Never replace already shown content with a skeleton on refresh; keep the old content and update.</li></ul>
+<h2 id="5-long-running-work">5. Long-running work</h2>
+<p>A task that outlives the page (install, download, backup, sync):</p>
+<ul><li>It belongs to a <strong>service</strong>, not the window (<code>NATIVE_MEOUI_FRONTEND.md</code> in OmniStore). Closing the window does not cancel it; reopening restores it.</li><li>Show it in a task list (side sheet from a toolbar action) with one row per task (below). The toolbar action carries a badge with the active count.</li><li>Notify <strong>once</strong> on completion or failure (system notification and/or snackbar), not on each percent.</li><li>Cancel is available only if the backend can cancel; otherwise do not render a disabled Cancel, say "Can't be cancelled now".</li><li>Queue: tasks wait in order; show "Queued" and position.</li></ul>
+<p>Task row:</p>
+<pre><code>[icon]  Name                         [Cancel]
+        Phase · detail
+        [========&gt;---------]  40%</code></pre>
+<div class="table-scroll"><table><thead><tr><th>Part</th><th>Rule</th></tr></thead><tbody><tr><td>Phase</td><td>Short localized verb phrase from the service state ("Downloading", "Verifying", "Installing"); never a raw backend string</td></tr><tr><td>Detail</td><td>Numbers only when known ("12.4 of 31 MB"); omit otherwise</td></tr><tr><td>Time left</td><td>Omit unless stable; never an estimate that jumps</td></tr><tr><td>Done</td><td>Replace the bar with a done icon and <strong>Open</strong>; remove on dismiss</td></tr><tr><td>Failed</td><td>Error tone, one-sentence reason, <strong>Retry</strong>, <strong>View log</strong> (<code>STATES.md</code>)</td></tr></tbody></table></div>
+<h2 id="6-timing-guide">6. Timing guide</h2>
+<div class="table-scroll"><table><thead><tr><th>Duration</th><th>Feedback</th></tr></thead><tbody><tr><td>&lt; 120 ms</td><td>None</td></tr><tr><td>120 ms – 1 s</td><td>Compact indicator or in-button loading</td></tr><tr><td>1 – 10 s</td><td>Skeleton/indicator + (if known) bar</td></tr><tr><td>&gt; 10 s</td><td>Determinate bar if possible, phase text, Cancel if possible</td></tr><tr><td>Minutes</td><td>Task row + completion notification; user may leave</td></tr></tbody></table></div>
+<h2 id="7-accessibility">7. Accessibility</h2>
+<ul><li>Every indicator has a name; changes of phase are announced, percent changes are not.</li><li>Respect Reduce Motion: no spinning or travelling; show static state + text.</li><li>Do not rely on color; the bar has a track and the text.</li><li>Provide the same information in text for screen readers ("Downloading, 40 percent, 12.4 of 31 MB").</li></ul>
+<h2 id="8-examples">8. Examples</h2>
+<p>Determinate task:</p>
+<pre><code>MeoProgressBar {
+    Layout.fillWidth: true
+    indeterminate: task.fraction &lt; 0
+    value: Math.max(0, task.fraction)
+    Accessible.name: qsTr(&quot;%1, %2&quot;).arg(task.name).arg(task.phaseText)
+}</code></pre>
+<p>Page loading with a skeleton:</p>
+<pre><code>MeoLoadingFeedback {
+    anchors.fill: parent
+    active: model.loading
+    placeholder: Component {
+        Column {
+            spacing: MeoTheme.space12
+            MeoSkeleton { type: &quot;block&quot;; width: parent.width; height: 160 * MeoTheme.globalScale }
+            MeoSkeleton { type: &quot;text&quot;; width: parent.width * 0.6 }
+            MeoSkeleton { type: &quot;text&quot;; width: parent.width * 0.9 }
+        }
+    }
+}</code></pre>
+<p>Names come from the component sources; the snippets have not been run in this pass.</p>
+<h2 id="9-checklist">9. Checklist</h2>
+<ul><li class="check"><span aria-hidden="true">☐</span> No indicator for work under 120 ms; no flashing.</li><li class="check"><span aria-hidden="true">☐</span> Determinate only when the fraction is real; phase named.</li><li class="check"><span aria-hidden="true">☐</span> Skeleton matches final geometry; old content kept on refresh.</li><li class="check"><span aria-hidden="true">☐</span> Long tasks survive closing the window; one completion notice.</li><li class="check"><span aria-hidden="true">☐</span> Reduce Motion and screen reader text verified.</li></ul>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

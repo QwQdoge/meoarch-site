@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layout · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/layout">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/layout.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li><li><a href="/docs/guide/account-api.html">Meo Account API</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html" aria-current="page">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/LAYOUT.md" target="_blank" rel="noreferrer">MeoUI/docs/design/LAYOUT.md ↗</a> · <a href="/docs/meoui/layout.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<blockquote>📚 <a href="https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md">MeoArch 主文档 / Master Doc</a>：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。&lt;!-- meoarch-master --&gt;</blockquote>
+<h1 id="layout-and-adaptive-behavior">Layout and Adaptive Behavior</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#1-window-size-classes">1. Window size classes</a></li><li><a href="#2-page-skeletons">2. Page skeletons</a></li><li><a href="#3-content-width-and-columns">3. Content width and columns</a></li><li><a href="#4-regions-of-a-page">4. Regions of a page</a></li><li><a href="#5-scrolling">5. Scrolling</a></li><li><a href="#6-compact-specifics">6. Compact specifics</a></li><li><a href="#7-checklist">7. Checklist</a></li></ul></nav>
+<p>Every MeoUI page adapts to the window it is given. Layout decisions are made from the <strong>window size class</strong>, never from the platform, the device name or a literal pixel width.</p>
+<h2 id="1-window-size-classes">1. Window size classes</h2>
+<p><code>MeoWindowMetrics</code> (width) reads <code>MeoTheme.windowWidthSizeClass()</code>. Widths are in dp before <code>globalScale</code>.</p>
+<div class="table-scroll"><table><thead><tr><th>Class</th><th>Width</th><th>Page margin</th><th>Navigation</th><th>Panes</th><th>Typical</th></tr></thead><tbody><tr><td><code>compact</code></td><td>&lt; 600</td><td>16</td><td>bottom bar (<code>MeoNavigationBar</code>)</td><td>one</td><td>phone, narrow window</td></tr><tr><td><code>medium</code></td><td>600–839</td><td>24</td><td>rail (<code>MeoNavigationRail</code>)</td><td>one, overlay secondary</td><td>small tablet, half window</td></tr><tr><td><code>expanded</code></td><td>840–1199</td><td>24</td><td>sidebar</td><td>two</td><td>laptop window</td></tr><tr><td><code>large</code></td><td>1200–1599</td><td>32</td><td>sidebar</td><td>two or three</td><td>desktop</td></tr><tr><td><code>extraLarge</code></td><td>≥ 1600</td><td>40</td><td>sidebar</td><td>two or three</td><td>wide monitor</td></tr></tbody></table></div>
+<p>Height classes: <code>compact</code> &lt; 480, <code>medium</code> &lt; 900, <code>expanded</code> ≥ 900. A short window (landscape phone, split screen) hides secondary chrome first: large top bars collapse, hero areas shrink, bottom bars may become a rail.</p>
+<p>Derived values from <code>MeoWindowMetrics</code> (instantiate it with <code>availableWidth</code> / <code>availableHeight</code>):</p>
+<div class="table-scroll"><table><thead><tr><th>Property</th><th>Meaning</th></tr></thead><tbody><tr><td><code>pageMargin</code></td><td>outer margin</td></tr><tr><td><code>sectionSpacing</code></td><td>gap between sections (16 compact, 24 otherwise)</td></tr><tr><td><code>controlSpacing</code></td><td>gap between controls (8 compact, 12 otherwise)</td></tr><tr><td><code>maximumContentWidth</code></td><td>readable width cap: 840 medium, 1040 expanded, 1200 large, 1440 extraLarge</td></tr><tr><td><code>navigationMode</code></td><td><code>bottomBar</code>, <code>rail</code> or <code>sidebar</code></td></tr><tr><td><code>usesOverlayPane</code> / <code>supportsTwoPane</code></td><td>whether a second pane overlays or sits beside</td></tr><tr><td><code>preferredColumns</code></td><td>card grid columns (1 compact, up to 2 medium, up to <code>maxColumns</code> otherwise; <code>minimumColumnWidth</code> 280)</td></tr></tbody></table></div>
+<p>Do not test <code>width &gt; 800</code>. Test <code>metrics.isCompactWidth</code>, <code>metrics.supportsTwoPane</code>, <code>metrics.preferredColumns</code>.</p>
+<h2 id="2-page-skeletons">2. Page skeletons</h2>
+<div class="table-scroll"><table><thead><tr><th>Pattern</th><th>Use</th><th>Adaptive behavior</th></tr></thead><tbody><tr><td><code>MeoAppLayout</code></td><td>An app with a few top-level destinations</td><td>Bottom bar / rail / sidebar from the class; Settings and About appended as routes (<code>APP_SHELL.md</code>)</td></tr><tr><td><code>MeoScaffold</code></td><td>A custom page host that needs explicit slots (<code>topBar</code>, <code>navigationBar</code>, <code>navigationRail</code>, <code>sideSheet</code>, <code>fab</code>, <code>snackbar</code>)</td><td>Same navigation switch; you supply the parts</td></tr><tr><td><code>MeoPageLayout</code></td><td>A scrolling content page with a title</td><td>Applies <code>pageMargin</code>, section spacing, a single readable column; breakpoints <code>compactWidth</code> 680 / <code>mediumWidth</code> 920 / <code>expandedWidth</code> 1180</td></tr><tr><td><code>MeoListDetailLayout</code></td><td>A list and the detail of the selected item</td><td>Two panes at <code>supportsTwoPane</code>; otherwise detail replaces the list (<code>showDetail</code>)</td></tr><tr><td><code>MeoSupportingPaneLayout</code></td><td>Main content plus a secondary pane (filters, inspector, task sheet)</td><td><code>adaptiveMode</code>: side-by-side when expanded, stacked when compact</td></tr><tr><td><code>MeoSettingsLayout</code></td><td>Settings with many categories</td><td>Category sidebar + detail; see <code>SETTINGS.md</code></td></tr></tbody></table></div>
+<p>Choose by task, not by looks:</p>
+<div class="table-scroll"><table><thead><tr><th>Task</th><th>Pattern</th></tr></thead><tbody><tr><td>Browse a catalog, open an item</td><td><code>MeoListDetailLayout</code> (wide) / <code>MeoPageHost</code> route (compact)</td></tr><tr><td>Read or edit one long page</td><td><code>MeoPageLayout</code></td></tr><tr><td>Show something about the current page without leaving it</td><td><code>MeoSupportingPaneLayout</code>, <code>MeoSideSheet</code></td></tr><tr><td>A short choice or confirmation</td><td>Dialog (<code>DIALOGS.md</code>), never a pane</td></tr></tbody></table></div>
+<h2 id="3-content-width-and-columns">3. Content width and columns</h2>
+<ul><li>Reading and form pages: one column, centered, up to <code>maximumContentWidth</code> (and prose up to 560–680dp). Do not stretch a form across a 1600dp window.</li><li>Grids of cards: <code>GridLayout</code> with <code>columns: metrics.preferredColumns</code>. Columns are equal width; a card never has a fixed pixel width inside a grid.</li><li>Lists are full width of their column; a row is never narrower than its content needs.</li><li>Settings content ≈ 720–760dp wide (<code>SETTINGS.md</code>).</li></ul>
+<h2 id="4-regions-of-a-page">4. Regions of a page</h2>
+<pre><code>┌───────────────────────────────────────────────┐
+│ Top app bar  (title, ≤3 actions, overflow)     │  chrome
+├────────┬──────────────────────────────┬───────┤
+│ Nav    │ Header (title, subtitle,     │ Side  │
+│ rail / │ primary action, tabs/chips)  │ sheet │
+│ sidebar├──────────────────────────────┤ (opt) │
+│        │ Content sections             │       │
+│        │  section header              │       │
+│        │  group / grid / list         │       │
+├────────┴──────────────────────────────┴───────┤
+│ Bottom bar (compact) · Snackbar above it       │
+└───────────────────────────────────────────────┘</code></pre>
+<p>Rules:</p>
+<ul><li>The top app bar is chrome, not content. Page title lives in it (or the large bar's headline), not repeated in the body.</li><li>A <strong>section</strong> has a header (<code>MeoListHeader</code>), then one group, grid or list. Sections are separated by <code>sectionSpacing</code>, not by dividers.</li><li>A sticky action (Install, Save) lives in the header or a docked toolbar (<code>MeoDockedToolbar</code>), not floating over the text.</li><li>A FAB is for the single most common creation action of the page. A store has none.</li><li>Snackbars appear above the bottom bar, never over a primary action.</li></ul>
+<h2 id="5-scrolling">5. Scrolling</h2>
+<ul><li>One scroll region per pane. Never nest vertical scroll areas.</li><li>Top bars may collapse on scroll (<code>scrollProgress</code>); a <code>large</code> bar collapses to <code>small</code>.</li><li>A long list uses <code>MeoListView</code> (keeps <code>useMeoTransitions</code>, scroll position with <code>preserveScrollPosition</code>).</li><li>Pull to refresh (<code>MeoPullToRefresh</code>) is for touch lists backed by remote data. On desktop provide a Refresh action as well.</li></ul>
+<h2 id="6-compact-specifics">6. Compact specifics</h2>
+<ul><li>Bottom bar holds up to 5 destinations (<code>compactNavigationLimit</code>); more go to the sidebar modal via the overflow (<code>openSidebar()</code>).</li><li>Dialogs become bottom sheets or full-screen dialogs when content is tall.</li><li>A two-pane page becomes list → detail routes with a back arrow (<code>MeoPageHost</code> transitions).</li><li>Hover-only affordances do not exist; every action reachable by touch.</li></ul>
+<h2 id="7-checklist">7. Checklist</h2>
+<ul><li class="check"><span aria-hidden="true">☐</span> Uses <code>MeoWindowMetrics</code> for margins, spacing and columns.</li><li class="check"><span aria-hidden="true">☐</span> Verified at compact (360), medium (700), expanded (1000), large (1400).</li><li class="check"><span aria-hidden="true">☐</span> No fixed widths on cards in a grid; no horizontal page scroll.</li><li class="check"><span aria-hidden="true">☐</span> Content capped at <code>maximumContentWidth</code>.</li><li class="check"><span aria-hidden="true">☐</span> One scroll region per pane.</li><li class="check"><span aria-hidden="true">☐</span> Navigation switches by class, not by platform.</li><li class="check"><span aria-hidden="true">☐</span> Safe-area margins honoured (<code>SafeArea.margins</code>, <code>safeAreaTop/Bottom/Left/Right</code> in <code>MeoAppLayout</code>).</li></ul>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

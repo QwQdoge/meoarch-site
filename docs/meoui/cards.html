@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cards · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/cards">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/cards.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li><li><a href="/docs/guide/account-api.html">Meo Account API</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html" aria-current="page">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/CARDS.md" target="_blank" rel="noreferrer">MeoUI/docs/design/CARDS.md ↗</a> · <a href="/docs/meoui/cards.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<blockquote>📚 <a href="https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md">MeoArch 主文档 / Master Doc</a>：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。&lt;!-- meoarch-master --&gt;</blockquote>
+<h1 id="cards">Cards</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#1-decide-card-list-row-or-group">1. Decide: card, list row or group?</a></li><li><a href="#2-types">2. Types</a></li><li><a href="#3-anatomy">3. Anatomy</a></li><li><a href="#4-sizes">4. Sizes</a></li><li><a href="#5-states">5. States</a></li><li><a href="#6-grids-and-strips">6. Grids and strips</a></li><li><a href="#7-content-rules">7. Content rules</a></li><li><a href="#8-example">8. Example</a></li><li><a href="#9-checklist">9. Checklist</a></li></ul></nav>
+<p>A card is one self-contained object the user can read, scan or open: an app, a song, an article, an account. A card is <strong>not</strong> a generic box for every group of controls: grouped settings use connected lists (<code>LISTS.md</code>), and page sections use headers and spacing.</p>
+<h2 id="1-decide-card-list-row-or-group">1. Decide: card, list row or group?</h2>
+<div class="table-scroll"><table><thead><tr><th>Content</th><th>Use</th></tr></thead><tbody><tr><td>A thing with an image, several facts and an action (app, album, post)</td><td><code>MeoCard</code> / <code>MeoMediaCard</code></td></tr><tr><td>A set of homogeneous items to scan quickly (installed apps, files)</td><td><code>MeoListItem</code> in a <code>MeoListView</code></td></tr><tr><td>A set of settings or related rows</td><td><code>MeoSettingsGroup</code> / <code>MeoSegmentedList</code></td></tr><tr><td>One status or note about the page</td><td><code>MeoBanner</code></td></tr><tr><td>A cluster of controls for one task</td><td>A plain section with a header, no card</td></tr></tbody></table></div>
+<p>If you could replace the card with a row and lose nothing, use a row.</p>
+<h2 id="2-types">2. Types</h2>
+<p><code>MeoCard.type</code>:</p>
+<div class="table-scroll"><table><thead><tr><th>Type</th><th>Surface</th><th>Edge</th><th>Use</th></tr></thead><tbody><tr><td><code>elevated</code> (default, level 1)</td><td><code>surfaceContainerLow</code></td><td>soft shadow</td><td>The default object card; sits on the page</td></tr><tr><td><code>filled</code> (level 0)</td><td><code>surfaceContainerHighest</code></td><td>none</td><td>Cards that must separate from a tinted page without a shadow, dense grids</td></tr><tr><td><code>outlined</code> (level 0)</td><td>page surface</td><td>1dp <code>outlineVariant</code></td><td>Cards in a list that already has many surfaces; selectable options</td></tr></tbody></table></div>
+<p>Rules:</p>
+<ul><li>One type per grid. Do not mix elevated and filled siblings.</li><li>Radius is <code>MeoTheme.cardRadius</code> (20dp); <code>compact: true</code> caps it at 20dp and tightens padding to 12dp (default 16dp).</li><li>Level is fixed by type; do not raise a card's <code>level</code> to "highlight" it. Use <code>selected</code>, a badge or a container color.</li></ul>
+<h2 id="3-anatomy">3. Anatomy</h2>
+<pre><code>┌──────────────────────────────┐
+│ [media / icon]               │  optional, top or side, fixed aspect ratio
+│ Overline (label)             │  optional category / source
+│ Title                        │  titleMedium, 1–2 lines
+│ Supporting text              │  bodyMedium, variant color, ≤3 lines
+│ [Badge/Chip]   [Action ▸]    │  at most one primary action
+└──────────────────────────────┘</code></pre>
+<div class="table-scroll"><table><thead><tr><th>Part</th><th>Rule</th></tr></thead><tbody><tr><td>Media</td><td>Fixed <code>aspectRatio</code> (16:9 default in <code>MeoMediaCard</code>); never stretched; <code>MeoSkeleton</code> while loading</td></tr><tr><td>Title</td><td>Required. One line preferred, two maximum, then elide</td></tr><tr><td>Supporting text</td><td>Optional, ≤3 lines</td></tr><tr><td>Actions</td><td><code>actions</code> in <code>MeoMediaCard</code> (text or tonal buttons); the card as a whole may be <code>interactive</code> <strong>or</strong> have actions, rarely both. If both, the whole-card action is the primary one</td></tr><tr><td>Overflow</td><td><code>showOverflowButton</code> for secondary actions (share, hide). Not for the main action</td></tr><tr><td>Badges</td><td><code>MeoBadge</code> for count/state; <code>MeoChip</code> for source/category</td></tr></tbody></table></div>
+<h2 id="4-sizes">4. Sizes</h2>
+<p><code>MeoMediaCard.cardSize</code>:</p>
+<div class="table-scroll"><table><thead><tr><th>Size</th><th>Width (media on top)</th><th>Width (media at side)</th><th>Use</th></tr></thead><tbody><tr><td><code>s</code></td><td>240dp</td><td>300dp</td><td>Dense rows, carousels</td></tr><tr><td><code>m</code></td><td>320dp</td><td>380dp</td><td>Default</td></tr><tr><td><code>l</code></td><td>400dp</td><td>460dp</td><td>Hero / featured</td></tr></tbody></table></div>
+<p>In a responsive grid the column decides the width; set the size only for horizontally scrolled strips (<code>MeoCarousel</code>).</p>
+<h2 id="5-states">5. States</h2>
+<div class="table-scroll"><table><thead><tr><th>State</th><th>Visual</th><th>Property</th></tr></thead><tbody><tr><td>Rest</td><td>by type</td><td></td></tr><tr><td>Hover / focus</td><td>state layer 8% / 10% (color only, no lift on desktop)</td><td><code>interactive: true</code></td></tr><tr><td>Pressed</td><td>10% layer, radius shrinks, slight scale</td><td><code>interactive: true</code></td></tr><tr><td>Selected</td><td><code>secondaryContainer</code> tint (+ check or border)</td><td><code>selected: true</code></td></tr><tr><td>Disabled</td><td>content at <code>disabledContentOpacity</code>, no state layer</td><td><code>enabled: false</code></td></tr><tr><td>Loading</td><td>Skeleton with the final geometry</td><td><code>MeoSkeleton { type: &quot;card&quot; }</code></td></tr><tr><td>Error</td><td>Keep the card, show an inline message and Retry; do not replace it with a dialog</td><td></td></tr></tbody></table></div>
+<p>A selected card uses more than color (check mark, border or label) so it is distinguishable in high contrast.</p>
+<h2 id="6-grids-and-strips">6. Grids and strips</h2>
+<ul><li>Grids use <code>GridLayout</code> with <code>columns: metrics.preferredColumns</code>; cards fill the cell width and share a height row by row.</li><li>Keep card heights equal in a row: truncate text, not the image.</li><li>A horizontal strip (<code>MeoCarousel</code>, scrolling <code>ListView</code>) is for ≤ 10 suggestions, shows a peek of the next card, and is never the only way to reach the content ("See all").</li><li>Gap between cards: <code>space12</code>–<code>space16</code>.</li></ul>
+<h2 id="7-content-rules">7. Content rules</h2>
+<ul><li>A card carries <strong>one</strong> idea. If you need tabs or sections inside, it is a page.</li><li>No card inside a card. Use dividers and spacing inside.</li><li>Do not put two filled buttons in a card.</li><li>Missing data is omitted, never invented (no zero stars, no fake size).</li><li>Text is localized and may be 40% longer; test a long translation.</li><li>Accessible name = title + the most important state ("Firefox, installed, update available"); the whole interactive card is one accessible element with a button role; inner actions remain separately reachable.</li></ul>
+<h2 id="8-example">8. Example</h2>
+<pre><code>import QtQuick
+import QtQuick.Layouts
+import MeoUI
+
+MeoCard {
+    id: card
+    type: &quot;elevated&quot;
+    interactive: true
+    onClicked: openDetails(model.id)
+    Accessible.name: qsTr(&quot;%1, %2&quot;).arg(model.name).arg(model.stateText)
+
+    ColumnLayout {
+        spacing: MeoTheme.space8
+        RowLayout {
+            spacing: MeoTheme.space12
+            MeoCachedImage { source: model.icon; Layout.preferredWidth: 48 * MeoTheme.globalScale; Layout.preferredHeight: 48 * MeoTheme.globalScale }
+            ColumnLayout {
+                Layout.fillWidth: true
+                MeoText { text: model.name; typeRole: &quot;title&quot;; typeSize: &quot;medium&quot;; elide: Text.ElideRight; Layout.fillWidth: true }
+                MeoText { text: model.developer; typeRole: &quot;label&quot;; typeSize: &quot;medium&quot;; color: MeoTheme.contentOnSurfaceVariant; visible: model.developer !== &quot;&quot; }
+            }
+        }
+        MeoText { text: model.summary; typeRole: &quot;body&quot;; typeSize: &quot;medium&quot;; maximumLineCount: 2; wrapMode: Text.Wrap; elide: Text.ElideRight; Layout.fillWidth: true }
+        RowLayout {
+            MeoChip { type: &quot;assist&quot;; label: model.sourceName; size: &quot;xs&quot; }
+            Item { Layout.fillWidth: true }
+            MeoButton { type: &quot;tonal&quot;; size: &quot;s&quot;; text: model.actionLabel; onClicked: model.run() }
+        }
+    }
+}</code></pre>
+<p>The snippet follows the real property names of <code>MeoCard</code>, <code>MeoText</code>, <code>MeoChip</code> and <code>MeoButton</code>; it has not been run in this documentation pass. Run the Showcase to confirm layout.</p>
+<h2 id="9-checklist">9. Checklist</h2>
+<ul><li class="check"><span aria-hidden="true">☐</span> A row or group would not do the job better.</li><li class="check"><span aria-hidden="true">☐</span> One card type per grid; no nested cards.</li><li class="check"><span aria-hidden="true">☐</span> Media has a fixed aspect ratio and a skeleton.</li><li class="check"><span aria-hidden="true">☐</span> One primary action; overflow for the rest.</li><li class="check"><span aria-hidden="true">☐</span> Selected state is not color-only.</li><li class="check"><span aria-hidden="true">☐</span> Tested with a long translation and 200% text.</li></ul>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

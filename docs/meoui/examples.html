@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Worked Examples · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/meoui/examples">
+  <link rel="alternate" type="text/markdown" href="/docs/meoui/examples.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li><li><a href="/docs/guide/account-api.html">Meo Account API</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html" aria-current="page">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/MeoUI/blob/main/docs/design/EXAMPLES.md" target="_blank" rel="noreferrer">MeoUI/docs/design/EXAMPLES.md ↗</a> · <a href="/docs/meoui/examples.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<blockquote>📚 <a href="https://github.com/QwQdoge/MeoArch-os-workspace/blob/main/docs/MEOARCH_MASTER.md">MeoArch 主文档 / Master Doc</a>：全部仓库地图、操作手册、Cloudflare 清单、全部文档链接。&lt;!-- meoarch-master --&gt;</blockquote>
+<h1 id="worked-examples">Worked Examples</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#1-an-app-shell-with-adaptive-navigation">1. An app shell with adaptive navigation</a></li><li><a href="#2-a-store-home-page">2. A store Home page</a></li><li><a href="#3-install-with-progress-then-done-or-failed">3. Install with progress, then done or failed</a></li><li><a href="#4-confirm-removal-and-undo-for-reversible-actions">4. Confirm removal (and undo for reversible actions)</a></li><li><a href="#5-offline-with-cached-data">5. Offline with cached data</a></li><li><a href="#6-a-settings-style-group">6. A Settings-style group</a></li><li><a href="#7-how-to-review-a-page-against-these-docs">7. How to review a page against these docs</a></li></ul></nav>
+<p>Small, complete compositions that apply the other pages together. Property and signal names are read from the component sources in this repository; <strong>the snippets were not run in this documentation pass</strong> (no Qt toolchain in the environment). Treat them as the intended structure and confirm in the Showcase (<code>cmake … -DMEOUI_BUILD_SHOWCASE=ON</code>) before copying into a product. Data objects (<code>model</code>, <code>details</code>, <code>task</code>, <code>transactions</code>) belong to the host app.</p>
+<p>Each example lists the rules it demonstrates, so it can be reviewed against the checklists.</p>
+<h2 id="1-an-app-shell-with-adaptive-navigation">1. An app shell with adaptive navigation</h2>
+<p>Rules: <code>LAYOUT.md</code> §1–2, <code>NAVIGATION.md</code> §1–2, <code>APP_SHELL.md</code>.</p>
+<pre><code>import QtQuick
+import MeoUI
+
+MeoAppLayout {
+    id: app
+    pageTitle: currentRoute === &quot;settings&quot; ? qsTr(&quot;Settings&quot;) : &quot;&quot;
+    navigationModel: [
+        { id: &quot;home&quot;,      route: &quot;home&quot;,      label: qsTr(&quot;Home&quot;),      icon: &quot;home&quot; },
+        { id: &quot;explore&quot;,   route: &quot;explore&quot;,   label: qsTr(&quot;Explore&quot;),   icon: &quot;explore&quot; },
+        { id: &quot;installed&quot;, route: &quot;installed&quot;, label: qsTr(&quot;Installed&quot;), icon: &quot;apps&quot; },
+        { id: &quot;updates&quot;,   route: &quot;updates&quot;,   label: qsTr(&quot;Updates&quot;),   icon: &quot;system_update&quot;, badgeText: updates.count &gt; 0 ? String(updates.count) : &quot;&quot; }
+    ]
+    pages: [homePage, explorePage, installedPage, updatesPage]
+}</code></pre>
+<p>(Entry keys: <code>label</code> or <code>text</code>, <code>icon</code>, <code>route</code> or <code>id</code>, <code>badgeText</code>, <code>badgeCount</code>, <code>badgeDot</code>. <code>MeoAppLayout</code> appends Settings and About routes itself.)</p>
+<h2 id="2-a-store-home-page">2. A store Home page</h2>
+<p>Rules: <code>LAYOUT.md</code> §3, <code>CARDS.md</code>, <code>PROGRESS.md</code> §4, <code>STATES.md</code> §1.</p>
+<pre><code>MeoPageLayout {
+    title: qsTr(&quot;Home&quot;)
+
+    MeoLoadingFeedback {
+        Layout.fillWidth: true
+        active: home.loading
+        placeholder: Component { /* skeleton cards with final height */ }
+    }
+
+    MeoEmptyState {
+        visible: home.failed
+        icon: &quot;cloud_off&quot;
+        title: qsTr(&quot;Couldn&#x27;t load Home&quot;)
+        description: qsTr(&quot;Check your connection, then try again.&quot;)
+        actionText: qsTr(&quot;Try again&quot;)
+        onActionClicked: home.reload()
+    }
+
+    MeoListHeader { text: qsTr(&quot;Recommended&quot;); visible: home.recommended.count &gt; 0 }
+    GridLayout {
+        columns: metrics.preferredColumns
+        Repeater { model: home.recommended; delegate: AppCard { } } // CARDS.md §8
+    }
+}</code></pre>
+<p>Shows: loading → skeleton, failed → one full-page state with one action, empty section → no header, grid columns from <code>MeoWindowMetrics</code>.</p>
+<h2 id="3-install-with-progress-then-done-or-failed">3. Install with progress, then done or failed</h2>
+<p>Rules: <code>FORMS.md</code> §1, <code>PROGRESS.md</code> §3/§5, <code>STORE_FEEDBACK.md</code> §2, <code>STATES.md</code> §3.</p>
+<pre><code>RowLayout {
+    spacing: MeoTheme.space12
+
+    MeoButton {
+        type: task.state === &quot;failed&quot; ? &quot;outlined&quot; : &quot;filled&quot;
+        text: task.actionLabel                // Install · Installing… · Open · Retry
+        loading: task.state === &quot;running&quot; &amp;&amp; task.fraction &lt; 0
+        enabled: task.state !== &quot;queued&quot;
+        onClicked: task.primary()
+    }
+
+    ColumnLayout {
+        visible: task.state === &quot;running&quot;
+        Layout.fillWidth: true
+        MeoText { text: task.phaseText; typeRole: &quot;label&quot;; typeSize: &quot;medium&quot; }
+        MeoProgressBar { Layout.fillWidth: true; indeterminate: task.fraction &lt; 0; value: Math.max(0, task.fraction) }
+    }
+
+    MeoIconButton {
+        visible: task.canCancel
+        type: &quot;standard&quot;; icon.name: &quot;close&quot;; toolTipText: qsTr(&quot;Cancel&quot;)
+        onClicked: task.cancel()
+    }
+}
+
+MeoSnackbar {
+    id: done
+    message: qsTr(&quot;%1 installed.&quot;).arg(task.name)
+    actionText: qsTr(&quot;Open&quot;)
+    onActionClicked: task.open()
+}</code></pre>
+<p>Shows: one primary button with a fixed slot, determinate vs indeterminate bar, cancel only when possible, one completion snackbar (not per percent).</p>
+<h2 id="4-confirm-removal-and-undo-for-reversible-actions">4. Confirm removal (and undo for reversible actions)</h2>
+<p>Rules: <code>DIALOGS.md</code> §2–3, <code>WRITING.md</code> §3.</p>
+<pre><code>MeoDialog {
+    id: remove
+    icon: &quot;warning&quot;
+    title: qsTr(&quot;Remove %1?&quot;).arg(target.name)
+    message: qsTr(&quot;The app and its cached data are removed from this device. This can&#x27;t be undone.&quot;)
+    confirmText: qsTr(&quot;Remove&quot;)
+    onConfirmed: transactions.remove(target.id)
+    onDismissed: { /* Escape or outside click = cancel */ }
+}</code></pre>
+<p>For a reversible action (hide an app, archive), skip the dialog and show a <code>MeoSnackbar { message: qsTr(&quot;App hidden.&quot;); actionText: qsTr(&quot;Undo&quot;) }</code>.</p>
+<h2 id="5-offline-with-cached-data">5. Offline with cached data</h2>
+<p>Rules: <code>STATES.md</code> §4–5.</p>
+<pre><code>MeoBanner {
+    visible: network.offline
+    Layout.fillWidth: true
+    tone: &quot;warning&quot;; icon: &quot;cloud_off&quot;
+    title: qsTr(&quot;You&#x27;re offline&quot;)
+    text: qsTr(&quot;Showing what was saved on %1.&quot;).arg(cache.updatedText)
+    confirmText: qsTr(&quot;Retry&quot;)
+    onConfirmed: network.retry()
+}</code></pre>
+<h2 id="6-a-settings-style-group">6. A Settings-style group</h2>
+<p>Rules: <code>SETTINGS.md</code>, <code>LISTS.md</code>, <code>FORMS.md</code> §3.</p>
+<pre><code>MeoSettingsGroup {
+    MeoSettingsRow {
+        title: qsTr(&quot;Notify me about updates&quot;)
+        subtitle: qsTr(&quot;Checked every 6 hours.&quot;)
+        leadingIcon: &quot;notifications&quot;
+        trailingKind: &quot;switch&quot;
+        checked: settings.notifyUpdates
+        onToggled: settings.notifyUpdates = checked
+    }
+    MeoSettingsRow {
+        title: qsTr(&quot;Update channel&quot;)
+        leadingIcon: &quot;alt_route&quot;
+        trailingKind: &quot;value&quot;
+        trailingText: settings.channelName
+        onActivated: channelSheet.open()   // MeoSettingsTaskSheet, level 3
+    }
+}</code></pre>
+<p>(<code>MeoSettingsRow</code> signals: <code>activated()</code>, <code>toggled(bool checked)</code>, <code>actionTriggered()</code>, <code>sliderMoved(real)</code>, <code>optionSelected(int, var)</code>, <code>dropdownSelected(int, string)</code>.)</p>
+<h2 id="7-how-to-review-a-page-against-these-docs">7. How to review a page against these docs</h2>
+<ol><li>Pick the page type (<code>PAGE_TYPES.md</code>) and layout (<code>LAYOUT.md</code>).</li><li>Walk the state matrix (<code>STATES.md</code> §1) and confirm every state exists.</li><li>Check each component against its page checklist (cards, lists, forms, dialogs, progress).</li><li>Check wording (<code>WRITING.md</code> §9) and accessibility (<code>FOUNDATIONS.md</code> §10).</li><li>Run the narrowest validation (<code>FOR_AGENTS.md</code> "Validation") and report the evidence level honestly.</li></ol>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>
