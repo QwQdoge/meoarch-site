@@ -53,6 +53,7 @@ GUIDE_DOCS = [
     ("meo-desktop", "meo-desktop.md", "Meo Desktop", "The Plasma 6 integration: install, the Meo Desktop session, what it does and does not control."),
     ("meo-settings", "meo-settings.md", "Meo Settings", "The everyday system settings app: boundaries, install, backup."),
     ("omnistore", "omnistore.md", "OmniStore", "The software store: sources, tasks, updates, custom repositories, AI and account."),
+    ("omnistore-sources", "omnistore-sources.md", "OmniStore sources", "What a source can provide, detection and offers, Bottles, macOS, and adding third-party catalogs."),
     ("meo-ai", "meo-ai.md", "Meo AI", "The assistant: downloads, what works now, data and network boundaries, troubleshooting."),
     ("meo-login", "meo-login.md", "Meo Login", "The login and display manager: compatibility boundary, install, configuration."),
     ("meo-repo", "meo-repo.md", "Meo Package Repository", "The signed Stable and Beta pacman repositories and how releases are made."),
@@ -62,7 +63,7 @@ GUIDE_DOCS = [
 # The guide pages share one URL directory (their relative links rely on it); the navigation shows them in sections.
 GUIDE_SECTIONS = [
     ("MeoArch", ["about", "requirements", "install", "projects", "legal", "terms", "privacy"]),
-    ("Projects", ["meoarch-iso", "meo-desktop", "meo-settings", "omnistore", "meo-ai", "meo-login", "meo-repo", "meo-account"]),
+    ("Projects", ["meoarch-iso", "meo-desktop", "meo-settings", "omnistore", "omnistore-sources", "meo-ai", "meo-login", "meo-repo", "meo-account"]),
     ("Developers", ["account-api", "api-reference", "account-native-apps"]),
 ]
 EXTERNAL_DOCS = [

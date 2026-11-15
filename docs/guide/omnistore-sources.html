@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OmniStore sources · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/guide/omnistore-sources">
+  <link rel="alternate" type="text/markdown" href="/docs/guide/omnistore-sources.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/install.html">Install Guide</a></li><li><a href="/docs/guide/projects.html">Projects Overview</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li></ul><p class="eyebrow">Projects</p><ul><li><a href="/docs/guide/meoarch-iso.html">MeoArch Image and Installer</a></li><li><a href="/docs/guide/meo-desktop.html">Meo Desktop</a></li><li><a href="/docs/guide/meo-settings.html">Meo Settings</a></li><li><a href="/docs/guide/omnistore.html">OmniStore</a></li><li><a href="/docs/guide/omnistore-sources.html" aria-current="page">OmniStore sources</a></li><li><a href="/docs/guide/meo-ai.html">Meo AI</a></li><li><a href="/docs/guide/meo-login.html">Meo Login</a></li><li><a href="/docs/guide/meo-repo.html">Meo Package Repository</a></li><li><a href="/docs/guide/meo-account.html">Meo Account</a></li></ul><p class="eyebrow">Developers</p><ul><li><a href="/docs/guide/account-api.html">Meo Account API</a></li><li><a href="/docs/guide/api-reference.html">Meo API Reference</a></li><li><a href="/docs/guide/account-native-apps.html">Native App Integration</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc" data-live-src="/content/omnistore-sources.md">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/meoarch-site/blob/main/content/omnistore-sources.md" target="_blank" rel="noreferrer">content/omnistore-sources.md ↗</a> · <a href="/docs/guide/omnistore-sources.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<h1 id="omnistore">OmniStore 来源</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#">原则</a></li><li><a href="#">源可以提供的能力</a></li><li><a href="#plugin-json">清单（plugin.json）字段</a></li><li><a href="#">内置来源</a></li><li><a href="#">添加第三方源</a></li></ul></nav>
+<p>OmniStore 里每个软件来源都是一个独立的“源”。源可以随时存在或不存在：没有它，商店照常工作，只是少一类软件。本页说明源能提供什么、怎么被发现、怎么添加第三方源。</p>
+<h2 id="">原则</h2>
+<ul><li><strong>默认保持干净</strong>：本机用不上的源不会出现。检测到可用的源只列在“可添加的来源”里，由你选择启用。</li><li><strong>能复用就复用</strong>：每个源只做自己独有的事，安装、卸载、更新都走同一套后台任务，不打断你。</li><li><strong>不夸大</strong>：清单里写了某项能力，不等于该能力已经可用。只有真正实现并测试过的才算。</li></ul>
+<h2 id="">源可以提供的能力</h2>
+<div class="table-scroll"><table><thead><tr><th>能力</th><th>含义</th></tr></thead><tbody><tr><td><code>search</code></td><td>按关键字搜索软件</td></tr><tr><td><code>details</code></td><td>版本、说明、开发者、许可证等详情，缺失的信息省略</td></tr><tr><td><code>install</code> / <code>uninstall</code></td><td>安装和卸载，作为后台任务执行</td></tr><tr><td><code>update</code></td><td>检查某个软件是否有新版本</td></tr><tr><td><code>list_installed</code></td><td>列出这个源管理的已安装软件</td></tr><tr><td><code>launch</code> / <code>locate</code></td><td>启动软件、打开所在位置</td></tr><tr><td><code>size</code></td><td>下载和安装大小</td></tr><tr><td><code>repositories</code></td><td>用户可以为该源添加自己的仓库</td></tr></tbody></table></div>
+<h2 id="plugin-json">清单（plugin.json）字段</h2>
+<div class="table-scroll"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>id</code>、<code>name</code>、<code>version</code>、<code>kind</code></td><td>标识。<code>kind</code> 目前只有 <code>source</code></td></tr><tr><td><code>platforms</code></td><td><code>linux</code>、<code>windows</code>、<code>macos</code> 中的若干个</td></tr><tr><td><code>capabilities</code></td><td>上表中本源真正实现的能力</td></tr><tr><td><code>permissions</code></td><td>需要的权限，例如 <code>subprocess</code>、<code>network</code>、<code>filesystem</code></td></tr><tr><td><code>detect</code></td><td>判断本机能否使用：<code>commands</code>（命令存在）或 <code>paths</code>（路径存在），满足任一即可</td></tr><tr><td><code>offer</code></td><td><code>default</code> 按默认规则；<code>on_detect</code> 检测到后只提示“可添加”；<code>manual</code> 只能手动添加</td></tr><tr><td><code>app_class</code></td><td><code>native</code> 为原生应用；<code>wrapped</code> 为通过运行时（如 Wine）运行的应用</td></tr><tr><td><code>experimental</code></td><td>实验性来源，界面上会标注</td></tr><tr><td><code>index</code></td><td>第三方目录的地址</td></tr><tr><td><code>trusted</code>、<code>default_enabled</code>、<code>requires_review</code></td><td>信任与默认启用。第三方源始终需要审核并默认关闭</td></tr></tbody></table></div>
+<h2 id="">内置来源</h2>
+<div class="table-scroll"><table><thead><tr><th>平台</th><th>来源</th></tr></thead><tbody><tr><td>Linux</td><td>Pacman、AUR、Flatpak、AppImage、APT、DNF、Zypper、APK、Bottles（实验）、F-Droid、GitHub</td></tr><tr><td>Windows</td><td>winget、Scoop、Chocolatey、GitHub</td></tr><tr><td>macOS</td><td>Homebrew、Homebrew Cask（实验）、GitHub</td></tr></tbody></table></div>
+<h3 id="bottles-windows">Bottles（Windows 应用）</h3>
+<p>Bottles 的“瓶子”是容器，不是应用；瓶子里登记的程序才是应用。检测到 Bottles 后，它只出现在“可添加的来源”里。启用后，每个瓶子要你确认一次是否把它的程序列入正常的软件列表；没确认前，它们不会出现在“已安装”里。启动走同一个任务流程。要安装 Windows 程序，选择一个瓶子和安装文件，OmniStore 在该瓶子里运行安装器。卸载请在瓶子内进行。</p>
+<p>Bottles 来源通过 <code>bottles-cli</code> 工作，目前还没有在真实 Bottles 环境里验证，所以标为实验。</p>
+<h3 id="macos">macOS（实验）</h3>
+<p>Homebrew Cask 提供 macOS 的 <code>.app</code> 应用，只在 macOS 上、检测到 <code>brew</code> 时提供。</p>
+<h2 id="">添加第三方源</h2>
+<p>第三方源是一个公开的 JSON 目录，<strong>不运行任何代码</strong>：每个软件只指向一个已有内置源能处理的安装目标。</p>
+<pre><code>omnistore --add-catalog https://example.org/apps/index.json
+omnistore --list-offers</code></pre>
+<p>目录必须使用 <code>https</code>，不超过 2 MB。添加后源默认关闭，需要你审核后再启用。</p>
+<pre><code>{
+  &quot;schema&quot;: 1,
+  &quot;id&quot;: &quot;acme&quot;,
+  &quot;name&quot;: &quot;Acme Apps&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;platforms&quot;: [&quot;linux&quot;],
+  &quot;apps&quot;: [
+    {
+      &quot;id&quot;: &quot;alpha&quot;,
+      &quot;name&quot;: &quot;Alpha&quot;,
+      &quot;description&quot;: &quot;An example app.&quot;,
+      &quot;version&quot;: &quot;1.2.0&quot;,
+      &quot;homepage&quot;: &quot;https://example.org/alpha&quot;,
+      &quot;install&quot;: { &quot;type&quot;: &quot;delegate&quot;, &quot;source&quot;: &quot;flatpak&quot;, &quot;id&quot;: &quot;org.example.Alpha&quot; }
+    }
+  ]
+}</code></pre>
+<p><code>install.source</code> 可以是 <code>flatpak</code>、<code>appimage</code>、<code>pacman</code>、<code>aur</code>、<code>apt</code>、<code>dnf</code>、<code>zypper</code>、<code>apk</code>、<code>winget</code>、<code>scoop</code>、<code>chocolatey</code>、<code>brew</code>、<code>brewcask</code>、<code>fdroid</code>、<code>github</code>、<code>bottles</code>。目标源在本机不可用时，该软件无法安装。</p>
+<p>目前第三方目录只支持 <code>delegate</code>，不支持直接下载文件，也不支持哈希校验的下载；这些还没有实现。</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

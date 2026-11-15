@@ -19,6 +19,7 @@
 - [Meo Desktop](https://meoarch.org/docs/guide/meo-desktop.md): The Plasma 6 integration: install, the Meo Desktop session, what it does and does not control.
 - [Meo Settings](https://meoarch.org/docs/guide/meo-settings.md): The everyday system settings app: boundaries, install, backup.
 - [OmniStore](https://meoarch.org/docs/guide/omnistore.md): The software store: sources, tasks, updates, custom repositories, AI and account.
+- [OmniStore sources](https://meoarch.org/docs/guide/omnistore-sources.md): What a source can provide, detection and offers, Bottles, macOS, and adding third-party catalogs.
 - [Meo AI](https://meoarch.org/docs/guide/meo-ai.md): The assistant: downloads, what works now, data and network boundaries, troubleshooting.
 - [Meo Login](https://meoarch.org/docs/guide/meo-login.md): The login and display manager: compatibility boundary, install, configuration.
 - [Meo Package Repository](https://meoarch.org/docs/guide/meo-repo.md): The signed Stable and Beta pacman repositories and how releases are made.

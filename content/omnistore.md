@@ -45,4 +45,6 @@ yay -Syu omnistore-bin
 
 仓库：[OmniStore](https://github.com/QwQdoge/OmniStore)。`docs/` 里有原生前端契约、事务与发布契约、统一更新、外部安装请求，以及与 Meo 的集成约定。商店页面、安装按钮、进度和错误状态的界面规范见 [MeoUI：商店反馈](/docs/meoui/store-feedback.html)。许可证 `GPL-3.0-only`。
 
+来源能提供什么、检测与按需添加、Bottles 和第三方源，见 [OmniStore 来源](omnistore-sources.md)。
+
 注意：不要仅凭某个来源的开关或清单就认为该来源的所有操作都可用——只有搜索、详情、安装、卸载、更新、平台限制和错误处理都实现并测试过，才算支持。
