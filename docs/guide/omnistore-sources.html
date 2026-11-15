@@ -42,7 +42,7 @@
 <h2 id="">内置来源</h2>
 <div class="table-scroll"><table><thead><tr><th>平台</th><th>来源</th></tr></thead><tbody><tr><td>Linux</td><td>Pacman、AUR、Flatpak、AppImage、APT、DNF、Zypper、APK、Bottles（实验）、F-Droid、GitHub</td></tr><tr><td>Windows</td><td>winget、Scoop、Chocolatey、GitHub</td></tr><tr><td>macOS</td><td>Homebrew、Homebrew Cask（实验）、GitHub</td></tr></tbody></table></div>
 <h3 id="bottles-windows">Bottles（Windows 应用）</h3>
-<p>Bottles 的“瓶子”是容器，不是应用；瓶子里登记的程序才是应用。检测到 Bottles 后，它只出现在“可添加的来源”里。启用后，每个瓶子要你确认一次是否把它的程序列入正常的软件列表；没确认前，它们不会出现在“已安装”里。启动走同一个任务流程。要安装 Windows 程序，选择一个瓶子和安装文件，OmniStore 在该瓶子里运行安装器。卸载请在瓶子内进行。</p>
+<p>Bottles 的“瓶子”是容器，不是应用；瓶子里登记的程序才是应用。检测到 Bottles 后，它只出现在“可添加的来源”里。启用后，每个瓶子要你确认一次是否把它的程序列入正常的软件列表；没确认前，它们不会出现在“已安装”里。启动走同一个任务流程。目前商店里不能直接选安装文件：先在 Bottles 里安装程序，它会出现在瓶子里，再在这里决定是否列入。卸载也请在瓶子里进行。</p>
 <p>Bottles 来源通过 <code>bottles-cli</code> 工作，目前还没有在真实 Bottles 环境里验证，所以标为实验。</p>
 <h3 id="macos">macOS（实验）</h3>
 <p>Homebrew Cask 提供 macOS 的 <code>.app</code> 应用，只在 macOS 上、检测到 <code>brew</code> 时提供。</p>
