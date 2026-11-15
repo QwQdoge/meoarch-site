@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meo AI · MeoArch Docs</title>
+  <meta name="theme-color" content="#7451c7">
+  <link rel="canonical" href="https://meoarch.org/docs/guide/meo-ai">
+  <link rel="alternate" type="text/markdown" href="/docs/guide/meo-ai.md">
+  <link rel="icon" href="/assets/icons/Logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <!-- AI agents: read https://meoarch.org/llms.txt and the Markdown versions of these pages instead of this HTML. -->
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="ui.skip">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="MeoArch"><img src="/assets/icons/Logo.svg" alt="" width="36" height="36"><span>MeoArch</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="sr-only" data-i18n="ui.menu">打开菜单</span><i></i><i></i></button>
+    <nav id="site-nav" aria-label="Primary" data-nav>
+      <a href="/#products" data-i18n="nav.products">产品</a><a href="/#install" data-i18n="nav.install">安装</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="/#workshop" data-i18n="nav.workshop">更多项目</a><a href="/#about" data-i18n="nav.about">关于</a>
+    </nav>
+    <label class="lang-switcher"><span class="sr-only" data-i18n="ui.lang">语言 / Language</span><select id="lang-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+    <a class="header-link" href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <div class="wrap doc-layout">
+      <nav class="doc-nav" aria-label="Docs"><p class="eyebrow">MeoArch</p><ul><li><a href="/docs/guide/about.html">About MeoArch</a></li><li><a href="/docs/guide/requirements.html">Requirements</a></li><li><a href="/docs/guide/install.html">Install Guide</a></li><li><a href="/docs/guide/projects.html">Projects Overview</a></li><li><a href="/docs/guide/legal.html">Legal</a></li><li><a href="/docs/guide/terms.html">Terms of Service</a></li><li><a href="/docs/guide/privacy.html">Privacy Policy</a></li></ul><p class="eyebrow">Projects</p><ul><li><a href="/docs/guide/meoarch-iso.html">MeoArch Image and Installer</a></li><li><a href="/docs/guide/meo-desktop.html">Meo Desktop</a></li><li><a href="/docs/guide/meo-settings.html">Meo Settings</a></li><li><a href="/docs/guide/omnistore.html">OmniStore</a></li><li><a href="/docs/guide/meo-ai.html" aria-current="page">Meo AI</a></li><li><a href="/docs/guide/meo-login.html">Meo Login</a></li><li><a href="/docs/guide/meo-repo.html">Meo Package Repository</a></li><li><a href="/docs/guide/meo-account.html">Meo Account</a></li></ul><p class="eyebrow">Developers</p><ul><li><a href="/docs/guide/account-api.html">Meo Account API</a></li><li><a href="/docs/guide/api-reference.html">Meo API Reference</a></li><li><a href="/docs/guide/account-native-apps.html">Native App Integration</a></li></ul><p class="eyebrow">MeoUI</p><ul><li><a href="/docs/meoui/index.html">MeoUI Specification</a></li><li><a href="/docs/meoui/app-shell.html">App Shell</a></li><li><a href="/docs/meoui/settings.html">Settings Pattern</a></li><li><a href="/docs/meoui/page-types.html">Page Types</a></li><li><a href="/docs/meoui/foundations.html">Foundations</a></li><li><a href="/docs/meoui/layout.html">Layout</a></li><li><a href="/docs/meoui/navigation.html">Navigation</a></li><li><a href="/docs/meoui/cards.html">Cards</a></li><li><a href="/docs/meoui/lists.html">Lists</a></li><li><a href="/docs/meoui/forms.html">Buttons and Forms</a></li><li><a href="/docs/meoui/dialogs.html">Dialogs and Alerts</a></li><li><a href="/docs/meoui/progress.html">Progress and Loading</a></li><li><a href="/docs/meoui/states.html">Empty and Error States</a></li><li><a href="/docs/meoui/detail-pages.html">Detail Pages</a></li><li><a href="/docs/meoui/writing.html">Writing</a></li><li><a href="/docs/meoui/examples.html">Worked Examples</a></li><li><a href="/docs/meoui/store-feedback.html">Store Feedback</a></li><li><a href="/docs/meoui/dynamic-color.html">Dynamic Color</a></li><li><a href="/docs/meoui/api-lifecycle.html">API Lifecycle</a></li><li><a href="/docs/meoui/localization.html">Localization</a></li><li><a href="/docs/meoui/for-agents.html">Rules for Coding Agents</a></li></ul></nav>
+      <article class="doc" data-live-src="/content/meo-ai.md">
+        <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/meoarch-site/blob/main/content/meo-ai.md" target="_blank" rel="noreferrer">content/meo-ai.md ↗</a> · <a href="/docs/guide/meo-ai.md" data-i18n="docs.markdown">Markdown</a></p>
+        
+<h1 id="meo-ai">Meo AI</h1>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#beta">获取（Beta）</a></li><li><a href="#">现在能用的</a></li><li><a href="#">常用操作</a></li><li><a href="#">数据与网络</a></li><li><a href="#">排错</a></li><li><a href="#">开发者</a></li></ul></nav>
+<p>Meo AI 是 MeoArch 的助手：日常对话、本机或远程的 Agent 工作，以及可审阅的系统操作，在桌面和网页上是同一套体验。<strong>目前是开发预览版</strong>，不是每一种模型提供商和系统组合都完成了实机验收。</p>
+<h2 id="beta">获取（Beta）</h2>
+<p>所有构建都是 Beta（GitHub 预发布）。从 <a href="https://github.com/QwQdoge/meo-ai/releases">GitHub 发布页</a> 下载：</p>
+<div class="table-scroll"><table><thead><tr><th>平台</th><th>文件</th><th>说明</th></tr></thead><tbody><tr><td>Windows 10/11 (x64)</td><td><code>…-windows-x64-setup.exe</code></td><td>安装包，可从发布页自动更新</td></tr><tr><td>Windows 10/11 (x64)</td><td><code>…-windows-x64-portable.zip</code></td><td>解压后运行 <code>meo-ai-desktop.exe</code>，免安装、不自动更新</td></tr><tr><td>Android 9+</td><td><code>…-android.apk</code></td><td>测试构建，使用调试密钥签名</td></tr><tr><td>Arch Linux</td><td><code>yay -Syu meo-ai-beta</code></td><td>签名的 Meo 软件源的 Beta 通道</td></tr><tr><td>网页</td><td><code>chat.meoarch.org</code></td><td>在浏览器里使用</td></tr></tbody></table></div>
+<p>发布页的文件附有 <code>SHA256SUMS.txt</code>，下载后请核对。</p>
+<h2 id="">现在能用的</h2>
+<ul><li>流式对话，可以真正停止；断线重连，处理过期的对话。</li><li>保存的历史对话：恢复、全文搜索、重命名、删除，导出为 Markdown。</li><li>附件：文件、图片、长文本，支持拖放和剪贴板；发给纯文本模型前会检查是否支持图片。</li><li>选择模型、按角色路由模型、记忆、技能（Skills）、MCP 可见性。</li><li>响应详情：用量、耗时、上下文、来源、工具活动；“AI 活动”视图显示当前请求和历史用量。</li><li>接入 Meo Account：账号里的模型连接。</li><li>系统操作通过有类型的 System AI Router，需要确认。</li></ul>
+<h2 id="">常用操作</h2>
+<div class="table-scroll"><table><thead><tr><th>做什么</th><th>怎么做</th></tr></thead><tbody><tr><td>新对话</td><td><code>Ctrl+N</code></td></tr><tr><td>找旧对话</td><td>响应详情 → 对话，搜索标题和可见的消息文字（不含隐藏的工具内容）</td></tr><tr><td>附加上下文</td><td>点附件按钮选择或拖放文件，粘贴剪贴板的文件或图片，或附加长文本；剪贴板里的网址不会自动下载</td></tr><tr><td>导出或删除</td><td>对话视图中导出为 Markdown，或确认后永久删除（本地附件一并清理）</td></tr><tr><td>查看过程</td><td>响应详情看元数据和来源，AI 活动看请求状态和用量汇总</td></tr></tbody></table></div>
+<h2 id="">数据与网络</h2>
+<p>Meo AI 以本地优先，但“本地优先”不等于不联网：</p>
+<ul><li>你选择的模型提供商会联系它自己的接口；</li><li>Meo Account 可能代理账号里的模型连接和同步；</li><li>明确启用的工具可以联系它们各自协议允许的服务。</li></ul>
+<p>对话内容和待发送的附件留在本机，除非某次请求明确把内容发给你选择的模型。提供商密钥不会成为 Meo AI 自己的第二份密钥库：账号里的密钥放在 Meo Account 和 KWallet 的边界后面。系统操作受 System AI Router 的能力和确认策略约束，不靠提示词授权。更多见 <a href="privacy.html">隐私政策</a>。</p>
+<h2 id="">排错</h2>
+<p>出现“AgentService not connected”时：</p>
+<pre><code>python3 -m meo.runtime.main --self-check
+systemctl --user status meo-agent-service.service
+journalctl --user -u meo-agent-service.service -b</code></pre>
+<p>原生应用只接受本机回环地址的 AgentService。</p>
+<h2 id="">开发者</h2>
+<p>仓库：<a href="https://github.com/QwQdoge/meo-ai">meo-ai</a>。客户端：桌面是 Rust + Qt/QML + MeoUI，网页是 React + TypeScript，安卓是 Kotlin + Jetpack Compose，共享的业务能力是 Meo AI 核心加有版本的 Meo API。调用接口见 <a href="account-api.html">Meo Account API</a>。</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-content">
+    <div><a class="brand" href="/"><img src="/assets/icons/Logo.svg" alt="" width="30" height="30"><span>MeoArch</span></a><p data-i18n="foot.tag">Calm by design. Built in the open.</p></div>
+    <nav aria-label="Footer"><a href="/os/">MeoArch OS</a><a href="/ai/">Meo AI</a><a href="/docs/" data-i18n="nav.docs">文档</a><a href="https://sourceforge.net/projects/meoarch/" target="_blank" rel="noreferrer">SourceForge</a><a href="https://github.com/QwQdoge" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </div></footer>
+  <script src="/app.js"></script>
+  <script src="/docs-live.js" defer></script>
+  <script src="/notice.js" defer></script>
+</body>
+</html>

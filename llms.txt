@@ -7,10 +7,28 @@
 
 - [About MeoArch](https://meoarch.org/docs/guide/about.md): What MeoArch is and why it is called that.
 - [Requirements](https://meoarch.org/docs/guide/requirements.md): What you need to try MeoArch, Meo AI and the Meo apps.
+- [Install Guide](https://meoarch.org/docs/guide/install.md): Install MeoArch from the ISO, on an existing Arch system, or one app at a time.
+- [Projects Overview](https://meoarch.org/docs/guide/projects.md): What each MeoArch project is, how they fit together, how to get them and where their docs are.
 - [Legal](https://meoarch.org/docs/guide/legal.md): All policies and open-source licenses of MeoArch's sites and apps in one place.
 - [Terms of Service](https://meoarch.org/docs/guide/terms.md): The terms for using Meo Account and Meo AI: accounts, your content, AI output, tools, acceptable use, liability.
 - [Privacy Policy](https://meoarch.org/docs/guide/privacy.md): What Meo Account and Meo AI store, who receives data, how long, and how to export or delete it.
-- [Meo Account API](https://meoarch.org/docs/guide/account-api.md): How to sign in, read account data, manage sessions and backups, and call Meo AI.
+
+## Projects
+
+- [MeoArch Image and Installer](https://meoarch.org/docs/guide/meoarch-iso.md): The ISO, the Live desktop, the installer and the repair tool.
+- [Meo Desktop](https://meoarch.org/docs/guide/meo-desktop.md): The Plasma 6 integration: install, the Meo Desktop session, what it does and does not control.
+- [Meo Settings](https://meoarch.org/docs/guide/meo-settings.md): The everyday system settings app: boundaries, install, backup.
+- [OmniStore](https://meoarch.org/docs/guide/omnistore.md): The software store: sources, tasks, updates, custom repositories, AI and account.
+- [Meo AI](https://meoarch.org/docs/guide/meo-ai.md): The assistant: downloads, what works now, data and network boundaries, troubleshooting.
+- [Meo Login](https://meoarch.org/docs/guide/meo-login.md): The login and display manager: compatibility boundary, install, configuration.
+- [Meo Package Repository](https://meoarch.org/docs/guide/meo-repo.md): The signed Stable and Beta pacman repositories and how releases are made.
+- [Meo Account](https://meoarch.org/docs/guide/meo-account.md): What the account does, its security model and where to find the developer docs.
+
+## Developers
+
+- [Meo Account API](https://meoarch.org/docs/guide/account-api.md): How to sign in, read account data, manage sessions and backups, call Meo AI, and read the streaming format, errors, models and plan limits.
+- [Meo API Reference](https://meoarch.org/docs/guide/api-reference.md): Every route an app can use: account, sessions, backups, conversations, chat, models, projects, files, plugins, devices, usage, realtime.
+- [Native App Integration](https://meoarch.org/docs/guide/account-native-apps.md): How a desktop app uses Meo Account: client manifest, getting its own token, asking the broker to call the API, usage upload.
 
 ## MeoUI specification
 
@@ -20,6 +38,19 @@ Start with "Rules for Coding Agents", then read only the document that matches t
 - [App Shell](https://meoarch.org/docs/meoui/app-shell.md): Window chrome and toolbar, where app settings live and how they are grouped, About, open-source credits.
 - [Settings Pattern](https://meoarch.org/docs/meoui/settings.md): Settings rows, groups, sidebar, task sheet, state layer and motion.
 - [Page Types](https://meoarch.org/docs/meoui/page-types.md): Page kinds, the two-level rule and registry metadata.
+- [Foundations](https://meoarch.org/docs/meoui/foundations.md): Page style, surfaces, color, type, shape, spacing, elevation, icons, motion, accessibility.
+- [Layout](https://meoarch.org/docs/meoui/layout.md): Window size classes, page skeletons, columns, scrolling and compact behavior.
+- [Navigation](https://meoarch.org/docs/meoui/navigation.md): Bottom bar, rail, sidebar, tabs, back, search and the top app bar.
+- [Cards](https://meoarch.org/docs/meoui/cards.md): Card versus row versus group, types, anatomy, sizes, states and grids.
+- [Lists](https://meoarch.org/docs/meoui/lists.md): List rows, connected groups, headers, tables and long lists.
+- [Buttons and Forms](https://meoarch.org/docs/meoui/forms.md): Button hierarchy, text fields, selection controls and form layout.
+- [Dialogs and Alerts](https://meoarch.org/docs/meoui/dialogs.md): Choosing a surface, dialogs, destructive confirmation, sheets, snackbars and banners.
+- [Progress and Loading](https://meoarch.org/docs/meoui/progress.md): Progress indicators, skeletons, long-running tasks and timing.
+- [Empty and Error States](https://meoarch.org/docs/meoui/states.md): Empty, error, offline, stale and no-access states.
+- [Detail Pages](https://meoarch.org/docs/meoui/detail-pages.md): Entity and app detail page anatomy, adaptive layout and states.
+- [Writing](https://meoarch.org/docs/meoui/writing.md): Voice, buttons, messages, tooltips and localization-safe wording.
+- [Worked Examples](https://meoarch.org/docs/meoui/examples.md): Worked compositions and a page review procedure.
+- [Store Feedback](https://meoarch.org/docs/meoui/store-feedback.md): Store pages, install button states, progress indicators, error and empty states.
 - [Dynamic Color](https://meoarch.org/docs/meoui/dynamic-color.md): The mandatory dynamic color role table and who generates it.
 - [API Lifecycle](https://meoarch.org/docs/meoui/api-lifecycle.md): Current, deprecated, experimental and internal components.
 - [Localization](https://meoarch.org/docs/meoui/localization.md): Language precedence, translation catalogs and accessible names.

@@ -21,6 +21,19 @@ DOCS = [
     ("app-shell", "design/APP_SHELL.md", "App Shell", "Window chrome and toolbar, where app settings live and how they are grouped, About, open-source credits."),
     ("settings", "design/SETTINGS.md", "Settings Pattern", "Settings rows, groups, sidebar, task sheet, state layer and motion."),
     ("page-types", "design/PAGE_TYPES.md", "Page Types", "Page kinds, the two-level rule and registry metadata."),
+    ("foundations", "design/FOUNDATIONS.md", "Foundations", "Page style, surfaces, color, type, shape, spacing, elevation, icons, motion, accessibility."),
+    ("layout", "design/LAYOUT.md", "Layout", "Window size classes, page skeletons, columns, scrolling and compact behavior."),
+    ("navigation", "design/NAVIGATION.md", "Navigation", "Bottom bar, rail, sidebar, tabs, back, search and the top app bar."),
+    ("cards", "design/CARDS.md", "Cards", "Card versus row versus group, types, anatomy, sizes, states and grids."),
+    ("lists", "design/LISTS.md", "Lists", "List rows, connected groups, headers, tables and long lists."),
+    ("forms", "design/FORMS.md", "Buttons and Forms", "Button hierarchy, text fields, selection controls and form layout."),
+    ("dialogs", "design/DIALOGS.md", "Dialogs and Alerts", "Choosing a surface, dialogs, destructive confirmation, sheets, snackbars and banners."),
+    ("progress", "design/PROGRESS.md", "Progress and Loading", "Progress indicators, skeletons, long-running tasks and timing."),
+    ("states", "design/STATES.md", "Empty and Error States", "Empty, error, offline, stale and no-access states."),
+    ("detail-pages", "design/DETAIL_PAGES.md", "Detail Pages", "Entity and app detail page anatomy, adaptive layout and states."),
+    ("writing", "design/WRITING.md", "Writing", "Voice, buttons, messages, tooltips and localization-safe wording."),
+    ("examples", "design/EXAMPLES.md", "Worked Examples", "Worked compositions and a page review procedure."),
+    ("store-feedback", "design/STORE_FEEDBACK.md", "Store Feedback", "Store pages, install button states, progress indicators, error and empty states."),
     ("dynamic-color", "design/DYNAMIC_COLOR.md", "Dynamic Color", "The mandatory dynamic color role table and who generates it."),
     ("api-lifecycle", "api-lifecycle.md", "API Lifecycle", "Current, deprecated, experimental and internal components."),
     ("localization", "localization.md", "Localization", "Language precedence, translation catalogs and accessible names."),
@@ -32,7 +45,25 @@ GUIDE_DOCS = [
     ("legal", "legal.md", "Legal", "All policies and open-source licenses of MeoArch's sites and apps in one place."),
     ("terms", "terms.md", "Terms of Service", "The terms for using Meo Account and Meo AI: accounts, your content, AI output, tools, acceptable use, liability."),
     ("privacy", "privacy.md", "Privacy Policy", "What Meo Account and Meo AI store, who receives data, how long, and how to export or delete it."),
-    ("account-api", "account-api.md", "Meo Account API", "How to sign in, read account data, manage sessions and backups, and call Meo AI."),
+    ("account-api", "account-api.md", "Meo Account API", "How to sign in, read account data, manage sessions and backups, call Meo AI, and read the streaming format, errors, models and plan limits."),
+    ("account-native-apps", "account-native-apps.md", "Native App Integration", "How a desktop app uses Meo Account: client manifest, getting its own token, asking the broker to call the API, usage upload."),
+    ("api-reference", "api-reference.md", "Meo API Reference", "Every route an app can use: account, sessions, backups, conversations, chat, models, projects, files, plugins, devices, usage, realtime."),
+    ("projects", "projects.md", "Projects Overview", "What each MeoArch project is, how they fit together, how to get them and where their docs are."),
+    ("install", "install.md", "Install Guide", "Install MeoArch from the ISO, on an existing Arch system, or one app at a time."),
+    ("meo-desktop", "meo-desktop.md", "Meo Desktop", "The Plasma 6 integration: install, the Meo Desktop session, what it does and does not control."),
+    ("meo-settings", "meo-settings.md", "Meo Settings", "The everyday system settings app: boundaries, install, backup."),
+    ("omnistore", "omnistore.md", "OmniStore", "The software store: sources, tasks, updates, custom repositories, AI and account."),
+    ("meo-ai", "meo-ai.md", "Meo AI", "The assistant: downloads, what works now, data and network boundaries, troubleshooting."),
+    ("meo-login", "meo-login.md", "Meo Login", "The login and display manager: compatibility boundary, install, configuration."),
+    ("meo-repo", "meo-repo.md", "Meo Package Repository", "The signed Stable and Beta pacman repositories and how releases are made."),
+    ("meoarch-iso", "meoarch-iso.md", "MeoArch Image and Installer", "The ISO, the Live desktop, the installer and the repair tool."),
+    ("meo-account", "meo-account.md", "Meo Account", "What the account does, its security model and where to find the developer docs."),
+]
+# The guide pages share one URL directory (their relative links rely on it); the navigation shows them in sections.
+GUIDE_SECTIONS = [
+    ("MeoArch", ["about", "requirements", "install", "projects", "legal", "terms", "privacy"]),
+    ("Projects", ["meoarch-iso", "meo-desktop", "meo-settings", "omnistore", "meo-ai", "meo-login", "meo-repo", "meo-account"]),
+    ("Developers", ["account-api", "api-reference", "account-native-apps"]),
 ]
 EXTERNAL_DOCS = [
     ("隐私、数据与测试版说明", "https://vrc.meoarch.org/legal.html", "VRC Memories 的隐私、数据处理、测试版风险和使用条款摘要。"),
@@ -63,7 +94,7 @@ def resolve(link, current, by_source=BY_SOURCE):
 def rewrite_links(md, current, ext, by_source=BY_SOURCE, repo=REPO):
     def sub(m):
         text, link = m.group(1), m.group(2)
-        if re.match(r"[a-z]+:|#", link):
+        if re.match(r"[a-z]+:|#|/", link):
             return m.group(0)
         path, _, frag = link.partition("#")
         slug = resolve(path, current, by_source)
@@ -221,14 +252,27 @@ GROUPS = [
 ]
 
 
+def sections_of(key, docs):
+    """(title, docs) sections of a group: the guide is split into sections, the others are one section."""
+    if key != "guide":
+        return [(None, docs)]
+    by_slug = {d[0]: d for d in docs}
+    placed = {slug for _, slugs in GUIDE_SECTIONS for slug in slugs}
+    missing = sorted(set(by_slug) - placed)
+    if missing:
+        sys.exit(f"guide docs without a section: {missing}")
+    return [(title, [by_slug[slug] for slug in slugs]) for title, slugs in GUIDE_SECTIONS]
+
+
 def doc_nav(group, active):
     current = ' aria-current="page"'
     nav = ""
     for key, title_g, docs, _, _, _, _ in GROUPS:
-        items = "".join(
-            f'<li><a href="/docs/{key}/{slug}.html"{current if (key == group and slug == active) else ""}>{html.escape(title)}</a></li>'
-            for slug, _, title, _ in docs)
-        nav += f'<p class="eyebrow">{title_g}</p><ul>{items}</ul>'
+        for section, items_docs in sections_of(key, docs):
+            items = "".join(
+                f'<li><a href="/docs/{key}/{slug}.html"{current if (key == group and slug == active) else ""}>{html.escape(title)}</a></li>'
+                for slug, _, title, _ in items_docs)
+            nav += f'<p class="eyebrow">{section or title_g}</p><ul>{items}</ul>'
     return f'<nav class="doc-nav" aria-label="Docs">{nav}</nav>'
 
 
@@ -274,7 +318,7 @@ def main():
             f'<a class="mini" href="/docs/{key}/{slug}.html"><h3>{html.escape(title)}</h3><p>{html.escape(summary)}</p><span>{"Markdown · " if slug == "for-agents" else ""}→</span></a>'
             for slug, _, title, summary in docs)
         return f'<h2 class="docs-group">{title_g}</h2>\n      <div class="mini-grid">{cards}</div>'
-    groups_html = "\n      ".join(card_group(k, t, d) for k, t, d, *_ in GROUPS)
+    groups_html = "\n      ".join(card_group(k, sec or t, d) for k, t, docs, *_ in GROUPS for sec, d in sections_of(k, docs))
     # Documents that live with another product are listed here too, and open where they are kept.
     external = "".join(
         f'<a class="mini" href="{href}"><h3>{html.escape(title)}</h3><p>{html.escape(summary)}</p><span>→</span></a>'
@@ -303,7 +347,11 @@ def main():
         "## About",
         "",
     ]
-    llms += [f"- [{title}]({SITE}/docs/guide/{slug}.md): {summary}" for slug, _, title, summary in GUIDE_DOCS]
+    guide_by_slug = {d[0]: d for d in GUIDE_DOCS}
+    for section, slugs in GUIDE_SECTIONS:
+        if section != "MeoArch":
+            llms += ["", f"## {section}", ""]
+        llms += [f"- [{guide_by_slug[x][2]}]({SITE}/docs/guide/{x}.md): {guide_by_slug[x][3]}" for x in slugs]
     llms += ["", "## MeoUI specification", "", "Start with \"Rules for Coding Agents\", then read only the document that matches the task.", ""]
     llms += [f"- [{title}]({SITE}/docs/meoui/{slug}.md): {summary}" for slug, _, title, summary in DOCS]
     llms += [""]
