@@ -31,6 +31,7 @@ OmniStore 里每个软件来源都是一个独立的“源”。源可以随时�
 | `permissions` | 需要的权限，例如 `subprocess`、`network`、`filesystem` |
 | `detect` | 判断本机能否使用：`commands`（命令存在）或 `paths`（路径存在），满足任一即可 |
 | `offer` | `default` 按默认规则；`on_detect` 检测到后只提示“可添加”；`manual` 只能手动添加 |
+| `requires` | 启用该源前需要的工具：`flatpak`、`aur_helper`（yay）、`bottles`。启用时缺什么装什么，已有的跳过；安装可能请求授权 |
 | `app_class` | `native` 为原生应用；`wrapped` 为通过运行时（如 Wine）运行的应用 |
 | `experimental` | 实验性来源，界面上会标注 |
 | `index` | 第三方目录的地址 |
