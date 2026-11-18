@@ -84,7 +84,7 @@ Meo 不面向 13 岁以下的儿童，亦不会有意收集其个人信息。所
 
 ## 11. 联系方式
 
-如有疑问或请求，请通过 [meo-ai 的 GitHub 仓库](https://github.com/QwQdoge/meo-ai/issues) 提出。
+如有疑问或请求，请发送邮件至 [info@meoarch.org](mailto:info@meoarch.org)，或通过 [meo-ai 的 GitHub 仓库](https://github.com/QwQdoge/meo-ai/issues) 提出。
 
 ---
 
@@ -174,4 +174,4 @@ We will update the date at the top of this page and indicate material changes in
 
 ## 11. Contact
 
-For questions or requests, please use the [meo-ai repository on GitHub](https://github.com/QwQdoge/meo-ai/issues).
+For questions or requests, email [info@meoarch.org](mailto:info@meoarch.org), or use the [meo-ai repository on GitHub](https://github.com/QwQdoge/meo-ai/issues).

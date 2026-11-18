@@ -33,7 +33,7 @@ MeoArch 各站点和应用的政策与许可证集中在这一页。本页链接
 
 ## 联系方式 / Contact
 
-对政策或许可证有疑问，请通过 [meo-ai 的 GitHub 仓库](https://github.com/QwQdoge/meo-ai/issues) 提出。
+对政策或许可证有疑问，请发送邮件至 [info@meoarch.org](mailto:info@meoarch.org)，或通过 [meo-ai 的 GitHub 仓库](https://github.com/QwQdoge/meo-ai/issues) 提出。
 
 ---
 
@@ -72,4 +72,4 @@ Each component is released under its own license; the full terms are in the LICE
 
 ## Contact
 
-Questions about a policy or license: use the [meo-ai repository on GitHub](https://github.com/QwQdoge/meo-ai/issues).
+Questions about a policy or license: email [info@meoarch.org](mailto:info@meoarch.org), or use the [meo-ai repository on GitHub](https://github.com/QwQdoge/meo-ai/issues).

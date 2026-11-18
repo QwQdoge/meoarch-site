@@ -90,7 +90,7 @@
 
 1. 我们可能修订本条款。我们会更新本页顶部的日期，重要变更会在应用内提示。变更生效后继续使用服务，视为您接受更新后的条款。
 2. 本条款适用您所在地区不可排除的法律规定；争议应首先通过友好协商解决。
-3. 如有疑问，请通过 [meo-ai 的 GitHub 仓库](https://github.com/QwQdoge/meo-ai/issues) 联系我们。
+3. 如有疑问，请发送邮件至 [info@meoarch.org](mailto:info@meoarch.org)，或通过 [meo-ai 的 GitHub 仓库](https://github.com/QwQdoge/meo-ai/issues) 联系我们。
 
 ---
 
@@ -186,4 +186,4 @@ To the maximum extent permitted by applicable law, the Service is provided "as i
 
 1. We may revise these terms. We will update the date at the top of this page and indicate material changes in the app. Continued use of the Service after a change takes effect constitutes acceptance of the updated terms.
 2. These terms are subject to the mandatory laws of your region; disputes should first be resolved through friendly consultation.
-3. For questions, contact us through the [meo-ai repository on GitHub](https://github.com/QwQdoge/meo-ai/issues).
+3. For questions, email [info@meoarch.org](mailto:info@meoarch.org), or contact us through the [meo-ai repository on GitHub](https://github.com/QwQdoge/meo-ai/issues).
