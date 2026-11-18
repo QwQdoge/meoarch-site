@@ -47,6 +47,10 @@ function rewrite(upstream, name) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.pathname === '/health/meo-version.json') {
+      const build = typeof MEO_BUILD === 'undefined' ? { commit: null } : MEO_BUILD;  // injected by scripts/deploy_paths.mjs
+      return new Response(JSON.stringify({ product: 'meoarch-paths', ...build }), { headers: { 'content-type': 'application/json', 'cache-control': 'no-store', 'access-control-allow-origin': '*' } });
+    }
     if (/^\/health(\/|$)/.test(url.pathname)) return health(request, env);
     const match = url.pathname.match(/^\/(os|ai)(\/.*)?$/);
     if (!match) return errorResponse('404', request);

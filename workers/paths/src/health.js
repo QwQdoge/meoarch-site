@@ -120,7 +120,7 @@ export async function health(request, env) {
   const url = new URL(request.url);
   if (request.method !== 'GET' && request.method !== 'HEAD') return errorResponse('405', request);
   const sub = url.pathname.replace(/^\/health\/?/, '');
-  if (sub && sub !== 'fragment' && sub !== 'status.json') return errorResponse('404', request);
+  if (sub && sub !== 'fragment' && sub !== 'status.json' && sub !== 'meo-version.json') return errorResponse('404', request);
   const q = url.searchParams.get('lang');
   const lang = q === 'en' || q === 'zh' ? q : (/^zh/i.test((request.headers.get('accept-language') || 'zh').trim()) ? 'zh' : 'en');
   const data = await load(env);
