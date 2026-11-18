@@ -54,3 +54,11 @@ Deploy the Worker with `cd workers/paths && wrangler deploy` (rollback = delete 
   Add an object to `notices` (`id`, `text.zh`/`text.en`, `label`, `href`, optional `sites`, `exclude`, `until`) and push.
   Closing it stores the id in a cookie on `.meoarch.org`, so it never appears again on any subdomain. Use a new `id` for
   each new notice. VRC Memories is excluded from Meo notices; give it its own entry with `"sites": ["vrc.meoarch.org"]`.
+
+## Error pages and service status
+
+- `errors/meo-error-page.src.mjs` is the one error-page design for every MeoArch host (404, 5xx, offline, maintenance ...).
+  Run `node scripts/build_errors.mjs` after editing it: it writes `errors/*.html`, `404.html`, and copies the module into
+  `workers/paths`, `meo-ai-landing` and `meo-api`, plus `404.html` into `MeoArch-os-webside` when those are checked out next to this repository.
+- `meoarch.org/health` is served by the `workers/paths` Worker (`src/health.js`) from Meo API `GET /v1/status`.
+  Manual states and incidents are set in the Meo Account admin console (Status tab).

@@ -1,3 +1,7 @@
+import { health } from './health.js';
+import { errorResponse, wantsHtml } from './meo-error-page.mjs';
+
+// meoarch.org/health is the public service status page (health.js).
 // meoarch.org/os and meoarch.org/ai: the intro pages of MeoArch OS and Meo AI live on their own hosts
 // (os.meoarch.org, ai.meoarch.org). This Worker serves them under the main domain, so every project's
 // "details" page sits at meoarch.org/<project>. (VRC Memories is served the same way by its own Worker.)
@@ -43,15 +47,26 @@ function rewrite(upstream, name) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (/^\/health(\/|$)/.test(url.pathname)) return health(request, env);
     const match = url.pathname.match(/^\/(os|ai)(\/.*)?$/);
-    if (!match) return new Response('Not found', { status: 404 });
+    if (!match) return errorResponse('404', request);
     const [, name, rest] = match;
     if (!rest) return Response.redirect(`${url.origin}/${name}/${url.search}`, 308);  // relative URLs need the slash
-    if (request.method !== 'GET' && request.method !== 'HEAD') return new Response('Method not allowed', { status: 405 });
+    if (request.method !== 'GET' && request.method !== 'HEAD') return errorResponse('405', request);
     const init = { method: request.method, headers: forwarded(request) };
-    const upstream = name === 'os'
-      ? await fetch(new Request(OS_ORIGIN + rest + url.search, init))
-      : await env.AI_LANDING.fetch(new Request(AI_ORIGIN + rest + url.search, init));
+    let upstream;
+    try {
+      upstream = name === 'os'
+        ? await fetch(new Request(OS_ORIGIN + rest + url.search, init))
+        : await env.AI_LANDING.fetch(new Request(AI_ORIGIN + rest + url.search, init));
+    } catch {
+      return errorResponse('502', request);
+    }
+    // Upstream errors become the shared MeoArch error page for browsers.
+    if (upstream.status >= 400 && wantsHtml(request)) {
+      const kind = [404, 405, 410, 429, 500, 502, 503, 504].includes(upstream.status) ? String(upstream.status) : upstream.status >= 500 ? '502' : '404';
+      return errorResponse(kind, request);
+    }
     return rewrite(upstream, name);
   },
 };

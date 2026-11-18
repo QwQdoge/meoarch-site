@@ -6,7 +6,12 @@
     { "pattern": "meoarch.org/os", "zone_name": "meoarch.org" },
     { "pattern": "meoarch.org/os/*", "zone_name": "meoarch.org" },
     { "pattern": "meoarch.org/ai", "zone_name": "meoarch.org" },
-    { "pattern": "meoarch.org/ai/*", "zone_name": "meoarch.org" }
+    { "pattern": "meoarch.org/ai/*", "zone_name": "meoarch.org" },
+    { "pattern": "meoarch.org/health", "zone_name": "meoarch.org" },
+    { "pattern": "meoarch.org/health/*", "zone_name": "meoarch.org" }
   ],
-  "services": [{ "binding": "AI_LANDING", "service": "meo-ai-landing" }]
+  "services": [
+    { "binding": "AI_LANDING", "service": "meo-ai-landing" },
+    { "binding": "API", "service": "meo-api" }
+  ]
 }
