@@ -44,6 +44,17 @@ Meo AI 是 MeoArch 的助手：日常对话、本机或远程的 Agent 工作，
 | 记忆、自定义说明 | 设置 → 个性化 |
 | 用量 | 设置 → 用量 |
 
+## 在 Chrome 里让 Meo AI 操作网页
+
+网页版（chat.meoarch.org）可以通过 **Meo AI for Chrome** 扩展使用你自己的 Chrome：打开网页、读取内容、点击、输入、截图，带着你的登录状态。
+
+1. 下载 meo-ai 仓库里的 `meo/browser-extension` 文件夹。
+2. 打开 `chrome://extensions`，打开“开发者模式”，点“加载已解压的扩展程序”，选这个文件夹。
+3. 点工具栏里的 Meo AI 图标，打开“Allow Meo AI to control this browser”。
+4. 在 Meo AI 里：设置 → 权限 → 浏览器控制 → My Chrome (extension)，然后刷新页面。
+
+Meo 只在它自己打开的标签页里操作，不会碰 `chrome://` 页面，也不会往密码框里输入；看页面不用确认，点击和输入按你的权限级别确认。电脑上的桌面版也可以用同一个“My Chrome”选项（通过 Playwright MCP Bridge 扩展）。
+
 ## 多设备与 Work
 
 - **Run on：** 输入框下方选择在哪台设备上运行。聊天、Work 和每个项目各自记住自己的默认设备。
