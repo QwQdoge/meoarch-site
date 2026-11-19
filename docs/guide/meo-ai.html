@@ -30,7 +30,7 @@
         <p class="doc-banner"><span data-i18n="docs.source"></span> <a href="https://github.com/QwQdoge/meoarch-site/blob/main/content/meo-ai.md" target="_blank" rel="noreferrer">content/meo-ai.md ↗</a> · <a href="/docs/guide/meo-ai.md" data-i18n="docs.markdown">Markdown</a></p>
         
 <h1 id="meo-ai">Meo AI</h1>
-<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#beta">获取（Beta）</a></li><li><a href="#">现在能用的</a></li><li><a href="#">设置在哪里</a></li><li><a href="#work">多设备与 Work</a></li><li><a href="#">图片生成</a></li><li><a href="#">最近更新</a></li><li><a href="#">常用操作</a></li><li><a href="#">数据与网络</a></li><li><a href="#">排错</a></li><li><a href="#">开发者</a></li></ul></nav>
+<nav class="doc-toc" aria-labelledby="toc-title"><p id="toc-title" class="eyebrow" data-i18n="docs.toc">本页</p><ul><li><a href="#beta">获取（Beta）</a></li><li><a href="#">现在能用的</a></li><li><a href="#">设置在哪里</a></li><li><a href="#chrome-meo-ai">在 Chrome 里让 Meo AI 操作网页</a></li><li><a href="#work">多设备与 Work</a></li><li><a href="#">图片生成</a></li><li><a href="#">最近更新</a></li><li><a href="#">常用操作</a></li><li><a href="#">数据与网络</a></li><li><a href="#">排错</a></li><li><a href="#">开发者</a></li></ul></nav>
 <p>Meo AI 是 MeoArch 的助手：日常对话、本机或远程的 Agent 工作，以及可审阅的系统操作，在桌面和网页上是同一套体验。<strong>目前是开发预览版</strong>，不是每一种模型提供商和系统组合都完成了实机验收。</p>
 <h2 id="beta">获取（Beta）</h2>
 <p>所有构建都是 Beta（GitHub 预发布）。从 <a href="https://github.com/QwQdoge/meo-ai/releases">GitHub 发布页</a> 下载：</p>
@@ -41,6 +41,10 @@
 <h2 id="">设置在哪里</h2>
 <p>在网页版也可以直接打开地址，例如 <code>chat.meoarch.org/settings/permissions</code>。</p>
 <div class="table-scroll"><table><thead><tr><th>想做什么</th><th>位置</th></tr></thead><tbody><tr><td>让 AI 打开网页、点按钮、填表（浏览器控制）</td><td>设置 → 权限 → 浏览器控制（电脑上的桌面版）</td></tr><tr><td>让 AI 看屏幕、用鼠标键盘（电脑控制）</td><td>设置 → 权限 → 电脑控制（电脑上的桌面版）</td></tr><tr><td>联网搜索</td><td>输入框下方的地球按钮，或输入 <code>/search on</code></td></tr><tr><td>选模型、给每种用途配模型（日常、快速、思考、图片）</td><td>设置 → 模型；某个模型一直失败时会在这里标出并提供一键替换</td></tr><tr><td>连接 GitHub、Google Drive、Notion 等应用</td><td>插件页</td></tr><tr><td>设备名称、远程控制</td><td>设置 → 设备</td></tr><tr><td>记忆、自定义说明</td><td>设置 → 个性化</td></tr><tr><td>用量</td><td>设置 → 用量</td></tr></tbody></table></div>
+<h2 id="chrome-meo-ai">在 Chrome 里让 Meo AI 操作网页</h2>
+<p>网页版（chat.meoarch.org）可以通过 <strong>Meo AI for Chrome</strong> 扩展使用你自己的 Chrome：打开网页、读取内容、点击、输入、截图，带着你的登录状态。</p>
+<ol><li>下载 meo-ai 仓库里的 <code>meo/browser-extension</code> 文件夹。</li><li>打开 <code>chrome://extensions</code>，打开“开发者模式”，点“加载已解压的扩展程序”，选这个文件夹。</li><li>点工具栏里的 Meo AI 图标，打开“Allow Meo AI to control this browser”。</li><li>在 Meo AI 里：设置 → 权限 → 浏览器控制 → My Chrome (extension)，然后刷新页面。</li></ol>
+<p>Meo 只在它自己打开的标签页里操作，不会碰 <code>chrome://</code> 页面，也不会往密码框里输入；看页面不用确认，点击和输入按你的权限级别确认。电脑上的桌面版也可以用同一个“My Chrome”选项（通过 Playwright MCP Bridge 扩展）。</p>
 <h2 id="work">多设备与 Work</h2>
 <ul><li><strong>Run on：</strong> 输入框下方选择在哪台设备上运行。聊天、Work 和每个项目各自记住自己的默认设备。</li><li><strong>项目的设备：</strong> 项目页的“设备”列出每台电脑上这个项目的文件夹，可以“在那里工作”或“设为默认”。侧边栏的项目是可折叠的树：Work 里先列有文件夹的电脑，再列任务。</li><li><strong>关掉也不丢：</strong> 聊天回答写到一半关掉页面，Meo API 会在后台把它写完并保存；Work 任务每一轮都保存进度。</li><li><strong>继续：</strong> 中断的任务或被截断的回答可以“在这里继续”，也可以“在（另一台电脑）上继续”。一台设备 5 分钟没有回报才会提示接手；同一个任务不会在两台设备上同时运行。</li><li><strong>云端运行：</strong> “Run on”里的“云端”即将推出。</li></ul>
 <h2 id="">图片生成</h2>
