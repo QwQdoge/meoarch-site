@@ -13,6 +13,7 @@ const T = {
     status: { investigating: '调查中', identified: '已确认原因', monitoring: '观察中', resolved: '已解决', scheduled: '已计划', in_progress: '进行中', completed: '已完成' },
     ago: '90 天前', today: '今天', uptime: '可用率', noData: '暂无数据', active: '当前事件', past: '过去 30 天的事件', none: '没有报告的事件。',
     manual: '人工设置', checks: '次检查', down: '中断', slow: '降级', affected: '影响', lang: 'English', langHref: '?lang=en',
+    probe: '从你的网络访问', probeBody: '在你的浏览器里直接连接这些服务，看它们从你这里能不能打开。', checking: '检测中…', reachable: '可以访问', unreachable: '无法访问', slowNet: '较慢', recheck: '重新检测', apiHint: '已连接 · 服务返回',
     unavailable: '暂时无法读取服务状态', unavailableBody: '状态服务本身没有回应。这通常意味着 Meo API 正在恢复，请稍后刷新。',
   },
   en: {
@@ -23,6 +24,7 @@ const T = {
     status: { investigating: 'Investigating', identified: 'Identified', monitoring: 'Monitoring', resolved: 'Resolved', scheduled: 'Scheduled', in_progress: 'In progress', completed: 'Completed' },
     ago: '90 days ago', today: 'Today', uptime: 'uptime', noData: 'No data', active: 'Active incidents', past: 'Past 30 days', none: 'No incidents reported.',
     manual: 'Set manually', checks: 'checks', down: 'down', slow: 'degraded', affected: 'Affects', lang: '中文', langHref: '?lang=zh',
+    probe: 'From your network', probeBody: 'Your browser connects to these services directly, to show whether they open from where you are.', checking: 'Checking…', reachable: 'Reachable', unreachable: 'Not reachable', slowNet: 'slow', recheck: 'Check again', apiHint: 'Connected · server answered',
     unavailable: 'Status is unavailable right now', unavailableBody: 'The status service itself did not answer. This usually means Meo API is recovering; refresh in a moment.',
   },
 };
@@ -94,19 +96,45 @@ const CSS = `:root{color-scheme:light dark;--bg:#f8f7fb;--card:#fff;--text:#1d1b
 .timeline{list-style:none;margin:10px 0 0;padding:0}.timeline li{padding:8px 0;border-top:1px dashed var(--line);font-size:14px}.timeline li:first-child{border-top:0}.timeline span{white-space:pre-wrap}.timeline time{display:block;color:var(--muted);font-size:12px}.empty{color:var(--muted)}
 footer{color:var(--muted);font-size:12px;padding:28px 0 48px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}footer a{color:var(--muted)}
 #tip{position:fixed;z-index:9;pointer-events:none;background:var(--text);color:var(--bg);font-size:12px;line-height:1.5;padding:8px 10px;border-radius:10px;white-space:pre;max-width:260px;display:none}
+.probe{background:var(--card);border:1px solid var(--line);border-radius:20px;margin:0 0 28px;overflow:hidden}.probe>header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}.probe h2{margin:0;font-size:15px}.probe header p{margin:2px 0 0;color:var(--muted);font-size:12px}
+.probe button{font:inherit;font-size:13px;color:var(--primary);background:var(--soft);border:0;border-radius:999px;padding:6px 14px;cursor:pointer;white-space:nowrap;transition:transform .12s}.probe button:active{transform:scale(.96)}.probe button:disabled{opacity:.6;cursor:default}
+.prow{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line)}.prow:last-child{border-bottom:0}.prow .dot{width:10px;height:10px;border-radius:50%;background:var(--nodata);flex:none;transition:background .3s}.prow.ok .dot{background:var(--ok)}.prow.slow .dot{background:var(--minor)}.prow.bad .dot{background:var(--major)}.prow.wait .dot{animation:pp 1s ease-in-out infinite}
+.prow b{font-weight:600}.prow small{display:block;color:var(--muted);font-size:12px}.prow .res{margin-left:auto;text-align:right;font-size:13px;font-weight:600;white-space:nowrap;color:var(--muted)}.prow.ok .res{color:var(--ok)}.prow.slow .res{color:var(--minor)}.prow.bad .res{color:var(--major)}.prow .res small{font-weight:400}
+@keyframes pp{50%{opacity:.35}}@media(prefers-reduced-motion:reduce){.prow.wait .dot{animation:none}}
 @media(max-width:600px){.bars{height:28px;gap:1px}.bars i:nth-child(-n+30){display:none}.axis span:first-child{visibility:hidden}.banner{padding:18px}.banner h1{font-size:19px}.comp,.group h2{padding-left:16px;padding-right:16px}}`;
 
 const SCRIPT = `(function(){var tip=document.getElementById('tip'),cur;function hide(){tip.style.display='none';if(cur)cur.classList.remove('on');cur=null}
 function show(el){if(cur)cur.classList.remove('on');cur=el;el.classList.add('on');tip.textContent=el.getAttribute('data-tip');tip.style.display='block';var r=el.getBoundingClientRect(),w=tip.offsetWidth;tip.style.left=Math.max(8,Math.min(innerWidth-w-8,r.left+r.width/2-w/2))+'px';tip.style.top=(r.top-tip.offsetHeight-8)+'px'}
 document.addEventListener('mouseover',function(e){var b=e.target.closest&&e.target.closest('[data-tip]');b?show(b):hide()});document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-tip]');b?show(b):hide()});addEventListener('scroll',hide,{passive:true});
-setInterval(function(){if(document.hidden)return;fetch(location.pathname.replace(/\\/$/,'')+'/fragment'+location.search,{cache:'no-store'}).then(function(r){return r.ok?r.text():null}).then(function(h){if(h)document.getElementById('main').innerHTML=h}).catch(function(){})},60000)})();`;
+setInterval(function(){if(document.hidden)return;fetch(location.pathname.replace(/\\/$/,'')+'/fragment'+location.search,{cache:'no-store'}).then(function(r){return r.ok?r.text():null}).then(function(h){if(h)document.getElementById('main').innerHTML=h}).catch(function(){})},60000);
+var P=document.getElementById('probe');if(P){var L=JSON.parse(P.getAttribute('data-t'));var btn=P.querySelector('button');
+function one(row){var url=row.getAttribute('data-url'),cors=row.hasAttribute('data-cors'),res=row.querySelector('.res');row.className='prow wait';res.innerHTML=L.checking;var c=new AbortController(),to=setTimeout(function(){c.abort()},8000),t0=performance.now();
+return fetch(url+(url.indexOf('?')<0?'?':'&')+'_='+Date.now(),{mode:cors?'cors':'no-cors',cache:'no-store',signal:c.signal,credentials:'omit'}).then(function(r){var ms=Math.round(performance.now()-t0);if(cors&&!r.ok)throw new Error('HTTP '+r.status);row.className='prow '+(ms>1500?'slow':'ok');res.innerHTML=L.reachable+'<small>'+ms+' ms'+(ms>1500?' · '+L.slowNet:'')+(cors?' · HTTP '+r.status:'')+'</small>'}).catch(function(e){row.className='prow bad';res.innerHTML=L.unreachable+'<small>'+(e&&e.name==='AbortError'?'8 s timeout':(e&&e.message&&e.message.indexOf('HTTP')===0?e.message:'network error'))+'</small>'}).finally(function(){clearTimeout(to)})}
+function all(){btn.disabled=true;Promise.all([].map.call(P.querySelectorAll('.prow'),one)).then(function(){btn.disabled=false})}
+btn.addEventListener('click',all);all();setInterval(function(){if(!document.hidden)all()},60000)}})();`;
+
+/** Checked by the visitor's browser (see SCRIPT): whether each service opens from their network. */
+const PROBES = [
+  { name: 'Meo API', host: 'api.meoarch.org', url: 'https://api.meoarch.org/v1/status', cors: true },
+  { name: 'Meo Account', host: 'account.meoarch.org', url: 'https://account.meoarch.org/meo-version.json' },
+  { name: { zh: 'Meo AI 网页版', en: 'Meo AI web' }, host: 'chat.meoarch.org', url: 'https://chat.meoarch.org/meo-version.json' },
+  { name: { zh: 'MeoArch 官网', en: 'MeoArch website' }, host: 'meoarch.org', url: 'https://meoarch.org/' },
+];
+
+function probeCard(lang) {
+  const t = T[lang];
+  const labels = { checking: t.checking, reachable: t.reachable, unreachable: t.unreachable, slowNet: t.slowNet };
+  return `<section class="probe" id="probe" data-t="${esc(JSON.stringify(labels))}"><header><div><h2>${t.probe}</h2><p>${t.probeBody}</p></div><button type="button">${t.recheck}</button></header>
+${PROBES.map((p) => `<div class="prow wait" data-url="${esc(p.url)}"${p.cors ? ' data-cors' : ''}><span class="dot"></span><div><b>${esc(typeof p.name === 'string' ? p.name : p.name[lang])}</b><small>${esc(p.host)}</small></div><span class="res">${t.checking}</span></div>`).join('')}
+<noscript><p class="note" style="padding:0 20px 14px">JavaScript</p></noscript></section>`;
+}
 
 function page(data, lang) {
   const t = T[lang];
   return `<!doctype html><html lang="${lang === 'zh' ? 'zh-CN' : 'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${t.title}</title><meta name="description" content="${t.title}"><link rel="canonical" href="https://meoarch.org/health"><link rel="icon" href="https://account.meoarch.org/meoarch-logo.svg" type="image/svg+xml"><style>${CSS}</style></head>
 <body><div class="wrap"><header class="top"><a class="brand" href="https://meoarch.org/"><img src="https://account.meoarch.org/meoarch-logo.svg" width="44" height="20" alt="MeoArch">${t.brand}</a><a href="${t.langHref}">${t.lang}</a><a href="https://meoarch.org/">${t.home}</a></header>
-<main id="main">${renderMain(data, lang)}</main><footer><span>MeoArch · ${t.auto}</span><a href="https://api.meoarch.org/v1/status">JSON</a></footer></div><div id="tip" role="tooltip"></div><script>${SCRIPT}</script></body></html>`;
+${probeCard(lang)}<main id="main">${renderMain(data, lang)}</main><footer><span>MeoArch · ${t.auto}</span><a href="https://api.meoarch.org/v1/status">JSON</a></footer></div><div id="tip" role="tooltip"></div><script>${SCRIPT}</script></body></html>`;
 }
 
 async function load(env) {
