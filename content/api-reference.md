@@ -205,7 +205,24 @@ GitHub 的 MCP 连接使用你已绑定的 GitHub 账号的令牌，只在服务
 | `POST` | `/usage-events` | 1–250 条一批，按 `(source, source_event_id)` 去重，返回 `202 {accepted}` |
 | `GET` | `/usage-dashboard?days=` | `days` 为 7–730（默认 365） |
 
-用量是 AI 的 token 用量，字段见 [Meo Account API](account-api.md)。
+用量是 AI 的 token 用量，字段见 [Meo Account API](account-api.md)。`/usage-dashboard` 还带有 `credits`（余额、本月消耗）。
+
+## Meo Credits、Meo Storage 与服务连接
+
+规则见 [Meo Credits 与 Meo Storage](meo-credits.md)。100 MC = 1 美元（仅作参考），接口里的数值单位是 MC。
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| `GET` | `/credits` | 余额、按来源的积分、本月消耗、最近记录、自动充值、预算、价格；`buying.available` 目前为 `false` |
+| `PATCH` | `/credits/settings` | `{autoTopup: {enabled, thresholdMc, amountMc}, budgets: {web_search: MC 或 null}}` |
+| `GET` | `/storage` | Meo Storage 方案、已用/容量、可选容量、是否暂停上传 |
+| `PUT` | `/storage/plan` | `{plan: free / tier / dynamic, tier, consent: true}`；付费方案必须 `consent: true` |
+| `POST` | `/search/web` | `{query, depth?: basic/advanced, requestId?}`；返回 `billing`（hosted / byok / custom / free）和 `credits {charged_mc, balance_mc, notice}`；同一个 `requestId` 只会执行一次（`409 duplicate_request`） |
+| `GET` `POST` | `/service-connections` | 列出 / 保存（同一服务和提供方会更新）自己的搜索、翻译、存储、我的服务器连接；密钥只写不读 |
+| `POST` | `/service-connections/test`、`/service-connections/:id/test` | 测试未保存 / 已保存的连接 |
+| `PATCH` `DELETE` | `/service-connections/:id` | 修改、删除 |
+
+自定义地址必须是公网地址（`endpoint_private_address` 等错误码）。积分不足的存储上传返回 `402 storage_uploads_paused`，带 `help.actions`。
 
 ## 实时
 

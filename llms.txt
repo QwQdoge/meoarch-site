@@ -21,6 +21,7 @@
 - [OmniStore](https://meoarch.org/docs/guide/omnistore.md): The software store: sources, tasks, updates, custom repositories, AI and account.
 - [OmniStore sources](https://meoarch.org/docs/guide/omnistore-sources.md): What a source can provide, detection and offers, Bottles, macOS, and adding third-party catalogs.
 - [Meo AI](https://meoarch.org/docs/guide/meo-ai.md): The assistant: downloads, what works now, data and network boundaries, troubleshooting.
+- [Meo Credits and Meo Storage](https://meoarch.org/docs/guide/meo-credits.md): What Meo Credits pay for, prices, what happens when they run out, Meo Storage, your own keys at 0 MC.
 - [Meo Login](https://meoarch.org/docs/guide/meo-login.md): The login and display manager: compatibility boundary, install, configuration.
 - [Meo Package Repository](https://meoarch.org/docs/guide/meo-repo.md): The signed Stable and Beta pacman repositories and how releases are made.
 - [Meo Account](https://meoarch.org/docs/guide/meo-account.md): What the account does, its security model and where to find the developer docs.

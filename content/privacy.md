@@ -1,6 +1,6 @@
 # 隐私政策 / Privacy Policy
 
-最后更新：2026-11-13。
+最后更新：2026-11-20。
 
 本政策适用于 **Meo 账号**（account.meoarch.org）及 **Meo AI**（网页、桌面和 Android 客户端）。二者使用同一账号和同一套数据，因此适用同一份政策。Meo 目前处于公开开发阶段，提供的是测试版本。
 
@@ -18,6 +18,8 @@
 | 账号信息 | 邮箱、名称、用户名、登录方式（密码哈希，或 Google / GitHub 关联）、会话、两步验证设置、已登记设备、安全事件（如登录、账号删除） | 登录验证与账号保护 |
 | Meo AI 内容 | 聊天与消息、项目（名称、说明、项目记忆）、个人记忆、上传的文件、模型方案与路由、设置、已安装的插件及授权 | 提供功能并在设备间同步 |
 | 模型提供商密钥 | 您添加的 API 密钥（加密存储） | 代您调用所选模型 |
+| 自己的服务连接 | 您添加的搜索、翻译、存储和“我的服务器”的地址与密钥（密钥加密存储，保存后任何人都无法查看，包括 Meo） | 代您调用这些服务，0 MC |
+| Meo Credits 与存储 | 积分余额、按来源分开的积分、每次扣费或发放的记录、托管服务调用记录（服务名、是否成功、扣了多少；**不保存搜索词和结果**）、Meo Storage 方案与用量、自动充值开关 | 计费、用量概览与防止重复扣费 |
 | 用量记录 | 每次回答的估算 token 数、模型名、提供商名、时间、所属项目名 | 用量统计；token 数依据文本长度估算 |
 | 授权审计 | 每次请求的编号、内容哈希、提供商、模型、数据类别、是否获得同意 | 证明请求经过同意；不保存请求内容 |
 | 远程任务 | 您委托给另一台设备执行的任务的事件记录 | 在您的设备之间转交并续跑任务 |
@@ -108,6 +110,8 @@ This policy applies to **Meo Account** (account.meoarch.org) and **Meo AI** (web
 | Account | Email, name, username, sign-in method (password hash, or Google / GitHub link), sessions, two-factor settings, registered devices, security events (such as sign-in and account deletion) | Authentication and account protection |
 | Meo AI content | Chats and messages, projects (name, instructions, project memory), personal memory, uploaded files, model profiles and routes, settings, installed plugins and grants | Providing the features and synchronizing them |
 | Provider keys | API keys you add (stored encrypted) | Calling your chosen models on your behalf |
+| Your own service connections | Addresses and keys of the search, translation, storage and "My Server" services you add (keys stored encrypted; once saved nobody can view them, Meo included) | Calling those services on your behalf, at 0 MC |
+| Meo Credits and storage | Credit balance, credits by origin, a record of each charge or grant, hosted service calls (service, success, amount charged; **search queries and results are not stored**), Meo Storage plan and usage, the auto top-up switch | Billing, the usage profile and never charging twice |
 | Usage records | Estimated tokens per answer, model, provider, time, project name | Usage statistics; token counts are estimated from text length |
 | Consent audit | Per request: an identifier, a content hash, provider, model, data categories and whether consent was given | Evidencing that a request was approved; request content is not retained |
 | Remote tasks | Event records of a task you delegate to another device | Handing a task between your devices and resuming it |

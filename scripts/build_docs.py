@@ -55,6 +55,7 @@ GUIDE_DOCS = [
     ("omnistore", "omnistore.md", "OmniStore", "The software store: sources, tasks, updates, custom repositories, AI and account."),
     ("omnistore-sources", "omnistore-sources.md", "OmniStore sources", "What a source can provide, detection and offers, Bottles, macOS, and adding third-party catalogs."),
     ("meo-ai", "meo-ai.md", "Meo AI", "The assistant: downloads, what works now, data and network boundaries, troubleshooting."),
+    ("meo-credits", "meo-credits.md", "Meo Credits and Meo Storage", "What Meo Credits pay for, prices, what happens when they run out, Meo Storage, your own keys at 0 MC."),
     ("meo-login", "meo-login.md", "Meo Login", "The login and display manager: compatibility boundary, install, configuration."),
     ("meo-repo", "meo-repo.md", "Meo Package Repository", "The signed Stable and Beta pacman repositories and how releases are made."),
     ("meoarch-iso", "meoarch-iso.md", "MeoArch Image and Installer", "The ISO, the Live desktop, the installer and the repair tool."),
@@ -63,7 +64,7 @@ GUIDE_DOCS = [
 # The guide pages share one URL directory (their relative links rely on it); the navigation shows them in sections.
 GUIDE_SECTIONS = [
     ("MeoArch", ["about", "requirements", "install", "projects", "legal", "terms", "privacy"]),
-    ("Projects", ["meoarch-iso", "meo-desktop", "meo-settings", "omnistore", "omnistore-sources", "meo-ai", "meo-login", "meo-repo", "meo-account"]),
+    ("Projects", ["meoarch-iso", "meo-desktop", "meo-settings", "omnistore", "omnistore-sources", "meo-ai", "meo-credits", "meo-login", "meo-repo", "meo-account"]),
     ("Developers", ["account-api", "api-reference", "account-native-apps"]),
 ]
 EXTERNAL_DOCS = [
